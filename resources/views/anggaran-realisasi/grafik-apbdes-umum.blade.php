@@ -12,25 +12,37 @@
 @endsection
 
 @section('content')
-<div class="card shadow">
-    <div class="card-body">
-        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-lg-between text-center text-lg-left mb-3">
-            <div class="nav-wrapper">
-                <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item m-1">
-                        <a class="nav-link tab {{ request('jenis') == 'laporan' ? 'active' : '' }}" href="{{ URL::current() }}?jenis=laporan&tahun={{ request('tahun') }}"><i class="fas fa-hand-holding-usd mr-2"></i>Laporan</a>
-                    </li>
-                    <li class="nav-item m-1">
-                        <a class="nav-link tab {{ request('jenis') == 'grafik' ? 'active' : '' }}" href="{{ URL::current() }}?jenis=grafik&tahun={{ request('tahun') }}"><i class="fas fa-chart-bar mr-2"></i>Grafik</a>
-                    </li>
-                </ul>
+<div class="container my-5">
+    <div class="header-body text-center mt-5 mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 border-bottom">
+                <h2 class="">GRAFIK APBDES</h2>
+                <p class="">GRAFIK Anggaran Pendapatan Belanja Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah mengetahui informasi mengenai Laporan Anggaran Pendapatan Belanja Desa {{ $desa->nama_desa }}.</p>
             </div>
-            <form id="form-tahun" action="{{ URL::current()}}" method="GET">
-                Tahun: <input type="number" name="tahun" id="tahun" class="form-control-sm" value="{{ request('tahun') ? request('tahun') : date('Y') }}" style="width: 80px">
-                <img id="loading-tahun" src="{{ asset(Storage::url('loading.gif')) }}" alt="Loading" height="20px" style="display: none">
-            </form>
         </div>
-        @include('anggaran-realisasi.grafik-apbdes')
+    </div>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-lg-between text-center text-lg-left mb-3">
+                <div class="nav-wrapper">
+                    <ul class="nav nav-pills nav-fill">
+                        <li class="nav-item m-1">
+                            <a class="nav-link tab {{ request('jenis') == 'laporan' ? 'active' : '' }}" href="{{ URL::current() }}?jenis=laporan&tahun={{ request('tahun') }}"><i class="fas fa-hand-holding-usd mr-2"></i>Laporan</a>
+                        </li>
+                        <li class="nav-item m-1">
+                            <a class="nav-link tab {{ request('jenis') == 'grafik' ? 'active' : '' }}" href="{{ URL::current() }}?jenis=grafik&tahun={{ request('tahun') }}"><i class="fas fa-chart-bar mr-2"></i>Grafik</a>
+                        </li>
+                    </ul>
+                </div>
+                <form id="form-tahun" action="{{ URL::current()}}" method="GET">
+                    <input type="hidden" name="jenis" value="{{ request('jenis') ? request('jenis') : "pendapatan"}}">
+                    <input type="hidden" id="tahun-apbdes" value="{{ request('tahun') ? request('tahun') : date('Y')}}">
+                    Tahun: <input type="number" name="tahun" id="tahun" class="form-control-sm" value="{{ request('tahun') ? request('tahun') : date('Y') }}" style="width: 80px">
+                    <img id="loading-tahun" src="{{ asset(Storage::url('loading.gif')) }}" alt="Loading" height="20px" style="display: none">
+                </form>
+            </div>
+            @include('anggaran-realisasi.grafik-apbdes')
+        </div>
     </div>
 </div>
 @endsection

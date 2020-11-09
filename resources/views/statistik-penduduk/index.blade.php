@@ -8,14 +8,19 @@
 <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
 @endsection
 
-@section('header')
-<h1 class="text-white text-muted">STATISTIK PENDUDUK</h1>
-<p class="text-white">Statistik Penduduk Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah mengetahui informasi mengenai statistik penduduk desa {{ $desa->nama_desa }}.</p>
-@endsection
-
 @section('content')
-<div class="row">
-    @include('statistik-penduduk.card')
+<div class="container my-5">
+    <div class="header-body text-center mt-5 mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 border-bottom">
+                <h2 class="">STATISTIK PENDUDUK</h2>
+                <p class="">Statistik Penduduk Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah mengetahui informasi mengenai statistik penduduk desa {{ $desa->nama_desa }}.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @include('statistik-penduduk.card')
+    </div>
 </div>
 @endsection
 

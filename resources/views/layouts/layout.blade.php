@@ -1,21 +1,7 @@
 @php
     $desa = App\Desa::find(1);
 @endphp
-<!--
 
-=========================================================
-* Argon Dashboard - v1.1.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -36,200 +22,187 @@
     <!-- Favicon -->
     <link href="{{ asset(Storage::url($desa->logo)) }}" rel="icon" type="image/png">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i|Playfair+Display:400,400i,500,500i,600,600i,700,700i&subset=cyrillic" rel="stylesheet">
 
     <!-- Icons -->
     <link href="{{ asset('/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
     <link href="{{ asset('/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
-    <!-- CSS Files -->
-    <link href="{{ asset('/css/argon-dashboard.css?v=1.1.2') }}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/venobox/venobox.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Lonely - v2.2.0
+    * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-lonely/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
 
     @yield('styles')
 </head>
 
-<body class="bg-default">
-    <div class="main-content">
-        <!-- Navbar -->
-        <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
-            <div class="container px-4">
-                <a class="navbar-brand" href="{{ url('') }}">
-                    <h2 class="h1 text-white"><b>Desa {{ $desa->nama_desa }}</b></h2>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar-collapse-main">
-                    <!-- Collapse header -->
-                    <div class="navbar-collapse-header d-md-none">
-                        <div class="row">
-                            <div class="col-6 collapse-brand">
-                                <a href="{{ url('') }}">
-                                    <h3 class="h1 text-primary"><b>Desa {{ $desa->nama_desa }}</b></h3>
-                                </a>
-                            </div>
-                            <div class="col-6 collapse-close">
-                                <button type="button" class="navbar-toggler" data-toggle="collapse"
-                                    data-target="#navbar-collapse-main" aria-controls="sidenav-main"
-                                    aria-expanded="false" aria-label="Toggle sidenav">
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Navbar items -->
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('home.index') }}">
-                                <i class="fas fa-home"></i>
-                                <span class="nav-link-inner--text">Beranda</span>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bars"></i> <span class="nav-link-inner--text">Menu Utama</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right py-0 overflow-hidden">
-                                <a class="dropdown-item @if (Request::segment(1) == 'layanan-surat') active @endif" href="{{ route('layanan-surat') }}">
-                                    <i class="fas fa-fw fa-file-alt text-yellow"></i>
-                                    <span class="nav-link-inner--text">Layanan Surat</span>
-                                </a>
-                                <a class="dropdown-item @if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa') }}">
-                                    <i class="fas fa-fw fa-atlas text-success"></i>
-                                    <span class="nav-link-inner--text">Pemerintahan Desa</span>
-                                </a>
-                                <a class="dropdown-item @if (Request::segment(1) == 'berita') active @endif" href="{{ route('berita') }}">
-                                    <i class="fas fa-fw fa-newspaper text-cyan"></i>
-                                    <span class="nav-link-inner--text">Berita</span>
-                                </a>
-                                <a class="dropdown-item @if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery') }}">
-                                    <i class="fas fa-fw fa-images text-orange"></i>
-                                    <span class="nav-link-inner--text">Gallery</span>
-                                </a>
-                                <a class="dropdown-item @if (Request::segment(1) == 'statistik-penduduk') active @endif" href="{{ route('statistik-penduduk') }}">
-                                    <i class="fas fa-fw fa-chart-pie text-info"></i>
-                                    <span class="nav-link-inner--text">Statistik Penduduk</span>
-                                </a>
-                                <a class="dropdown-item @if (Request::segment(1) == 'laporan-apbdes') active @endif" href="{{ route('laporan-apbdes') }}">
-                                    <i class="fas fa-fw fa-money-check-alt text-success"></i>
-                                    <span class="nav-link-inner--text">Laporan APBDes</span>
-                                </a>
-                            </div>
-                        </li>
-                        @auth
-                            <li class="nav-item dropdown">
-                                <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-bars"></i> <span class="nav-link-inner--text">Menu Admin</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right py-0 overflow-hidden">
-                                    <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                        <i class="fas fa-fw fa-tachometer-alt text-blue"></i> Dashboard
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('penduduk.index') }}">
-                                        <i class="fas fa-fw fa-users text-info"></i> Kelola Penduduk
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('dusun.index') }}">
-                                        <i class="fas fa-fw fa-map-marker-alt text-yellow"></i> Kelola Dusun
-                                    </a>
-                                    <a class="dropdown-item" href="{{ url('anggaran-realisasi?jenis=pendapatan&tahun='.date('Y')) }}">
-                                        <i class="fas fa-fw fa-coins text-success"></i> Kelola APBDes
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('surat.index') }}">
-                                        <i class="fas fa-fw fa-file-alt text-primary"></i> Kelola Surat
-                                    </a>
-                                    <a href="{{ route('pemerintahan-desa.index') }}" class="dropdown-item">
-                                        <i class="fas fa-fw fa-atlas text-success"></i> Kelola Informasi Pemerintahan Desa
-                                    </a>
-                                    <a href="{{ route('berita.index') }}" class="dropdown-item">
-                                        <i class="fas fa-fw fa-newspaper text-cyan"></i> Kelola Berita
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('gallery.index') }}">
-                                        <i class="fas fa-fw fa-images text-orange"></i> Kelola Gallery
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('slider.index') }}">
-                                        <i class="fas fa-fw fa-images text-purple"></i> Kelola Slider
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('profil-desa') }}">
-                                        <i class="fas fa-fw fa-users text-info"></i> Profil Desa
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('profil') }}">
-                                        <i class="fas fa-fw fa-user text-yellow"></i> Profil Saya
-                                    </a>
-                                    <hr class="m-0">
-                                    <a class="dropdown-item" href="{{ route('keluar') }}" onclick="event.preventDefault(); document.getElementById('form-keluar').submit();">
-                                        <i class="fas fa-fw fa-sign-out-alt"></i> Keluar
-                                    </a>
-                                    <form id="form-keluar" action="{{ route('keluar') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+<body>
+    <!--? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text font-weight-bold">
+                    Desa {{ $desa->nama_desa }}
                 </div>
-            </div>
-        </nav>
-        <!-- Header -->
-        <div class="header bg-gradient-primary py-7 py-lg-8">
-            <div class="container">
-                <div class="header-body text-center mb-7">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5 col-md-6">
-                            @yield('header')
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="separator separator-bottom separator-skew zindex-100">
-                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-                </svg>
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container mt--8 pb-5">
-            @yield('content')
-        </div>
-        <footer class="py-5">
-            <div class="container">
-                <div class="row align-items-center justify-content-xl-between">
-                    <div class="col-xl-6">
-                        <div class="copyright text-center text-xl-left text-muted">
-                            © {{ date('Y') }} <a href="{{ url('') }}" class="font-weight-bold ml-1"
-                                target="_blank">Desa {{ $desa->nama_desa }}</a>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="copyright text-center text-xl-right text-muted">
-                            Powered By <a href="https://github.com/maulanakevinp/simapeda" class="font-weight-bold ml-1"
-                                target="_blank">SIMAPEDA</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 
-    <!--   Core   -->
-    <script src="{{ url('/js/plugins/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ url('/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- ======= Hero Section ======= -->
+    <div class="py-3 bg-dark text-white d-flex flex-column flex-md-row align-items-center justify-content-center text-center text-md-left">
+        <img src="{{ asset(Storage::url($desa->logo)) }}" alt="" height="100px" class="mr-3">
+        <div class="text-center">
+            <h1 class="font-weight-bold">Desa {{ $desa->nama_desa }}</h1>
+            <h5>Kecamatan {{ $desa->nama_kecamatan }} Kabupaten {{ $desa->nama_kabupaten }}</h5>
+        </div>
+    </div><!-- End Hero -->
 
-    <!--   Optional JS   -->
+    <!-- ======= Header ======= -->
+    <header id="header">
+        <div class="container d-flex align-items-center">
+            <div class="logo mr-auto">
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <a href="{{ url('') }}">
+                    <img src="{{ asset(Storage::url($desa->logo)) }}" alt="" class="img-fluid">
+                    <span class="m-0 text-dark font-weight-bold">Desa {{ $desa->nama_desa }}</span>
+                </a>
+            </div>
 
-    <!--   Argon JS   -->
-    <script src="{{ url('/js/argon-dashboard.min.js?v=1.1.2') }}"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+            <!-- Navbar -->
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li>
+                        <a class="" href="{{ route('home.index') }}">Beranda</a>
+                    </li>
+                    <li class="drop-down">
+                        <a class="" href="#">Menu Utama</a>
+                        <ul>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'layanan-surat') active @endif" href="{{ route('layanan-surat') }}">Layanan Surat</a>
+                            </li>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa') }}">Pemerintahan Desa</a>
+                            </li>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'berita') active @endif" href="{{ route('berita') }}">Berita</a>
+                            </li>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery') }}">Gallery</a>
+                            </li>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'statistik-penduduk') active @endif" href="{{ route('statistik-penduduk') }}">Statistik Penduduk</a>
+                            </li>
+                            <li>
+                                <a class="@if (Request::segment(1) == 'laporan-apbdes') active @endif" href="{{ route('laporan-apbdes') }}">Laporan APBDes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @auth
+                        <li class="drop-down">
+                            <a href="#">Menu Admin</a>
+                            <ul>
+                                <li>
+                                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('penduduk.index') }}">Kelola Penduduk</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('dusun.index') }}">Kelola Dusun</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('anggaran-realisasi?jenis=pendapatan&tahun='.date('Y')) }}">Kelola APBDes</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('surat.index') }}">Kelola Surat</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('pemerintahan-desa.index') }}">Kelola Informasi Pemerintahan Desa</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('berita.index') }}">Kelola Berita</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('gallery.index') }}">Kelola Gallery</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('slider.index') }}">Kelola Slider</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('profil-desa') }}">Profil Desa</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('profil') }}">Profil Saya</a>
+                                </li>
+                                <hr class="m-0">
+                                <li>
+                                    <a href="{{ route('keluar') }}" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">Keluar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endguest
+                    </ul>
+                </nav>
+            </div>
+            <form id="form-logout" action="{{ route('keluar') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+    </header><!-- End Header -->
+
+    <main id="main">
+        @yield('content')
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Desa {{ $desa->nama_desa }}</span></strong> {{ date('Y') }}. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-html-bootstrap-template-lonely/ -->
+                Designed by <a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a>
+                Powered By <a href="https://github.com/maulanakevinp/simapeda" target="_blank">SIMAPEDA</a>
+            </div>
+        </div>
+    </footer><!-- End  Footer -->
+
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery.easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-sticky/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('assets/vendor/waypoints/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/counterup/counterup.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/venobox/venobox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+
     <script>
         const baseURL = $('meta[name="base-url"]').attr('content');
-        window.TrackJS &&
-            TrackJS.install({
-                token: "ee6fab19c5a04ac1a32a645abde4613a",
-                application: "argon-dashboard-free"
-            });
     </script>
     @stack('scripts')
 </body>
