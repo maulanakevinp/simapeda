@@ -85,3 +85,44 @@ function hanyaHuruf(evt) {
         return false;
     return true;
 }
+
+function uploadImage (inputFile) {
+    if (inputFile.files && inputFile.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $(inputFile).siblings('img').attr("src", e.target.result);
+        }
+        reader.readAsDataURL(inputFile.files[0]);
+    }
+}
+
+function perkawinan() {
+    if ($('#status_perkawinan_id').val() == 1) {
+        $('#nomor_akta_perkawinan').attr('placeholder','');
+        $('#nomor_akta_perkawinan').attr('readonly','true');
+        $('#nomor_akta_perkawinan').val('');
+        $('#tanggal_perkawinan').attr('readonly','true');
+        $('#tanggal_perkawinan').val('');
+        $('#nomor_akta_perceraian').attr('placeholder','');
+        $('#nomor_akta_perceraian').attr('readonly','true');
+        $('#nomor_akta_perceraian').val('');
+        $('#tanggal_perceraian').attr('readonly','true');
+        $('#tanggal_perceraian').val('');
+    } else if ($('#status_perkawinan_id').val() == 2) {
+        $('#nomor_akta_perkawinan').attr('placeholder','Masukkan Nomor Akta Perkawinan');
+        $('#nomor_akta_perkawinan').removeAttr('readonly');
+        $('#tanggal_perkawinan').removeAttr('readonly');
+        $('#nomor_akta_perceraian').attr('placeholder','');
+        $('#nomor_akta_perceraian').val('');
+        $('#nomor_akta_perceraian').attr('readonly','true');
+        $('#tanggal_perceraian').attr('readonly','true');
+        $('#tanggal_perceraian').val('');
+    } else {
+        $('#nomor_akta_perkawinan').attr('placeholder','Masukkan Nomor Akta Perkawinan');
+        $('#nomor_akta_perkawinan').removeAttr('readonly');
+        $('#tanggal_perkawinan').removeAttr('readonly');
+        $('#nomor_akta_perceraian').attr('placeholder','Masukkan Nomor Akta Perceraian');
+        $('#nomor_akta_perceraian').removeAttr('readonly');
+        $('#tanggal_perceraian').removeAttr('readonly');
+    }
+}

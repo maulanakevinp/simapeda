@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Agama;
+use App\AkseptorKb;
+use App\Asuransi;
 use App\Darah;
-use App\DetailDusun;
 use App\Dusun;
 use App\Http\Requests\PendudukRequest;
+use App\JenisCacat;
+use App\JenisKelahiran;
 use App\Pekerjaan;
 use App\Pendidikan;
 use App\Penduduk;
+use App\PenolongKelahiran;
+use App\SakitMenahun;
 use App\StatusHubunganDalamKeluarga;
+use App\StatusPenduduk;
 use App\StatusPerkawinan;
+use App\StatusRekam;
+use App\TempatDilahirkan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class PendudukController extends Controller
 {
@@ -71,6 +79,15 @@ class PendudukController extends Controller
             'pendidikan'                    => Pendidikan::all(),
             'status_hubungan_dalam_keluarga'=> StatusHubunganDalamKeluarga::all(),
             'status_perkawinan'             => StatusPerkawinan::all(),
+            'akseptor_kb'                   => AkseptorKb::all(),
+            'asuransi'                      => Asuransi::all(),
+            'jenis_cacat'                   => JenisCacat::all(),
+            'jenis_kelahiran'               => JenisKelahiran::all(),
+            'penolong_kelahiran'            => PenolongKelahiran::all(),
+            'sakit_menahun'                 => SakitMenahun::all(),
+            'status_penduduk'               => StatusPenduduk::all(),
+            'status_rekam'                  => StatusRekam::all(),
+            'tempat_dilahirkan'             => TempatDilahirkan::all(),
         ]);
     }
 
@@ -83,6 +100,9 @@ class PendudukController extends Controller
     public function store(PendudukRequest $request)
     {
         $data = $request->validated();
+        if ($request->foto) {
+            $data['foto'] = $request->foto->store('public/gallery');
+        }
         Penduduk::create($data);
         return redirect()->route('penduduk.index')->with('success','Penduduk berhasil ditambahkan');
     }
@@ -115,6 +135,15 @@ class PendudukController extends Controller
             'pendidikan'                    => Pendidikan::all(),
             'status_hubungan_dalam_keluarga'=> StatusHubunganDalamKeluarga::all(),
             'status_perkawinan'             => StatusPerkawinan::all(),
+            'akseptor_kb'                   => AkseptorKb::all(),
+            'asuransi'                      => Asuransi::all(),
+            'jenis_cacat'                   => JenisCacat::all(),
+            'jenis_kelahiran'               => JenisKelahiran::all(),
+            'penolong_kelahiran'            => PenolongKelahiran::all(),
+            'sakit_menahun'                 => SakitMenahun::all(),
+            'status_penduduk'               => StatusPenduduk::all(),
+            'status_rekam'                  => StatusRekam::all(),
+            'tempat_dilahirkan'             => TempatDilahirkan::all(),
             'penduduk'                      => $penduduk,
         ]);
     }
@@ -129,6 +158,13 @@ class PendudukController extends Controller
     public function update(PendudukRequest $request, Penduduk $penduduk)
     {
         $data = $request->validated();
+        if ($request->foto) {
+            if ($penduduk->foto) {
+                File::delete(storage_path('app/' . $penduduk->foto));
+            }
+            $data['foto'] = $request->foto->store('public/gallery');
+        }
+
         $penduduk->update($data);
         return redirect()->back()->with('success','Penduduk berhasil diperbarui');
     }

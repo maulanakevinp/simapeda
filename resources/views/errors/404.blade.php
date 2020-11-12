@@ -4,7 +4,15 @@
 Error 404
 @endsection
 
-@section('header')
-    <h1 class="text-white">Halaman Tidak Ditemukan</h1>
-    <p class="text-lead text-light">ERROR 404</p>
+@section('content')
+<div class="container my-5">
+    <div class="header-body text-center mt-5 mb-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-6 border-bottom">
+                <h2 class="">Halaman Tidak Ditemukan</h2>
+                <p class="">ERROR 404</p>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

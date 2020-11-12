@@ -47,128 +47,69 @@
 </div>
 
 <div class="container">
-    <section class="mb-5">
-        <div class="row">
-            <div class="col-md">
-                <div class="header-body text-center mt-5 mb-3">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6 col-md-6 border-bottom">
-                            <h2 class="">LAYANAN SURAT</h2>
-                            <p class="">Dengan menggunakan layanan surat website Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah membuat beberapa surat keterangan berikut ini secara online.</p>
+    <div class="row">
+        <div class="col-md-9 mb-3">
+            @foreach ($artikel as $item)
+                @php
+                    $url = '/';
+                    if ($item->menu) {
+                        $url .= Str::slug($item->menu) .'/';
+                    }
+
+                    if ($item->submenu) {
+                        $url .= Str::slug($item->submenu) .'/';
+                    }
+
+                    if ($item->sub_submenu) {
+                        $url .= Str::slug($item->sub_submenu) .'/';
+                    }
+
+                    $url .= $item->id .'/'. Str::slug($item->judul);
+                @endphp
+                <div class="card shadow mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <a href="{{ $url }}">
+                                    <img style="max-height: 200px; object-fit: cover" class="mw-100" src="{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}" alt="Gambar {{ $item->judul }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{ $url }}">
+                                    <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
+                                </a>
+                                <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
+                                <a href="{{ $url }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
+                                <div class="mt-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
+                                    <span>
+                                        <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-eye"></i>  {{ $item->dilihat }} Kali Dibaca
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4 justify-content-center">
-            @foreach ($surat as $item)
-                <div class="col-lg-4 col-md-6 surats">
-                    <div class="single-service bg-white rounded shadow p-3 animate-up">
-                        <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}">
-                            <i class="fas {{ $item->icon }} ikon fa-5x mb-3"></i>
-                            <h4>{{ $item->nama }}</h4>
-                        </a>
-                        <p>{{ $item->deskripsi }}</p>
                     </div>
                 </div>
             @endforeach
-            @if (App\Surat::count() > 3)
-                <a href="{{ route('layanan-surat') }}" class="btn btn-primary">Lebih Banyak Surat</a>
-            @endif
         </div>
-    </section>
-    @if ($berita->count() > 0)
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-md">
-                    <div class="header-body text-center mt-5 mb-3">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6 col-md-6 border-bottom">
-                                <h2 class="">BERITA</h2>
-                                <p class="">Berita Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah mengetahui informasi seputar berita desa {{ $desa->nama_desa }}.</p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <h5 class="text-center">
+                        <a href="{{ route('layanan-surat') }}" class="">Layanan Surat</a>
+                    </h5>
+                    <div class="list-group">
+                        @foreach ($surat as $item)
+                            <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}" class="list-group-item list-group-item-action" style="font-size: 0.8rem">{{ $item->nama }}</a>
+                        @endforeach
+                      </div>
                 </div>
             </div>
-            <div class="row justify-content-center">
-                @foreach ($berita as $item)
-                    <div class="col-lg-4 col-md-6 mb-3">
-                        <div class="card animate-up shadow">
-                            <a href="{{ route('berita.show', ['berita' => $item, 'slug' => Str::slug($item->judul)]) }}">
-                                <div class="card-img" style="background-image: url('{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}'); background-size: cover; height: 200px;"></div>
-                            </a>
-                            <div class="card-body">
-                                <a href="{{ route('berita.show', ['berita' => $item, 'slug' => Str::slug($item->judul)]) }}">
-                                    <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
-                                </a>
-                                <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
-                                <div class="mt-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
-                                    <span>
-                                        <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-eye"></i>  {{ $item->dilihat }} Kali Dibaca
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            @if (App\Berita::count() > 3)
-                <div class="text-center">
-                    <a href="{{ route('berita') }}" class="btn btn-primary">Lebih Banyak Berita</a>
-                </div>
-            @endif
-        </section>
-    @endif
-    @if ($pemerintahan_desa->count() > 0)
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-md">
-                    <div class="header-body text-center mt-5 mb-3">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6 col-md-6 border-bottom">
-                                <h2 class="">Pemerintahan Desa</h2>
-                                <p class="">Pemerintahan Desa {{ $desa->nama_desa }}, masyarakat dapat dengan mudah mengetahui informasi seputar pemerintahan desa {{ $desa->nama_desa }}.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                @foreach ($pemerintahan_desa as $item)
-                    <div class="col-lg-4 col-md-6 mb-3">
-                        <div class="card animate-up shadow">
-                            <a href="{{ route('pemerintahan-desa.show', ['pemerintahan_desa' => $item, 'slug' => Str::slug($item->judul)]) }}">
-                                <div class="card-img" style="background-image: url('{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}'); background-size: cover; height: 200px;"></div>
-                            </a>
-                            <div class="card-body">
-                                <a href="{{ route('pemerintahan-desa.show', ['pemerintahan_desa' => $item, 'slug' => Str::slug($item->judul)]) }}">
-                                    <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
-                                </a>
-                                <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
-                                <div class="mt-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
-                                    <span>
-                                        <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-eye"></i>  {{ $item->dilihat }} Kali Dibaca
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            @if (App\PemerintahanDesa::count() > 3)
-                <div class="text-center">
-                    <a href="{{ route('pemerintahan-desa') }}" class="btn btn-primary">Lebih Banyak Informasi Pemerintahan Desa</a>
-                </div>
-            @endif
-        </section>
-    @endif
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31599.41679812257!2d113.7189174164237!3d-8.108905637778197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6953778add047%3A0x71944989e3c29684!2sArjasa%2C%20Kabupaten%20Jember%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1596496940461!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
     @if (count($galleries) > 0)
         <section class="mb-5">
             <div class="row">
@@ -185,7 +126,7 @@
             </div>
             <div class="row justify-content-center">
                 @foreach ($galleries as $key => $item)
-                    @if ($key < 3)
+                    @if ($key < 6)
                         @if ($item['jenis'] == 1)
                             <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
                                 <a href="{{ url(Storage::url($item['gambar'])) }}" data-fancybox data-caption="{{ $item['caption'] }}">
@@ -227,7 +168,6 @@
         </div>
     </div>
 </div>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31599.41679812257!2d113.7189174164237!3d-8.108905637778197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6953778add047%3A0x71944989e3c29684!2sArjasa%2C%20Kabupaten%20Jember%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1596496940461!5m2!1sid!2sid" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 @endsection
 
 @push('scripts')

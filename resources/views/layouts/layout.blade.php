@@ -66,102 +66,15 @@
     <div class="py-3 bg-dark text-white d-flex flex-column flex-md-row align-items-center justify-content-center text-center text-md-left">
         <img src="{{ asset(Storage::url($desa->logo)) }}" alt="" height="100px" class="mr-3">
         <div class="text-center">
-            <h1 class="font-weight-bold">Desa {{ $desa->nama_desa }}</h1>
-            <h5>Kecamatan {{ $desa->nama_kecamatan }} Kabupaten {{ $desa->nama_kabupaten }}</h5>
+            <h4 class="text-uppercase m-0" style="font-weight: bolder;font-family: Arial, Helvetica, sans-serif">Pemerintah Desa</h4>
+            <h1 class="text-uppercase m-0" style="font-weight: bolder;font-family: Arial, Helvetica, sans-serif">{{ $desa->nama_desa }}</h1>
+            <h6 class="m-0" style="font-weight: bolder;font-family: Arial, Helvetica, sans-serif">{{ $desa->alamat }}</h6>
         </div>
     </div><!-- End Hero -->
 
     <!-- ======= Header ======= -->
-    <header id="header">
-        <div class="container d-flex align-items-center">
-            <div class="logo mr-auto">
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <a href="{{ url('') }}">
-                    <img src="{{ asset(Storage::url($desa->logo)) }}" alt="" class="img-fluid">
-                    <span class="m-0 text-dark font-weight-bold">Desa {{ $desa->nama_desa }}</span>
-                </a>
-            </div>
-
-            <!-- Navbar -->
-            <nav class="nav-menu d-none d-lg-block">
-                <ul>
-                    <li>
-                        <a class="" href="{{ route('home.index') }}">Beranda</a>
-                    </li>
-                    <li class="drop-down">
-                        <a class="" href="#">Menu Utama</a>
-                        <ul>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'layanan-surat') active @endif" href="{{ route('layanan-surat') }}">Layanan Surat</a>
-                            </li>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa') }}">Pemerintahan Desa</a>
-                            </li>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'berita') active @endif" href="{{ route('berita') }}">Berita</a>
-                            </li>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery') }}">Gallery</a>
-                            </li>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'statistik-penduduk') active @endif" href="{{ route('statistik-penduduk') }}">Statistik Penduduk</a>
-                            </li>
-                            <li>
-                                <a class="@if (Request::segment(1) == 'laporan-apbdes') active @endif" href="{{ route('laporan-apbdes') }}">Laporan APBDes</a>
-                            </li>
-                        </ul>
-                    </li>
-                    @auth
-                        <li class="drop-down">
-                            <a href="#">Menu Admin</a>
-                            <ul>
-                                <li>
-                                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('penduduk.index') }}">Kelola Penduduk</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('dusun.index') }}">Kelola Dusun</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('anggaran-realisasi?jenis=pendapatan&tahun='.date('Y')) }}">Kelola APBDes</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('surat.index') }}">Kelola Surat</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('pemerintahan-desa.index') }}">Kelola Informasi Pemerintahan Desa</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('berita.index') }}">Kelola Berita</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('gallery.index') }}">Kelola Gallery</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('slider.index') }}">Kelola Slider</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('profil-desa') }}">Profil Desa</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('profil') }}">Profil Saya</a>
-                                </li>
-                                <hr class="m-0">
-                                <li>
-                                    <a href="{{ route('keluar') }}" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">Keluar</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endguest
-                    </ul>
-                </nav>
-            </div>
-            <form id="form-logout" action="{{ route('keluar') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-    </header><!-- End Header -->
+        @include('layouts.components.header')
+    <!-- End Header -->
 
     <main id="main">
         @yield('content')

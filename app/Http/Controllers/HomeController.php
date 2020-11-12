@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Berita;
+use App\Artikel;
 use App\Desa;
 use App\Gallery;
-use App\PemerintahanDesa;
 use App\Penduduk;
 use App\Surat;
 use App\Video;
@@ -15,15 +14,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $surat = Surat::whereTampilkan(1)->latest()->take(3)->get();
+        $surat = Surat::whereTampilkan(1)->latest()->get();
         $desa = Desa::find(1);
-        $berita = Berita::latest()->take(3)->get();
-        $pemerintahan_desa = PemerintahanDesa::latest()->take(3)->get();
+        $artikel = Artikel::latest()->paginate(10);
         $gallery = Gallery::where('slider', 1)->latest()->get();
         $galleries = array();
-        $videos = Video::all();
 
-        foreach (Gallery::where('slider', null)->get() as $key => $value) {
+        foreach (Gallery::where('slider', null)->inRandomOrder()->limit(7)->get() as $key => $value) {
             $gambar = [
                 'gambar'    => $value->gallery,
                 'id'        => $value->id,
@@ -34,7 +31,7 @@ class HomeController extends Controller
             array_push($galleries, $gambar);
         }
 
-        foreach ($videos as $key => $value) {
+        foreach (Video::inRandomOrder()->limit(7)->get() as $key => $value) {
             $gambar = [
                 'gambar'    => $value->gambar,
                 'id'        => $value->video_id,
@@ -49,7 +46,7 @@ class HomeController extends Controller
             return $a['created_at'] < $b['created_at'];
         });
 
-        return view('index', compact('surat', 'desa', 'gallery','berita','pemerintahan_desa','galleries'));
+        return view('index', compact('surat', 'desa', 'gallery','galleries','artikel'));
     }
 
     public function dashboard()
