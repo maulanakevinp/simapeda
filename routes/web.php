@@ -68,6 +68,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('/tambah-penduduk', 'PendudukController@create')->name('penduduk.create');
     Route::get('/penduduk/{penduduk}', function (){return abort(404);});
+    Route::get('/export-penduduk', 'PendudukController@export')->name('penduduk.export');
+    Route::post('/import-penduduk', 'PendudukController@import')->name('penduduk.import');
     Route::resource('penduduk', 'PendudukController')->except('create','show');
 
     Route::get('/kelompok-jenis-anggaran/{kelompokJenisAnggaran}', 'AnggaranRealisasiController@kelompokJenisAnggaran');

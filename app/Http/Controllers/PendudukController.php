@@ -7,7 +7,9 @@ use App\AkseptorKb;
 use App\Asuransi;
 use App\Darah;
 use App\Dusun;
+use App\Exports\PendudukExport;
 use App\Http\Requests\PendudukRequest;
+use App\Imports\PendudukImport;
 use App\JenisCacat;
 use App\JenisKelahiran;
 use App\Pekerjaan;
@@ -22,6 +24,7 @@ use App\StatusRekam;
 use App\TempatDilahirkan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PendudukController extends Controller
 {
@@ -179,5 +182,22 @@ class PendudukController extends Controller
     {
         $penduduk->delete();
         return redirect()->back()->with('success','Penduduk berhasil diperbarui');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PendudukExport, 'penduduk.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'xlsx' => ['required']
+        ],[
+            'xlsx.required' => 'File wajib diisi'
+        ]);
+
+        Excel::import(new PendudukImport, $request->file('xlsx'));
+        return redirect()->back()->with('success', 'File xlsx berhasil di import');
     }
 }

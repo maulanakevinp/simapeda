@@ -19,6 +19,8 @@
                                 <p class="mb-0 text-sm">Kelola Penduduk</p>
                             </div>
                             <div class="mb-3">
+                                <a href="#import" data-toggle="modal" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i> Import .xlsx</a>
+                                <a href="{{ route('penduduk.export') }}" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i> Export .xlsx</a>
                                 <a href="{{ route('penduduk.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Penduduk</a>
                             </div>
                         </div>
@@ -201,25 +203,20 @@
 <div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="modal-hapus" aria-hidden="true">
     <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
         <div class="modal-content bg-gradient-danger">
-
             <div class="modal-header">
                 <h6 class="modal-title" id="modal-title-delete">Hapus Penduduk?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-
             <div class="modal-body">
-
                 <div class="py-3 text-center">
                     <i class="ni ni-bell-55 ni-3x"></i>
                     <h4 class="heading mt-4">Perhatian!!</h4>
                     <p>Menghapus penduduk akan menghapus semua data yang dimilikinya</p>
                     <p><strong id="nama-hapus"></strong></p>
                 </div>
-
             </div>
-
             <div class="modal-footer">
                 <form id="form-hapus" action="" method="POST" >
                     @csrf @method('delete')
@@ -227,7 +224,30 @@
                 </form>
                 <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Tidak</button>
             </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="import" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-import">Import .xlsx</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route("penduduk.import") }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input accept=".xlsx" type="file" name="xlsx" class="form-control" placeholder="Masukkan File Excel">
+                    <div class="mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
