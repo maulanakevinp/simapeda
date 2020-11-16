@@ -19,9 +19,13 @@
                                 <p class="mb-0 text-sm">Kelola Penduduk</p>
                             </div>
                             <div class="mb-3">
-                                <a href="#import" data-toggle="modal" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i> Import .xlsx</a>
-                                <a href="{{ route('penduduk.export') }}" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i> Export .xlsx</a>
-                                <a href="{{ route('penduduk.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Penduduk</a>
+                                <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
+                                <a id="btn-import" href="#import" data-toggle="tooltip" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
+                                <a href="{{ route('penduduk.export') }}" data-toggle="tooltip" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
+                                <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                         <form class="navbar-search mt-3 cari-none" action="{{ URL::current() }}" method="GET">
@@ -46,7 +50,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Kepala Keluarga</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $totalPenduduk->where('status_hubungan_dalam_keluarga_id',1)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::whereHas('statusHubunganDalamKeluarga', function ($status) {$status->where('nama', 'Kepala Keluarga');})->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -64,7 +68,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Total Penduduk</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $totalPenduduk->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -82,7 +86,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Laki-laki</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $totalPenduduk->where('jenis_kelamin',1)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::where('jenis_kelamin',1)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -100,7 +104,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Perempuan</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $totalPenduduk->where('jenis_kelamin',2)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::where('jenis_kelamin',2)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-pink text-white rounded-circle shadow">
@@ -136,7 +140,11 @@
         <div class="table-responsive">
             <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
-                    <th class="text-center">#</th>
+                    <th class="text-center">
+                        <input type="checkbox" name="check_all" id="check_all">
+                    </th>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Opsi</th>
                     <th class="text-center">NIK</th>
                     <th class="text-center">KK</th>
                     <th class="text-center">Nama</th>
@@ -155,22 +163,26 @@
                 <tbody>
                     @forelse ($penduduk as $item)
                         <tr>
-                            <td>
+                            <td style="vertical-align: middle">
+                                <input type="checkbox" class="penduduk-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
+                            </td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle">
                                 <a href="{{ route('penduduk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("penduduk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ $item->nik }}</td>
-                            <td>{{ $item->kk }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
-                            <td>{{ $item->tempat_lahir }}, {{ date('d/m/Y',strtotime($item->tanggal_lahir)) }}</td>
-                            <td>{{ $item->darah ? $item->darah->golongan : '-' }}</td>
-                            <td>{{ $item->agama->nama }}</td>
-                            <td>{{ $item->pendidikan ? $item->pendidikan->nama : '-' }}</td>
-                            <td>{{ $item->pekerjaan ? $item->pekerjaan->nama : '-' }}</td>
-                            <td>{{ $item->statusPerkawinan->nama }}</td>
-                            <td>{{ $item->statusHubunganDalamKeluarga->nama }}</td>
-                            <td>
+                            <td style="vertical-align: middle">{{ $item->nik }}</td>
+                            <td style="vertical-align: middle"><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>
+                            <td style="vertical-align: middle">{{ $item->nama }}</td>
+                            <td style="vertical-align: middle">{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
+                            <td style="vertical-align: middle">{{ $item->tempat_lahir }}, {{ date('d/m/Y',strtotime($item->tanggal_lahir)) }}</td>
+                            <td style="vertical-align: middle">{{ $item->darah ? $item->darah->golongan : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->agama ? $item->agama->nama : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->pendidikan ? $item->pendidikan->nama : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->pekerjaan ? $item->pekerjaan->nama : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->statusPerkawinan ? $item->statusPerkawinan->nama : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->statusHubunganDalamKeluarga ? $item->statusHubunganDalamKeluarga->nama : '-' }}</td>
+                            <td style="vertical-align: middle">
                                 @php
                                     switch ($item->kewarganegaraan) {
                                         case 1:
@@ -185,12 +197,12 @@
                                     }
                                 @endphp
                             </td>
-                            <td>{{ $item->nama_ayah }}</td>
-                            <td>{{ $item->nama_ibu }}</td>
+                            <td style="vertical-align: middle">{{ $item->nama_ayah ? $item->nama_ayah : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->nama_ibu ? $item->nama_ibu : '-' }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="15" align="center">Data tidak tersedia</td>
+                            <td colspan="17" align="center">Data tidak tersedia</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -252,3 +264,47 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#btn-import').click(function (e) {
+            e.preventDefault();
+            $("#import").modal('show');
+        });
+
+        $(document).on('click', '#delete', function(){
+            let id = [];
+            if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+                $(".penduduk-checkbox:checked").each(function () {
+                    id.push($(this).val());
+                });
+                if (id.length > 0) {
+                    $.ajax({
+                        url     : "{{ route('penduduk.destroys') }}",
+                        method  : 'delete',
+                        data    : {
+                            _token  : "{{ csrf_token() }}",
+                            id      : id,
+                        },
+                        success : function(data){
+                            alertSuccess(data.message);
+                            location.reload();
+                        }
+                    });
+                } else {
+                    alertFail('Harap pilih salah satu penduduk');
+                }
+            }
+        });
+
+        $("#check_all").click(function(){
+            if (this.checked) {
+                $(".penduduk-checkbox").prop('checked',true);
+            } else {
+                $(".penduduk-checkbox").prop('checked',false);
+            }
+        });
+    });
+</script>
+@endpush

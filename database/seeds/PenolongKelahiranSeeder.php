@@ -12,6 +12,7 @@ class PenolongKelahiranSeeder extends Seeder
      */
     public function run()
     {
+        PenolongKelahiran::truncate();
         PenolongKelahiran::create(['nama' => 'DOKTER']);
         PenolongKelahiran::create(['nama' => 'BIDAN']);
         PenolongKelahiran::create(['nama' => 'PERAWAT']);

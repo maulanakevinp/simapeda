@@ -12,6 +12,7 @@ class TempatDilahirkanSeeder extends Seeder
      */
     public function run()
     {
+        TempatDilahirkan::truncate();
         TempatDilahirkan::create(['nama' => 'RS/RB']);
         TempatDilahirkan::create(['nama' => 'PUSKESMAS']);
         TempatDilahirkan::create(['nama' => 'POLINDES']);

@@ -12,6 +12,7 @@ class DetailJenisAnggaranSeeder extends Seeder
      */
     public function run()
     {
+        DetailJenisAnggaran::truncate();
         DetailJenisAnggaran::create([
             'id'                        => 411,
             'jenis_anggaran_id'         => 4,

@@ -12,6 +12,7 @@ class DarahSeeder extends Seeder
      */
     public function run()
     {
+        Darah::truncate();
         Darah::create(['golongan' => 'A']);
         Darah::create(['golongan' => 'A+']);
         Darah::create(['golongan' => 'A-']);

@@ -74,13 +74,29 @@
             </li>
         </ul>
         <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Kelola Penduduk</h6>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'penduduk' || Request::segment(1) == 'tambah-penduduk') active @endif" href="{{ route('penduduk.index') }}">
-                    <i class="fas fa-users text-info"></i>
-                    <span class="nav-link-inner--text">Kelola Penduduk</span>
+                    <i class="fas fa-user text-info"></i>
+                    <span class="nav-link-inner--text">Penduduk</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'keluarga-penduduk') active @endif" href="{{ route('penduduk.keluarga') }}">
+                    <i class="fas fa-users text-cyan"></i>
+                    <span class="nav-link-inner--text">Keluarga</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'calon-pemilih') active @endif" href="{{ route('penduduk.calon_pemilih') }}">
+                    <i class="fas fa-podcast text-success"></i>
+                    <span class="nav-link-inner--text">Calon Pemilih</span>
+                </a>
+            </li>
+        </ul>
+        <hr class="my-3">
+        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'dusun' || Request::segment(1) == 'tambah-dusun') active @endif" href="{{ route('dusun.index') }}">
                     <i class="fas fa-map-marker-alt text-yellow"></i>
@@ -122,7 +138,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'identitas-desa') active @endif" href="{{ route('identitas-desa') }}">
-                    <i class="fas fa-users text-info"></i>
+                    <i class="fas fa-id-card text-info"></i>
                     <span class="nav-link-inner--text">Profil Desa</span>
                 </a>
             </li>

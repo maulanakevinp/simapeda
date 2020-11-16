@@ -12,6 +12,7 @@ class StatusRekamSeeder extends Seeder
      */
     public function run()
     {
+        StatusRekam::truncate();
         StatusRekam::create(['nama' => 'BELUM REKAM']);
         StatusRekam::create(['nama' => 'SUDAH REKAM']);
         StatusRekam::create(['nama' => 'CARD PRINTED']);

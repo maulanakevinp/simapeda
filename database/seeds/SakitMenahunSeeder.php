@@ -12,6 +12,7 @@ class SakitMenahunSeeder extends Seeder
      */
     public function run()
     {
+        SakitMenahun::truncate();
         SakitMenahun::create(['nama' => 'JANTUNG']);
         SakitMenahun::create(['nama' => 'LEVER']);
         SakitMenahun::create(['nama' => 'PARU-PARU']);

@@ -57,6 +57,20 @@ function alertSuccess (pesan) {
     `);
 }
 
+function alertFail (pesan) {
+    $('.notifikasi').html(`
+        <div class="alert alert-danger alert-dismissible fade show">
+            <span class="alert-icon"><i class="fas fa-times-circle"></i> <strong>Berhasil</strong></span>
+            <span class="alert-text">
+                ${pesan}
+            </span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    `);
+}
+
 function alertError () {
     $('.notifikasi').html(`
         <div class="alert alert-danger alert-dismissible fade show">

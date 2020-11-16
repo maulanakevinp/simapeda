@@ -12,6 +12,7 @@ class DesaSeeder extends Seeder
      */
     public function run()
     {
+        Desa::truncate();
         Desa::create([
             'nama_desa'         => 'Arjasa',
             'nama_kecamatan'    => 'Arjasa',

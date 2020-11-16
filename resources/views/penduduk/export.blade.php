@@ -1,7 +1,6 @@
 <table>
     <thead>
         <tr>
-            <td></td>
             <th>RT</th>
             <th>RW</th>
             <th>Dusun</th>
@@ -26,30 +25,26 @@
         </tr>
     </thead>
     <tbody>
-        @php
-            $no = 1;
-        @endphp
         @foreach ($penduduk as $anggota)
             @foreach ($anggota as $item)
                 <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ $item->detailDusun->rt }}</td>
-                    <td>{{ $item->detailDusun->rw }}</td>
-                    <td>{{ $item->detailDusun->dusun->nama }}</td>
+                    <td>{{ $item->detailDusun->rt ?? ''}}</td>
+                    <td>{{ $item->detailDusun->rw ?? ''}}</td>
+                    <td>{{ $item->detailDusun->dusun->nama ?? ''}}</td>
                     <td>{{ $item->alamat_sekarang }}</td>
-                    <td>{{ $item->kk }}</td>
-                    <td>{{ $item->status_hubungan_dalam_keluarga_id == 1 ? $item->nama : '' }}</td>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->nik }}</td>
+                    <td>_{{ $item->kk }}</td>
+                    <td>{{ App\Penduduk::where('kk',$item->kk)->whereHas('statusHubunganDalamKeluarga',function ($status) { $status->where('nama','Kepala Keluarga'); })->first()->nama ?? '' }}</td>
+                    <td>{{ $item->nomor_urut_dalam_kk }}</td>
+                    <td>_{{ $item->nik }}</td>
                     <td>{{ $item->nama }}</td>
                     <td>{{ $item->jenis_kelamin == 1 ? 'LAKI-LAKI' : 'PEREMPUAN' }}</td>
-                    <td>{{ $item->statusHubunganDalamKeluarga->nama }}</td>
+                    <td>{{ $item->statusHubunganDalamKeluarga->nama ?? '' }}</td>
                     <td>{{ $item->tempat_lahir }}</td>
                     <td>{{ date('d/m/Y',strtotime($item->tanggal_lahir)) }}</td>
                     <td>{{ date('Y') - date('Y',strtotime($item->tanggal_lahir)) }}</td>
-                    <td>{{ $item->statusPerkawinan->nama }}</td>
-                    <td>{{ $item->agama->nama }}</td>
-                    <td>{{ $item->darah ? $item->darah->golongan : '' }}</td>
+                    <td>{{ $item->statusPerkawinan->nama ?? '' }}</td>
+                    <td>{{ $item->agama->nama ?? '' }}</td>
+                    <td>{{ $item->darah->golongan ?? '' }}</td>
                     <td>
                         @php
                             if ($item->kewarganegaraan == 1) {
@@ -57,13 +52,13 @@
                             } elseif ($item->kewarganegaraan == 2) {
                                 echo 'Warga Negara Asing';
                             } else {
-                                echo 'Dua Kewarganegaraan';
+                                echo 'Dwi Kewarganegaraan';
                             }
                         @endphp
                     </td>
-                    <td></td>
-                    <td>{{ $item->pendidikan->nama }}</td>
-                    <td>{{ $item->pekerjaan->nama }}</td>
+                    <td>{{ $item->etnis_atau_suku }}</td>
+                    <td>{{ $item->pendidikan->nama ?? '' }}</td>
+                    <td>{{ $item->pekerjaan->nama ?? '' }}</td>
                 </tr>
             @endforeach
         @endforeach

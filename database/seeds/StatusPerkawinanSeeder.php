@@ -12,6 +12,7 @@ class StatusPerkawinanSeeder extends Seeder
      */
     public function run()
     {
+        StatusPerkawinan::truncate();
         StatusPerkawinan::create(['nama' => 'Belum Kawin']);
         StatusPerkawinan::create(['nama' => 'Kawin']);
         StatusPerkawinan::create(['nama' => 'Cerai Hidup']);

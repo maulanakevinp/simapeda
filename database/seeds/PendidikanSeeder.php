@@ -12,15 +12,36 @@ class PendidikanSeeder extends Seeder
      */
     public function run()
     {
-        Pendidikan::create(['nama' => 'TIDAK / BELUM SEKOLAH',]);
-        Pendidikan::create(['nama' => 'BELUM TAMAT SD/SEDERAJAT',]);
-        Pendidikan::create(['nama' => 'TAMAT SD / SEDERAJAT',]);
-        Pendidikan::create(['nama' => 'SLTP/SEDERAJAT',]);
-        Pendidikan::create(['nama' => 'SLTA / SEDERAJAT',]);
-        Pendidikan::create(['nama' => 'DIPLOMA I / II',]);
-        Pendidikan::create(['nama' => 'AKADEMI/ DIPLOMA III/S. MUDA',]);
-        Pendidikan::create(['nama' => 'DIPLOMA IV/ STRATA I',]);
-        Pendidikan::create(['nama' => 'STRATA II',]);
-        Pendidikan::create(['nama' => 'STRATA III']);
+        Pendidikan::truncate();
+        Pendidikan::create(['nama' => 'Belum masuk TK/Kelompok Bermain',]);
+        Pendidikan::create(['nama' => 'Sedang TK/Kelompok Bermain',]);
+        Pendidikan::create(['nama' => 'Sedang SD/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang SLTP/Sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang SLTA/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang D-1/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang D-2/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang D-3/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang S-1/sederajat',]);
+        Pendidikan::create(['nama' => 'Sedang S-2/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat SD/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat SLTP/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat SLTA/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat D-1/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat D-2/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat D-3/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat D-4/sederajat',]);
+        Pendidikan::create(['nama' => 'Tamat S-1/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat S-2/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat S-3/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat S-3/sederajat']);
+        Pendidikan::create(['nama' => 'Sedang SLB A/sederajat']);
+        Pendidikan::create(['nama' => 'Sedang SLB B/sederajat']);
+        Pendidikan::create(['nama' => 'Sedang SLB C/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat SLB A/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat SLB B/sederajat']);
+        Pendidikan::create(['nama' => 'Tamat SLB C/sederajat']);
+        Pendidikan::create(['nama' => 'Tidak pernah sekolah']);
+        Pendidikan::create(['nama' => 'Tidak dapat membaca dan menulis huruf Latin/Arab']);
+        Pendidikan::create(['nama' => 'Tidak tamat SD/sederajat']);
     }
 }

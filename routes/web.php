@@ -69,7 +69,15 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/tambah-penduduk', 'PendudukController@create')->name('penduduk.create');
     Route::get('/penduduk/{penduduk}', function (){return abort(404);});
     Route::get('/export-penduduk', 'PendudukController@export')->name('penduduk.export');
+    Route::get('/cetak-penduduk', 'PendudukController@printAll')->name('penduduk.print_all');
+    Route::get('/keluarga-penduduk', 'PendudukController@keluarga')->name('penduduk.keluarga');
+    Route::get('/keluarga-penduduk/{kk}', 'PendudukController@detailKeluarga')->name('penduduk.keluarga.show');
+    Route::get('/keluarga-penduduk/{kk}/cetak', 'PendudukController@printKeluarga')->name('penduduk.keluarga.print');
+    Route::get('/cetak-keluarga-penduduk', 'PendudukController@printAllKeluarga')->name('penduduk.print_all_keluarga');
+    Route::get('/calon-pemilih', 'PendudukController@calonPemilih')->name('penduduk.calon_pemilih');
+    Route::get('/cetak-calon-pemilih', 'PendudukController@printCalonPemilih')->name('penduduk.print_calon_pemilih');
     Route::post('/import-penduduk', 'PendudukController@import')->name('penduduk.import');
+    Route::delete('/hapus-penduduk', 'PendudukController@destroys')->name('penduduk.destroys');
     Route::resource('penduduk', 'PendudukController')->except('create','show');
 
     Route::get('/kelompok-jenis-anggaran/{kelompokJenisAnggaran}', 'AnggaranRealisasiController@kelompokJenisAnggaran');

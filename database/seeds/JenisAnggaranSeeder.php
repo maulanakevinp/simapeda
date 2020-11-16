@@ -12,6 +12,7 @@ class JenisAnggaranSeeder extends Seeder
      */
     public function run()
     {
+        JenisAnggaran::truncate();
         JenisAnggaran::create([
             'id'    => 4,
             'nama'  => 'PENDAPATAN'

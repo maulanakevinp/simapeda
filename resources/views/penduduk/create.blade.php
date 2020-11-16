@@ -55,15 +55,24 @@
                         </div>
                         <div class="col-lg-9 col-md-6">
                             <div class="row">
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-4 col-md-6">
                                     <label class="form-control-label" for="nik">NIK</label>
                                     <input type="text" onkeypress="return hanyaAngka(event)" class="form-control @error('nik') is-invalid @enderror" name="nik" placeholder="Masukkan NIK ..." value="{{ old('nik') }}">
                                     @error('nik')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-5 col-md-6">
                                     <label class="form-control-label" for="nama">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" placeholder="Masukkan Nama ..." value="{{ old('nama') }}">
                                     @error('nama')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label class="form-control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                                    <select class="form-control @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" id="jenis_kelamin">
+                                        <option selected value="">Pilih Jenis Kelamin</option>
+                                        <option value="1" {{ old('jenis_kelamin') == 1 ? 'selected="true"' : ''  }}>Laki-laki</option>
+                                        <option value="2" {{ old('jenis_kelamin') == 2 ? 'selected="true"' : ''  }}>Perempuan</option>
+                                    </select>
+                                    @error('jenis_kelamin')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             <h4>Status Kepemilikan KTP</h4>
@@ -80,13 +89,13 @@
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label class="form-control-label" for="kk">Status Rekam</label>
-                                        <select class="form-control @error('status_rekam') is-invalid @enderror" name="status_rekam" id="status_rekam">
+                                        <select class="form-control @error('status_rekam_id') is-invalid @enderror" name="status_rekam_id" id="status_rekam_id">
                                             <option selected value="">Pilih Status Rekam</option>
                                             @foreach ($status_rekam as $item)
                                                 <option value="{{ $item->id }}" {{ old('status_rekam_id') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }}</option>
                                             @endforeach
                                         </select>
-                                        @error('status_rekam')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                        @error('status_rekam_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +108,11 @@
                             @error('kk')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-lg-4 col-md-6">
+                            <label class="form-control-label" for="nomor_urut_dalam_kk">Nomor Urut Dalam KK</label>
+                            <input type="text" onkeypress="return hanyaAngka(event)" class="form-control @error('nomor_urut_dalam_kk') is-invalid @enderror" name="nomor_urut_dalam_kk" placeholder="Masukkan Nomor Urut Dalam KK ..." value="{{ old('nomor_urut_dalam_kk') }}">
+                            @error('nomor_urut_dalam_kk')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="form-group col-lg-4 col-md-6">
                             <label class="form-control-label" for="status_hubungan_dalam_keluarga_id">Status Hubungan Dalam Keluarga</label>
                             <select class="form-control @error('status_hubungan_dalam_keluarga_id') is-invalid @enderror" name="status_hubungan_dalam_keluarga_id" id="status_hubungan_dalam_keluarga_id">
                                 <option selected value="">Pilih Status Hubungan Dalam Keluarga</option>
@@ -109,15 +123,6 @@
                             @error('status_hubungan_dalam_keluarga_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-lg-4 col-md-6">
-                            <label class="form-control-label" for="jenis_kelamin">Jenis Kelamin</label>
-                            <select class="form-control @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" id="jenis_kelamin">
-                                <option selected value="">Pilih Jenis Kelamin</option>
-                                <option value="1" {{ old('jenis_kelamin') == 1 ? 'selected="true"' : ''  }}>Laki-laki</option>
-                                <option value="2" {{ old('jenis_kelamin') == 2 ? 'selected="true"' : ''  }}>Perempuan</option>
-                            </select>
-                            @error('jenis_kelamin')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="form-group col-md-6">
                             <label class="form-control-label" for="agama_id">Agama</label>
                             <select class="form-control @error('agama_id') is-invalid @enderror" name="agama_id" id="agama_id">
                                 <option selected value="">Pilih Agama</option>
@@ -127,7 +132,7 @@
                             </select>
                             @error('agama_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-lg-4 col-md-6">
                             <label class="form-control-label" for="status_penduduk_id">Status Penduduk</label>
                             <select class="form-control @error('status_penduduk_id') is-invalid @enderror" name="status_penduduk_id" id="status_penduduk_id">
                                 <option selected value="">Pilih Status Penduduk</option>
@@ -136,6 +141,11 @@
                                 @endforeach
                             </select>
                             @error('status_penduduk_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="form-group col-lg-4 col-md-6">
+                            <label class="form-control-label" for="etnis_atau_suku">Etnis/Suku</label>
+                            <input type="text" class="form-control @error('etnis_atau_suku') is-invalid @enderror" name="etnis_atau_suku" placeholder="Masukkan Etnis/Suku ..." value="{{ old('etnis_atau_suku') }}">
+                            @error('etnis_atau_suku')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                     </div>
                     <h4>Data Kelahiran</h4>
@@ -211,8 +221,8 @@
                     <h4>Pendidikan Dan Pekerjaan</h4>
                     <div class="pl-4">
                         <div class="row">
-                            <div class="form-group col-lg-4 col-md-6">
-                                <label class="form-control-label" for="pendidikan_id">Pendidikan Dalam KK</label>
+                            <div class="form-group col-md-6">
+                                <label class="form-control-label" for="pendidikan_id">Pendidikan</label>
                                 <select class="form-control @error('pendidikan_id') is-invalid @enderror" name="pendidikan_id" id="pendidikan_id">
                                     <option selected value="">Pilih Pendidikan</option>
                                     @foreach ($pendidikan as $item)
@@ -221,17 +231,7 @@
                                 </select>
                                 @error('pendidikan_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-lg-4 col-md-6">
-                                <label class="form-control-label" for="pendidikan_sedang_ditempuh_id">Pendidikan Sedang Ditempuh</label>
-                                <select class="form-control @error('pendidikan_sedang_ditempuh_id') is-invalid @enderror" name="pendidikan_sedang_ditempuh_id" id="pendidikan_sedang_ditempuh_id">
-                                    <option selected value="">Pilih Pendidikan Sedang Ditempuh</option>
-                                    @foreach ($pendidikan as $item)
-                                        <option value="{{ $item->id }}" {{ old('pendidikan_sedang_ditempuh_id') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('pendidikan_sedang_ditempuh_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="form-group col-lg-4 col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="form-control-label" for="pekerjaan_id">Pekerjaan</label>
                                 <select style="width: 100%;" class="form-control @error('pekerjaan_id') is-invalid @enderror" name="pekerjaan_id" id="pekerjaan_id">
                                     <option selected value="">Pilih Pekerjaan</option>
@@ -306,7 +306,7 @@
                                 <select class="form-control @error('dusun') is-invalid @enderror" name="dusun" id="dusun">
                                     <option selected value="">Pilih Dusun</option>
                                     @foreach ($dusun as $item)
-                                        <option value="{{ $item->id }}" {{ old('dusun') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }}</option>
+                                        <option value="{{ $item->id }}" {{ old('dusun') == $item->id ? 'selected' : ''  }}>{{ $item->nama }}</option>
                                     @endforeach
                                 </select>
                                 @error('dusun')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -366,7 +366,7 @@
                                 <input type="text" class="form-control @error('nomor_akta_perceraian') is-invalid @enderror" name="nomor_akta_perceraian" id="nomor_akta_perceraian" placeholder="Masukkan Akta Perceraian ..." value="{{ old('nomor_akta_perceraian') }}">
                                 @error('nomor_akta_perceraian')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-lg-6">
                                 <label class="form-control-label" for="tanggal_perceraian">Tanggal Perceraian</label>
                                 <input type="date" class="form-control @error('tanggal_perceraian') is-invalid @enderror" name="tanggal_perceraian" id="tanggal_perceraian" placeholder="Masukkan tanggal_perceraian ..." value="{{ old('tanggal_perceraian') }}">
                                 @error('tanggal_perceraian')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -406,7 +406,7 @@
                                 </select>
                                 @error('sakit_menahun_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-lg-4 col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="form-control-label" for="akseptor_kb_id">Akseptor KB</label>
                                 <select class="form-control @error('akseptor_kb_id') is-invalid @enderror" name="akseptor_kb_id" id="akseptor_kb_id">
                                     <option selected value="">Pilih Akseptor KB</option>
@@ -416,7 +416,7 @@
                                 </select>
                                 @error('akseptor_kb_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-lg-4 col-md-6">
+                            <div class="form-group col-md-6">
                                 <label class="form-control-label" for="asuransi_id">Asuransi</label>
                                 <select class="form-control @error('asuransi_id') is-invalid @enderror" name="asuransi_id" id="asuransi_id">
                                     <option selected value="">Pilih Asuransi</option>
@@ -459,9 +459,7 @@
                         $('#detail_dusun_id').append(`<option value="${e.id}">${e.rt}/${e.rw}</option>`);
                     });
 
-                    $("#detail_dusun_id").val("{{ old('detail_dusun_id') }}");
-                }
-            });
+                    $("#detail_dusun_id").val("{{ old('detail_dusun_id'
         } else {
             $('#detail_dusun_id').html(`<option value="">Pilih RT/RW</option>`);
         }

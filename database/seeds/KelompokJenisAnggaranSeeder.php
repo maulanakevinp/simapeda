@@ -12,6 +12,7 @@ class KelompokJenisAnggaranSeeder extends Seeder
      */
     public function run()
     {
+        KelompokJenisAnggaran::truncate();
         KelompokJenisAnggaran::create([
             'id'                => 41,
             'nama'              => 'Pendapatan Asli Desa'

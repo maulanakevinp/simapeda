@@ -12,6 +12,7 @@ class JenisCacatSeeder extends Seeder
      */
     public function run()
     {
+        JenisCacat::truncate();
         JenisCacat::create(['nama' => 'CACAT FISIK']);
         JenisCacat::create(['nama' => 'CACAT NETRA/BUTA']);
         JenisCacat::create(['nama' => 'CACAT RUNGU/WICARA']);

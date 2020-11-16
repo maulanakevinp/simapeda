@@ -12,6 +12,7 @@ class StatusPendudukSeeder extends Seeder
      */
     public function run()
     {
+        StatusPenduduk::truncate();
         StatusPenduduk::create(['nama' => 'TETAP']);
         StatusPenduduk::create(['nama' => 'TIDAK TETAP']);
         StatusPenduduk::create(['nama' => 'PENDATANG']);

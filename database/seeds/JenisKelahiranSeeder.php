@@ -12,6 +12,7 @@ class JenisKelahiranSeeder extends Seeder
      */
     public function run()
     {
+        JenisKelahiran::truncate();
         JenisKelahiran::create(['nama' => 'TUNGGAL']);
         JenisKelahiran::create(['nama' => 'KEMBAR 2']);
         JenisKelahiran::create(['nama' => 'KEMBAR 3']);
