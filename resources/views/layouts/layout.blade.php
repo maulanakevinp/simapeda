@@ -81,7 +81,7 @@
     </main>
 
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" class="bg-dark text-white">
         <div class="container">
             <div class="copyright">
                 &copy; Copyright <strong><span>Desa {{ $desa->nama_desa }}</span></strong> {{ date('Y') }}. All Rights Reserved

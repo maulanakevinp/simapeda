@@ -39,8 +39,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Nama Lengkap</th>
                                 <th class="text-center">NIK</th>
+                                <th class="text-center">Nama Lengkap</th>
                                 <th class="text-center">Jenis Kelamin</th>
                                 <th class="text-center">Tempat Lahir</th>
                                 <th class="text-center">Tanggal Lahir</th>
@@ -60,7 +60,7 @@
                             @forelse ($penduduk as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nik }}</td>
+                                    <td><a href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a></td>
                                     <td>{{ $item->nama }}</td>
                                     <td>{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
                                     <td>{{ $item->tempat_lahir }}</td>

@@ -67,7 +67,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
     Route::get('/tambah-penduduk', 'PendudukController@create')->name('penduduk.create');
-    Route::get('/penduduk/{penduduk}', function (){return abort(404);});
+    Route::get('/penduduk/{nik}', 'PendudukController@show')->name('penduduk.show');
+    Route::get('/detail-penduduk/{penduduk}', 'PendudukController@detail')->name('penduduk.detail');
     Route::get('/export-penduduk', 'PendudukController@export')->name('penduduk.export');
     Route::get('/cetak-penduduk', 'PendudukController@printAll')->name('penduduk.print_all');
     Route::get('/keluarga-penduduk', 'PendudukController@keluarga')->name('penduduk.keluarga');
@@ -91,6 +92,12 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('detailDusun', 'DetailDusunController')->except('create','edit');
 
     Route::get('/chart-surat/{id}', 'SuratController@chartSurat')->name('chart-surat');
+
+    Route::get('/export-pemerintahan-desa', 'PemerintahanDesaController@export')->name('pemerintahan-desa.export');
+    Route::get('/cetak-pemerintahan-desa', 'PemerintahanDesaController@printAll')->name('pemerintahan-desa.print_all');
+    Route::post('/import-pemerintahan-desa', 'PemerintahanDesaController@import')->name('pemerintahan-desa.import');
+    Route::delete('/hapus-pemerintah-desa', 'PemerintahanDesaController@destroys')->name('pemerintah-desa.destroys');
+    Route::resource('pemerintahan-desa', 'PemerintahanDesaController');
 });
 
 Route::get('/{any}', 'ArtikelController@show')->where('any', '.*')->name('artikel.show');

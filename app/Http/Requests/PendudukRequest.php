@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PendudukRequest extends FormRequest
 {
@@ -26,7 +27,6 @@ class PendudukRequest extends FormRequest
     {
         $rules = [
             'foto'                              => ['nullable','image','max:2048'],
-            'nik'                               => ['required','digits:16'],
             'nama'                              => ['required','string','max:64'],
             'ktp_elektronik'                    => ['nullable','numeric'],
             'status_rekam_id'                   => ['nullable','numeric'],
@@ -74,6 +74,12 @@ class PendudukRequest extends FormRequest
 
         if ($this->dusun) {
             $rules['detail_dusun_id'] = ['required'];
+        }
+
+        if (request()->isMethod('post')) {
+            $rules['nik'] = ['required','digits:16','unique:penduduk,nik'];
+        } elseif (request()->isMethod('patch')) {
+            $rules['nik'] = ['required','digits:16',Rule::unique('penduduk','nik')->ignore($this->penduduk)];
         }
 
         return $rules;

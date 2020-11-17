@@ -96,10 +96,10 @@
         </div>
         <div class="col-md-3 mb-3">
             <div class="card shadow mb-3">
+                <div class="card-header bg-dark text-white">
+                    <b><a href="{{ route('layanan-surat') }}" class="text-white">Layanan Surat</a></b>
+                </div>
                 <div class="card-body">
-                    <h5 class="text-center">
-                        <a href="{{ route('layanan-surat') }}" class="">Layanan Surat</a>
-                    </h5>
                     <div class="list-group">
                         @foreach ($surat as $item)
                             <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}" class="list-group-item list-group-item-action" style="font-size: 0.8rem">{{ $item->nama }}</a>
@@ -107,6 +107,25 @@
                       </div>
                 </div>
             </div>
+            @if ($pemerintahan_desa->count() > 0)
+                <div class="card shadow mb-3">
+                    <div class="card-header bg-dark text-white">
+                        <b>Pemerintahan Desa</b>
+                    </div>
+                    <div class="card-body">
+                        <div id="owl-two" class="owl-carousel owl-theme" style="z-index: 0">
+                            @foreach($pemerintahan_desa as $key => $item)
+                                <div class="text-center">
+                                    <a class="text-center" href="{{ $item->foto ? asset(Storage::url($item->foto)) : asset('storage/noavatar.png') }}" data-caption="{{ $item->nama }} {{ $item->jabatan ? '(' . $item->jabatan . ')' : '' }}" data-fancybox>
+                                        <img class="mw-100" src="{{ $item->foto ? asset(Storage::url($item->foto)) : asset('storage/noavatar.png') }}" alt="Pemerintahan Desa {{ $key }}">
+                                    </a>
+                                    <p style="font-size: 0.8rem">{{ $item->nama }}<br><b>{{ $item->jabatan ? '('. $item->jabatan . ')': '' }}</b></p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31599.41679812257!2d113.7189174164237!3d-8.108905637778197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6953778add047%3A0x71944989e3c29684!2sArjasa%2C%20Kabupaten%20Jember%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1596496940461!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
     </div>
@@ -152,7 +171,7 @@
         </section>
     @endif
     <div class="card shadow h-100 mb-5" style="margin-top:100px">
-        <div class="card-header">
+        <div class="card-header bg-dark text-white">
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-lg-between text-center text-lg-left">
                 <div class="mb-1">
                     <b>Grafik Pelaksanaan APBDes</b>
@@ -191,6 +210,28 @@
                     items: 1
                 },
                 1000: {
+                    items: 1
+                }
+            }
+        });
+        $('#owl-two').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed:900,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                400: {
+                    items: 3
+                },
+                650: {
+                    items: 3
+                },
+                660: {
                     items: 1
                 }
             }

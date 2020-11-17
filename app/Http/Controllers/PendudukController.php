@@ -140,9 +140,30 @@ class PendudukController extends Controller
      * @param  \App\Penduduk  $penduduk
      * @return \Illuminate\Http\Response
      */
-    public function show(Penduduk $penduduk)
+    public function show($nik)
     {
-        //
+        $penduduk = Penduduk::where('nik',$nik)->firstOrFail();
+        return view('penduduk.show', compact('penduduk'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Penduduk  $penduduk
+     * @return \Illuminate\Http\Response
+     */
+    public function detail(Penduduk $penduduk)
+    {
+        if ($penduduk) {
+            return response()->json([
+                'success'   => true,
+                'data'      => $penduduk
+            ]);
+        } else {
+            return response()->json([
+                'success'   => false
+            ]);
+        }
     }
 
     /**
@@ -208,7 +229,7 @@ class PendudukController extends Controller
             File::delete(storage_path('app/' . $penduduk->foto));
         }
         $penduduk->delete();
-        return redirect()->back()->with('success','Penduduk berhasil diperbarui');
+        return redirect()->back()->with('success','Penduduk berhasil dihapus');
     }
 
     public function destroys(Request $request)

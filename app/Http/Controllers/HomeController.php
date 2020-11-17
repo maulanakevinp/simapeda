@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Artikel;
 use App\Desa;
 use App\Gallery;
+use App\PemerintahanDesa;
 use App\Penduduk;
 use App\Surat;
 use App\Video;
@@ -18,6 +19,7 @@ class HomeController extends Controller
         $desa = Desa::find(1);
         $artikel = Artikel::latest()->paginate(10);
         $gallery = Gallery::where('slider', 1)->latest()->get();
+        $pemerintahan_desa = PemerintahanDesa::all();
         $galleries = array();
 
         foreach (Gallery::where('slider', null)->inRandomOrder()->limit(7)->get() as $key => $value) {
@@ -46,7 +48,7 @@ class HomeController extends Controller
             return $a['created_at'] < $b['created_at'];
         });
 
-        return view('index', compact('surat', 'desa', 'gallery','galleries','artikel'));
+        return view('index', compact('surat', 'desa', 'gallery','galleries','artikel','pemerintahan_desa'));
     }
 
     public function dashboard()

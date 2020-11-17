@@ -73,7 +73,7 @@
                             <div class="pl-4">
                                 <div class="row">
                                     <div class="form-group col-lg-6">
-                                        <label class="form-control-label" for="kk">KTP Elektronik</label>
+                                        <label class="form-control-label" for="ktp_elektronik">KTP Elektronik</label>
                                         <select class="form-control @error('ktp_elektronik') is-invalid @enderror" name="ktp_elektronik" id="ktp_elektronik">
                                             <option selected value="">Pilih KTP Elektronik</option>
                                             <option value="1" {{ old('ktp_elektronik', $penduduk->ktp_elektronik) == 1 ? 'selected="true"' : ''  }}>Belum</option>
@@ -82,7 +82,7 @@
                                         @error('ktp_elektronik')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="form-group col-lg-6">
-                                        <label class="form-control-label" for="kk">Status Rekam</label>
+                                        <label class="form-control-label" for="status_rekam_id">Status Rekam</label>
                                         <select class="form-control @error('status_rekam_id') is-invalid @enderror" name="status_rekam_id" id="status_rekam_id">
                                             <option selected value="">Pilih Status Rekam</option>
                                             @foreach ($status_rekam as $item)

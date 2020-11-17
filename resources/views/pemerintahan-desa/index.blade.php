@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Penduduk')
+@section('title', 'Pemerintahan Desa')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,17 +15,17 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Penduduk</h2>
-                                <p class="mb-0 text-sm">Kelola Penduduk</p>
+                                <h2 class="mb-0">Pemerintahan Desa</h2>
+                                <p class="mb-0 text-sm">Profil Desa</p>
                             </div>
                             <div class="mb-3">
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
+                                <a target="_blank" href="{{ route('pemerintahan-desa.print_all') }}" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
                                 <a id="btn-import" href="#import" data-toggle="tooltip" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
-                                <a href="{{ route('penduduk.export') }}" data-toggle="tooltip" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
-                                <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('pemerintahan-desa.export') }}" data-toggle="tooltip" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
+                                <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                         <form class="navbar-search mt-3 cari-none" action="{{ URL::current() }}" method="GET">
@@ -42,15 +42,15 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row justify-content-center mb-3">
             <div class="col-xl-3 col-md-6 col-sm-6 mb-3">
                 <div class="card card-stats shadow h-100">
                     <!-- Card body -->
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Kepala Keluarga</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::whereHas('statusHubunganDalamKeluarga', function ($status) {$status->where('nama', 'Kepala Keluarga');})->count() }}</span>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Aparat Desa</h5>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -67,26 +67,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Total Penduduk</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::count() }}</span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 col-sm-6 mb-3">
-                <div class="card card-stats shadow h-100">
-                    <!-- Card body -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Laki-laki</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::where('jenis_kelamin',1)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('jenis_kelamin',1)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -104,7 +86,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Perempuan</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::where('jenis_kelamin',2)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('jenis_kelamin',2)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-pink text-white rounded-circle shadow">
@@ -145,71 +127,60 @@
                     </th>
                     <th class="text-center">No</th>
                     <th class="text-center">Opsi</th>
-                    <th class="text-center">NIK</th>
-                    <th class="text-center">KK</th>
                     <th class="text-center">Nama</th>
+                    <th class="text-center">NIK</th>
+                    <th class="text-center">NIP</th>
+                    <th class="text-center">NIPD</th>
+                    <th class="text-center">Tempat Lahir</th>
+                    <th class="text-center">Tanggal Lahir</th>
                     <th class="text-center">Jenis Kelamin</th>
-                    <th class="text-center">TTL</th>
-                    <th class="text-center">Golongan Darah</th>
                     <th class="text-center">Agama</th>
+                    <th class="text-center">Pangkat/Golongan</th>
+                    <th class="text-center">Jabatan</th>
                     <th class="text-center">Pendidikan</th>
-                    <th class="text-center">Pekerjaan</th>
-                    <th class="text-center">Status Perkawinan</th>
-                    <th class="text-center">Status Hub. dalam Keluarga</th>
-                    <th class="text-center">Kewarganegaraan</th>
-                    <th class="text-center">Nama Ayah</th>
-                    <th class="text-center">Nama Ibu</th>
+                    <th class="text-center">Nomor SK Pengangkatan</th>
+                    <th class="text-center">Tanggal SK Pengangkatan</th>
+                    <th class="text-center">Nomor SK Pemberhentian</th>
+                    <th class="text-center">Tanggal SK Pemberhentian</th>
+                    <th class="text-center">Masa Jabatan</th>
                 </thead>
                 <tbody>
-                    @forelse ($penduduk as $item)
+                    @forelse ($pemerintahan_desa as $item)
                         <tr>
                             <td style="vertical-align: middle">
-                                <input type="checkbox" class="penduduk-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
+                                <input type="checkbox" class="pemerintah-desa-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
-                            <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($pemerintahan_desa->currentpage()-1) * $pemerintahan_desa->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('penduduk.show', $item->nik) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('penduduk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("penduduk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('pemerintahan-desa.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("pemerintahan-desa.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td style="vertical-align: middle"><a href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a></td>
-                            <td style="vertical-align: middle"><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
+                            <td style="vertical-align: middle"><a href="{{ App\Penduduk::where("nik",$item->nik)->first() ? route('penduduk.show', $item->nik) : '' }}">{{ $item->nik }}</a></td>
+                            <td style="vertical-align: middle">{{ $item->nip }}</td>
+                            <td style="vertical-align: middle">{{ $item->nipd }}</td>
+                            <td style="vertical-align: middle">{{ $item->tempat_lahir }}</td>
+                            <td style="vertical-align: middle">{{ tgl(date('Y-m-d',strtotime($item->tanggal_lahir))) }}</td>
                             <td style="vertical-align: middle">{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
-                            <td style="vertical-align: middle">{{ $item->tempat_lahir }}, {{ date('d/m/Y',strtotime($item->tanggal_lahir)) }}</td>
-                            <td style="vertical-align: middle">{{ $item->darah->golongan ?? '-' }}</td>
                             <td style="vertical-align: middle">{{ $item->agama->nama ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->pangkat_atau_golongan ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->jabatan }}</td>
                             <td style="vertical-align: middle">{{ $item->pendidikan->nama ?? '-' }}</td>
-                            <td style="vertical-align: middle">{{ $item->pekerjaan->nama ?? '-' }}</td>
-                            <td style="vertical-align: middle">{{ $item->statusPerkawinan->nama ?? '-' }}</td>
-                            <td style="vertical-align: middle">{{ $item->statusHubunganDalamKeluarga->nama ?? '-' }}</td>
-                            <td style="vertical-align: middle">
-                                @php
-                                    switch ($item->kewarganegaraan) {
-                                        case 1:
-                                            echo "WNI";
-                                            break;
-                                        case 2:
-                                            echo "WNA";
-                                            break;
-                                        case 3:
-                                            echo "Dua Kewarganegaraan";
-                                            break;
-                                    }
-                                @endphp
-                            </td>
-                            <td style="vertical-align: middle">{{ $item->nama_ayah ? $item->nama_ayah : '-' }}</td>
-                            <td style="vertical-align: middle">{{ $item->nama_ibu ? $item->nama_ibu : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor_sk_pengangkatan ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->tanggal_sk_pengangkatan ? tgl(date('Y-m-d', strtotime($item->tanggal_sk_pengangkatan))) : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor_sk_pemberhentian ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->tanggal_sk_pemberhentian ? tgl(date('Y-m-d', strtotime($item->tanggal_sk_pemberhentian))) : '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->masa_jabatan ?? '-' }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="17" align="center">Data tidak tersedia</td>
+                            <td colspan="19" align="center">Data tidak tersedia</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-        {{ $penduduk->links() }}
+        {{ $pemerintahan_desa->links() }}
     </div>
 </div>
 
@@ -217,7 +188,7 @@
     <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
         <div class="modal-content bg-gradient-danger">
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus Penduduk?</h6>
+                <h6 class="modal-title" id="modal-title-delete">Hapus Aparat?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -226,7 +197,7 @@
                 <div class="py-3 text-center">
                     <i class="ni ni-bell-55 ni-3x"></i>
                     <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus penduduk akan menghapus semua data yang dimilikinya</p>
+                    <p>Menghapus aparat akan menghapus semua data yang dimilikinya</p>
                     <p><strong id="nama-hapus"></strong></p>
                 </div>
             </div>
@@ -252,7 +223,7 @@
             </div>
 
             <div class="modal-body">
-                <form action="{{ route("penduduk.import") }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route("pemerintahan-desa.import") }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input accept=".xlsx" type="file" name="xlsx" class="form-control" placeholder="Masukkan File Excel">
                     <div class="mt-5 d-flex justify-content-between">
@@ -277,12 +248,12 @@
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-                $(".penduduk-checkbox:checked").each(function () {
+                $(".pemerintah-desa-checkbox:checked").each(function () {
                     id.push($(this).val());
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('penduduk.destroys') }}",
+                        url     : "{{ route('pemerintah-desa.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",
@@ -294,16 +265,16 @@
                         }
                     });
                 } else {
-                    alertFail('Harap pilih salah satu penduduk');
+                    alertFail('Harap pilih salah satu aparat');
                 }
             }
         });
 
         $("#check_all").click(function(){
             if (this.checked) {
-                $(".penduduk-checkbox").prop('checked',true);
+                $(".pemerintah-desa-checkbox").prop('checked',true);
             } else {
-                $(".penduduk-checkbox").prop('checked',false);
+                $(".pemerintah-desa-checkbox").prop('checked',false);
             }
         });
     });

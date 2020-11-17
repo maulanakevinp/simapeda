@@ -14,8 +14,8 @@
         <!-- Navbar -->
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li>
-                    <a class="" href="{{ route('home.index') }}">Beranda</a>
+                <li class="{{ !request()->segment(1) ? 'active' : '' }}">
+                    <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 @foreach ($menu as $menu => $submenu)
                     <li class="{{ count($submenu->where('submenu','!=', null)) > 0 ? 'drop-down' : '' }}">
@@ -41,17 +41,17 @@
                 <li class="drop-down">
                     <a class="" href="#">Menu Utama</a>
                     <ul>
-                        <li>
-                            <a class="@if (Request::segment(1) == 'layanan-surat') active @endif" href="{{ route('layanan-surat') }}">Layanan Surat</a>
+                        <li class="@if (Request::segment(1) == 'layanan-surat') active @endif">
+                            <a class="" href="{{ route('layanan-surat') }}">Layanan Surat</a>
                         </li>
-                        <li>
-                            <a class="@if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery') }}">Gallery</a>
+                        <li class="@if (Request::segment(1) == 'gallery') active @endif">
+                            <a class="" href="{{ route('gallery') }}">Gallery</a>
                         </li>
-                        <li>
-                            <a class="@if (Request::segment(1) == 'statistik-penduduk') active @endif" href="{{ route('statistik-penduduk') }}">Statistik Penduduk</a>
+                        <li class="@if (Request::segment(1) == 'statistik-penduduk') active @endif">
+                            <a class="" href="{{ route('statistik-penduduk') }}">Statistik Penduduk</a>
                         </li>
-                        <li>
-                            <a class="@if (Request::segment(1) == 'laporan-apbdes') active @endif" href="{{ route('laporan-apbdes') }}">Laporan APBDes</a>
+                        <li class="@if (Request::segment(1) == 'laporan-apbdes') active @endif">
+                            <a class="" href="{{ route('laporan-apbdes') }}">Laporan APBDes</a>
                         </li>
                         @auth
                             <li>

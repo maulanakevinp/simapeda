@@ -96,6 +96,7 @@
             </li>
         </ul>
         <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Menu</h6>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'dusun' || Request::segment(1) == 'tambah-dusun') active @endif" href="{{ route('dusun.index') }}">
@@ -135,11 +136,18 @@
             </li>
         </ul>
         <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Profil Desa</h6>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'identitas-desa') active @endif" href="{{ route('identitas-desa') }}">
                     <i class="fas fa-id-card text-info"></i>
-                    <span class="nav-link-inner--text">Profil Desa</span>
+                    <span class="nav-link-inner--text">Identitas Desa</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa.index') }}">
+                    <i class="fa fa-sitemap  text-success"></i>
+                    <span class="nav-link-inner--text">Pemerintahan Desa</span>
                 </a>
             </li>
         </ul>

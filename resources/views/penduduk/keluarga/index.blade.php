@@ -149,20 +149,20 @@
                 <tbody>
                     @forelse ($penduduk as $item)
                         <tr>
-                            <td class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
-                            <td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle">
                                 <a href="{{ route('penduduk.keluarga.show', $item->kk) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
                                 <a target="_parent" href="{{ route('penduduk.keluarga.print', $item->kk) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Cetak KK"><i class="fas fa-print"></i></a>
                             </td>
-                            <td><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->nik }}</td>
-                            <td>{{ App\Penduduk::where('kk',$item->kk)->count() }}</td>
-                            <td>{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
-                            <td>{{ $item->alamat_sekarang }}</td>
-                            <td>{{ $item->detailDusun->dusun->nama ?? '-' }}</td>
-                            <td>{{ $item->detailDusun->rw ?? '-' }}</td>
-                            <td>{{ $item->detailDusun->rt ?? '-' }}</td>
+                            <td style="vertical-align: middle"><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>
+                            <td style="vertical-align: middle">{{ $item->nama }}</td>
+                            <td style="vertical-align: middle"><a href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a></td>
+                            <td style="vertical-align: middle">{{ App\Penduduk::where('kk',$item->kk)->count() }}</td>
+                            <td style="vertical-align: middle">{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
+                            <td style="vertical-align: middle">{{ $item->alamat_sekarang }}</td>
+                            <td style="vertical-align: middle">{{ $item->detailDusun->dusun->nama ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->detailDusun->rw ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->detailDusun->rt ?? '-' }}</td>
                         </tr>
                     @empty
                         <tr>

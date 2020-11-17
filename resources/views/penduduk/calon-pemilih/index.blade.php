@@ -143,7 +143,7 @@
                     @forelse ($penduduk as $item)
                         <tr>
                             <td class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
-                            <td>{{ $item->nik }}</td>
+                            <td><a href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a></td>
                             <td>{{ $item->nama }}</td>
                             <td><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>
                             <td>{{ $item->alamat_sekarang }}</td>
