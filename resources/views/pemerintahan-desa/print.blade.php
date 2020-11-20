@@ -1,7 +1,11 @@
 @extends('layouts.cetak')
-@section('title','Data Penduduk')
+@section('title','Data Aparat Pemerintahan Desa')
 
 @section('content')
+    <div class="text-center mb-3" style="margin-top:20px">
+        <h6 class="font-weight-bold">Data Aparat Pemerintahan Desa</h6>
+        <p>{{ tgl(date('Y-m-d')) }}</p>
+    </div>
     <table class="table table-bordered">
         <thead style="background-color: skyblue">
             <tr>

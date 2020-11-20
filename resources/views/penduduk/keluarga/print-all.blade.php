@@ -2,6 +2,10 @@
 @section('title','Data Kepala Keluarga Penduduk')
 
 @section('content')
+    <div class="text-center mb-3" style="margin-top:20px">
+        <h6 class="font-weight-bold">Data Kepala Keluarga Penduduk</h6>
+        <p>{{ tgl(date('Y-m-d')) }}</p>
+    </div>
     <table class="table table-bordered">
         <thead style="background-color: skyblue">
             <tr>

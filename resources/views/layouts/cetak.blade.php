@@ -40,10 +40,6 @@
         </div>
         <hr style="border-top: 5px double #000000;">
     </div>
-    <div class="text-center mb-3" style="margin-top:20px">
-        <h6 class="font-weight-bold">@yield('title')</h6>
-        <p>{{ tgl(date('Y-m-d')) }}</p>
-    </div>
 
     @yield('content')
 

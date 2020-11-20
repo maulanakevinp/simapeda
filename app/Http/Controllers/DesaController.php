@@ -66,10 +66,10 @@ class DesaController extends Controller
                 'email'                 => ['nullable', 'max:64', 'string'],
                 'telepon'               => ['nullable', 'max:16', 'string'],
                 'website'               => ['nullable', 'max:32', 'string'],
-                'link_facebook'         => ['nullable'],
-                'link_instagram'        => ['nullable'],
-                'link_twitter'          => ['nullable'],
-                'link_youtube'          => ['nullable'],
+                'link_facebook'         => ['nullable', 'url'],
+                'link_instagram'        => ['nullable', 'url'],
+                'link_twitter'          => ['nullable', 'url'],
+                'link_youtube'          => ['nullable', 'url'],
                 'link_maps'             => ['nullable'],
             ]);
 

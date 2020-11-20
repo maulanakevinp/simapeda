@@ -459,7 +459,9 @@
                         $('#detail_dusun_id').append(`<option value="${e.id}">${e.rt}/${e.rw}</option>`);
                     });
 
-                    $("#detail_dusun_id").val("{{ old('detail_dusun_id'
+                    $("#detail_dusun_id").val("{{ old('detail_dusun_id') }}");
+                }
+            });
         } else {
             $('#detail_dusun_id').html(`<option value="">Pilih RT/RW</option>`);
         }

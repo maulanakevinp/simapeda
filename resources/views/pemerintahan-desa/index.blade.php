@@ -22,9 +22,6 @@
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a target="_blank" href="{{ route('pemerintahan-desa.print_all') }}" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a id="btn-import" href="#import" data-toggle="tooltip" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
-                                <a href="{{ route('pemerintahan-desa.export') }}" data-toggle="tooltip" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
                                 <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>

@@ -89,7 +89,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'calon-pemilih') active @endif" href="{{ route('penduduk.calon_pemilih') }}">
+                <a class="nav-link @if (Request::segment(1) == 'calon-pemilih') active @endif" href="{{ route('penduduk.calon_pemilih') }}?tanggal={{ date('d-m-Y') }}">
                     <i class="fas fa-podcast text-success"></i>
                     <span class="nav-link-inner--text">Calon Pemilih</span>
                 </a>

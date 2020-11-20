@@ -2,6 +2,10 @@
 @section('title','Data Penduduk Calon Pemilih')
 
 @section('content')
+<div class="text-center mb-3" style="margin-top:20px">
+    <h6 class="font-weight-bold">Data Penduduk Calon Pemilih</h6>
+    <p>{{ tgl(date('Y-m-d', strtotime(request('tanggal')))) }}</p>
+</div>
 <table class="table table-bordered">
     <thead>
         <th style="vertical-align: middle" class="text-center">No</th>

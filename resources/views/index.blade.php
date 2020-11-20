@@ -31,6 +31,11 @@
             object-fit: cover;
         }
     }
+
+    iframe {
+        width: 100%;
+        height: 300px;
+    }
 </style>
 @endsection
 
@@ -49,6 +54,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9 mb-3">
+            <form class="shadow" class="mb-3" action="{{ URL::current() }}" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" name="cari" id="cari" class="form-control" placeholder="cari ..." value="{{ request('cari') }}">
+                    <div class="input-group-append">
+                        <button title="cari" type="submit" class="input-group-text" id="icon-cari"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
             @foreach ($artikel as $item)
                 @php
                     $url = '/';
@@ -126,7 +139,30 @@
                     </div>
                 </div>
             @endif
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31599.41679812257!2d113.7189174164237!3d-8.108905637778197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6953778add047%3A0x71944989e3c29684!2sArjasa%2C%20Kabupaten%20Jember%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1596496940461!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            @if ($desa->link_facebook || $desa->link_instagram || $desa->link_twitter || $desa->link_youtube)
+            <div class="card shadow mb-3">
+                <div class="card-header bg-dark text-white">
+                    <b>Tautan <i class="fas fa-link"></i></b>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        @if ($desa->link_facebook)
+                            <a class="list-group-item list-group-item-action" target="_blank" href="{{ $desa->link_facebook }}" class="btn" title="facebook" style="font-size: 0.8rem"><i class="fab fa-facebook text-primary"></i> Facebook</a>
+                        @endif
+                        @if ($desa->link_instagram)
+                            <a class="list-group-item list-group-item-action" target="_blank" href="{{ $desa->link_instagram }}" class="btn" title="instagram" style="font-size: 0.8rem"><i class="fab fa-instagram text-secondary"></i> Instagram</a>
+                        @endif
+                        @if ($desa->link_twitter)
+                            <a class="list-group-item list-group-item-action" target="_blank" href="{{ $desa->link_twitter }}" class="btn" title="twitter" style="font-size: 0.8rem"><i class="fab fa-twitter text-primary"></i> Twitter</a>
+                        @endif
+                        @if ($desa->link_youtube)
+                            <a class="list-group-item list-group-item-action" target="_blank" href="{{ $desa->link_youtube }}" class="btn" title="youtube" style="font-size: 0.8rem"><i class="fab fa-youtube text-danger"></i> YouTube</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endif
+            {!! $desa->link_maps !!}
         </div>
     </div>
     @if (count($galleries) > 0)

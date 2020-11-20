@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $surat = Surat::whereTampilkan(1)->latest()->get();
         $desa = Desa::find(1);
@@ -21,6 +21,17 @@ class HomeController extends Controller
         $gallery = Gallery::where('slider', 1)->latest()->get();
         $pemerintahan_desa = PemerintahanDesa::all();
         $galleries = array();
+
+        if ($request->cari) {
+            $artikel = Artikel::where('judul','like',"%{$request->cari}%")
+            ->orWhere('konten','like',"%{$request->cari}%")
+            ->orWhere('menu','like',"%{$request->cari}%")
+            ->orWhere('submenu','like',"%{$request->cari}%")
+            ->orWhere('sub_submenu','like',"%{$request->cari}%")
+            ->orderBy('id','desc')->paginate(10);
+        }
+
+        $artikel->appends($request->only('cari'));
 
         foreach (Gallery::where('slider', null)->inRandomOrder()->limit(7)->get() as $key => $value) {
             $gambar = [

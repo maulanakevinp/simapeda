@@ -285,10 +285,10 @@ class PendudukController extends Controller
         return view('penduduk.keluarga.print', compact('penduduk','desa'));
     }
 
-    public function printCalonPemilih()
+    public function printCalonPemilih(Request $request)
     {
         $desa = Desa::find(1);
-        $penduduk = Penduduk::latest()->whereYear('tanggal_lahir','<', date('Y') - 17)->get();
+        $penduduk = Penduduk::latest()->where('tanggal_lahir','<', (date('Y', strtotime($request->tanggal)) - 17) . '-' . date('m-d', strtotime($request->tanggal)))->get();
         return view('penduduk.calon-pemilih.print', compact('penduduk','desa'));
     }
 
@@ -330,13 +330,16 @@ class PendudukController extends Controller
 
     public function calonPemilih(Request $request)
     {
-        $penduduk = Penduduk::latest()->whereYear('tanggal_lahir','<', date('Y') - 17)->paginate(20);
+        if (!$request->tanggal) {
+            return redirect('/calon-pemilih?tanggal='.date('d-m-Y'));
+        }
+        $penduduk = Penduduk::latest()->where('tanggal_lahir','<', (date('Y', strtotime($request->tanggal)) - 17) . '-' . date('m-d', strtotime($request->tanggal)))->paginate(20);
 
         if ($request->cari) {
             if ($request->cari == "Laki-laki") {
-                $penduduk = Penduduk::where('jenis_kelamin',1)->whereYear('tanggal_lahir','<', date('Y') - 17)->latest()->paginate(20);
+                $penduduk = Penduduk::where('jenis_kelamin',1)->where('tanggal_lahir','<', (date('Y', strtotime($request->tanggal)) - 17) . '-' . date('m-d', strtotime($request->tanggal)))->latest()->paginate(20);
             } elseif ($request->cari == "Perempuan") {
-                $penduduk = Penduduk::where('jenis_kelamin',2)->whereYear('tanggal_lahir','<', date('Y') - 17)->latest()->paginate(20);
+                $penduduk = Penduduk::where('jenis_kelamin',2)->where('tanggal_lahir','<', (date('Y', strtotime($request->tanggal)) - 17) . '-' . date('m-d', strtotime($request->tanggal)))->latest()->paginate(20);
             } else {
                 $penduduk = Penduduk::where(function ($penduduk) use ($request) {
                     $penduduk->where('nik', 'like', "%$request->cari%");
@@ -356,7 +359,7 @@ class PendudukController extends Controller
                     $penduduk->orWhereHas('pekerjaan', function ($status) use ($request) {
                         $status->where('nama', 'like', "%$request->cari%");
                     });
-                })->whereYear('tanggal_lahir','<', date('Y') - 17)->latest()->paginate(20);
+                })->where('tanggal_lahir','<', (date('Y', strtotime($request->tanggal)) - 17) . '-' . date('m-d', strtotime($request->tanggal)))->latest()->paginate(20);
             }
         }
 

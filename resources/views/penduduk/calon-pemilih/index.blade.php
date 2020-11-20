@@ -29,7 +29,7 @@
                                 <p class="mb-0 text-sm">Kelola Penduduk</p>
                             </div>
                             <div class="mb-3">
-                                <a target="_blank" href="{{ route('penduduk.print_calon_pemilih') }}" data-toggle="tooltip" class="btn btn-primary" title="Cetak"><i class="fas fa-print"></i></a>
+                                <a target="_blank" href="{{ route('penduduk.print_calon_pemilih') }}?tanggal={{ request('tanggal') }}" data-toggle="tooltip" class="btn btn-primary" title="Cetak"><i class="fas fa-print"></i></a>
                             </div>
                         </div>
                         <form class="navbar-search mt-3 cari-none" action="{{ URL::current() }}" method="GET">
@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Calon Pemilih</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::whereYear('tanggal_lahir','<', date('Y') - 17)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::latest()->where('tanggal_lahir','<', (date('Y', strtotime(request('tanggal'))) - 17) . '-' . date('m-d', strtotime(request('tanggal'))))->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Laki-laki</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::whereYear('tanggal_lahir','<', date('Y') - 17)->where('jenis_kelamin',1)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::latest()->where('tanggal_lahir','<', (date('Y', strtotime(request('tanggal'))) - 17) . '-' . date('m-d', strtotime(request('tanggal'))))->where('jenis_kelamin',1)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Perempuan</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::whereYear('tanggal_lahir','<', date('Y') - 17)->where('jenis_kelamin',2)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\Penduduk::latest()->where('tanggal_lahir','<', (date('Y', strtotime(request('tanggal'))) - 17) . '-' . date('m-d', strtotime(request('tanggal'))))->where('jenis_kelamin',2)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-pink text-white rounded-circle shadow">
@@ -123,6 +123,12 @@
 @include('layouts.components.alert')
 <div class="card shadow">
     <div class="card-body">
+        <div class="text-center mb-3">
+            <form action="{{ URL::current() }}" method="GET">
+                Tanggal : <input class="form-control-sm" type="date" name="tanggal" value="{{ date('Y-m-d',strtotime(request('tanggal'))) }}">
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>

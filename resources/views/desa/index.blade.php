@@ -64,7 +64,7 @@ Identitas Desa
                 <div class="card-body bg-secondary">
                     <div class="form-group">
                         <label class="form-control-label" for="link_facebook">Facebook</label>
-                        <textarea name="link_facebook" type="text" id="link_facebook" class="form-control form-control-alternative @error('link_facebook') is-invalid @enderror" placeholder="Masukkan link facebook">{{ old('link_facebook',$desa->link_facebook) }}</textarea>
+                        <textarea name="link_facebook" id="link_facebook" class="form-control form-control-alternative @error('link_facebook') is-invalid @enderror" placeholder="Masukkan link facebook">{{ old('link_facebook',$desa->link_facebook) }}</textarea>
                         @error('link_facebook')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@ Identitas Desa
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="link_instagram">Instagram</label>
-                        <textarea name="link_instagram" type="text" id="link_instagram" class="form-control form-control-alternative @error('link_instagram') is-invalid @enderror" placeholder="Masukkan link instagram">{{ old('link_instagram',$desa->link_instagram) }}</textarea>
+                        <textarea name="link_instagram" id="link_instagram" class="form-control form-control-alternative @error('link_instagram') is-invalid @enderror" placeholder="Masukkan link instagram">{{ old('link_instagram',$desa->link_instagram) }}</textarea>
                         @error('link_instagram')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -82,7 +82,7 @@ Identitas Desa
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="link_twitter">Twitter</label>
-                        <textarea name="link_twitter" type="text" id="link_twitter" class="form-control form-control-alternative @error('link_twitter') is-invalid @enderror" placeholder="Masukkan link twitter">{{ old('link_twitter',$desa->link_twitter) }}</textarea>
+                        <textarea name="link_twitter" id="link_twitter" class="form-control form-control-alternative @error('link_twitter') is-invalid @enderror" placeholder="Masukkan link twitter">{{ old('link_twitter',$desa->link_twitter) }}</textarea>
                         @error('link_twitter')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -91,7 +91,7 @@ Identitas Desa
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="link_youtube">Youtube</label>
-                        <textarea name="link_youtube" type="text" id="link_youtube" class="form-control form-control-alternative @error('link_youtube') is-invalid @enderror" placeholder="Masukkan link youtube">{{ old('link_youtube',$desa->link_youtube) }}</textarea>
+                        <textarea name="link_youtube" id="link_youtube" class="form-control form-control-alternative @error('link_youtube') is-invalid @enderror" placeholder="Masukkan link youtube">{{ old('link_youtube',$desa->link_youtube) }}</textarea>
                         @error('link_youtube')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -100,7 +100,7 @@ Identitas Desa
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="link_maps">Maps</label>
-                        <textarea name="link_maps" type="text" id="link_maps" class="form-control form-control-alternative @error('link_maps') is-invalid @enderror" placeholder="Masukkan link maps">{{ old('link_maps',$desa->link_maps) }}</textarea>
+                        <textarea name="link_maps" id="link_maps" class="form-control form-control-alternative @error('link_maps') is-invalid @enderror" placeholder="Masukkan link maps">{{ old('link_maps',$desa->link_maps) }}</textarea>
                         @error('link_maps')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
