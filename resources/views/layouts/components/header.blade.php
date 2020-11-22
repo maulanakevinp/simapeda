@@ -2,19 +2,19 @@
     $menu = DB::table('artikel')->where('menu','!=',null)->select('menu','submenu','sub_submenu')->get()->groupBy('menu');
 @endphp
 <header id="header">
-    <div class="container d-flex align-items-center">
-        <div class="logo mr-auto">
+    <div class="container d-flex justify-content-center">
+        {{-- <div class="logo mr-auto">
             <!-- Uncomment below if you prefer to use an image logo -->
             <a href="{{ url('') }}">
                 <img src="{{ asset(Storage::url($desa->logo)) }}" alt="" class="img-fluid">
-                {{-- <span class="m-0 text-dark font-weight-bold">Desa {{ $desa->nama_desa }}</span> --}}
+                <span class="m-0 text-dark font-weight-bold">Desa {{ $desa->nama_desa }}</span>
             </a>
-        </div>
+        </div> --}}
 
         <!-- Navbar -->
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li class="{{ !request()->segment(1) ? 'active' : '' }}">
+                <li>
                     <a href="{{ route('home.index') }}">Beranda</a>
                 </li>
                 @foreach ($menu as $menu => $submenu)

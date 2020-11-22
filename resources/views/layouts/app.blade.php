@@ -128,6 +128,7 @@
     <!--   Core   -->
     <script src="{{ asset('/js/plugins/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jquery-sticky/jquery.sticky.js') }}"></script>
 
     <!--   Optional JS   -->
 
