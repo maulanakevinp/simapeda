@@ -22,6 +22,7 @@
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
+                                <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
                                 <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
@@ -142,14 +143,20 @@
                     <th class="text-center">Masa Jabatan</th>
                 </thead>
                 <tbody>
-                    @forelse ($pemerintahan_desa as $item)
+                    @forelse ($pemerintahan_desa as $key => $item)
                         <tr>
                             <td style="vertical-align: middle">
                                 <input type="checkbox" class="pemerintah-desa-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
                             <td style="vertical-align: middle" class="text-center">{{ ($pemerintahan_desa->currentpage()-1) * $pemerintahan_desa->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('pemerintahan-desa.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                @if ($key != 0)
+                                    <button data-id="{{ $item->id }}" title="Pindah Ke Atas" data-toggle="tooltip" class="btn btn-sm btn-success atas"><i class="fas fa-arrow-up"></i></button>
+                                @endif
+                                @if ($key+1 != count($pemerintahan_desa))
+                                    <button data-id="{{ $item->id }}" title="Pindah Ke Bawah" data-toggle="tooltip" class="btn btn-sm btn-success bawah"><i class="fas fa-arrow-down"></i></button>
+                                @endif
+                                <a href="{{ route('pemerintahan-desa.edit', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("pemerintahan-desa.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
@@ -232,14 +239,74 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="print" tabindex="-1" role="dialog" aria-labelledby="print" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-delete">Print</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body pt-0">
+                <form class="d-inline" action="{{ route("pemerintahan-desa.print_all") }}" method="POST" >
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="ditandatangani">Laporan Ditandatangani</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
+                        <select required class="form-control @error('ditandatangani') is-invalid @enderror" name="ditandatangani" id="ditandatangani">
+                            <option selected value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ old('ditandatangani') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                        @error('ditandatangani')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="diketahui">Laporan Diketahui</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
+                        <select required class="form-control @error('diketahui') is-invalid @enderror" name="diketahui" id="diketahui">
+                            <option selected value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ old('diketahui') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                        @error('diketahui')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Print</button>
+                </form>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form id="form-urutan" action="{{ route('pemerintahan-desa.urutan') }}" method="post">
+    @csrf
+    <input type="hidden" name="urutan">
+    <input type="hidden" name="id">
+</form>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#btn-import').click(function (e) {
+        $(".atas").click(function () {
+            $('input[name="urutan"]').val('atas');
+            $('input[name="id"]').val($(this).data('id'));
+            $('#form-urutan').submit();
+        });
+
+        $(".bawah").click(function () {
+            $('input[name="urutan"]').val('bawah');
+            $('input[name="id"]').val($(this).data('id'));
+            $('#form-urutan').submit();
+        });
+
+        $('#btn-print').click(function (e) {
             e.preventDefault();
-            $("#import").modal('show');
+            $("#print").modal('show');
         });
 
         $(document).on('click', '#delete', function(){

@@ -174,6 +174,11 @@
                             @error('tanggal_sk_pemberhentian')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="alamat">Alamat</label>
+                        <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" placeholder="Masukkan Alamat  ..." value="{{ old('alamat') }}">
+                        @error('alamat')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block" id="simpan">SIMPAN</button>
                 </form>
             </div>
@@ -201,6 +206,7 @@
                 $("#jenis_kelamin").val(response.data.jenis_kelamin);
                 $("#pendidikan_id").val(response.data.pendidikan_id);
                 $("#agama_id").val(response.data.agama_id);
+                $("#alamat").val(response.data.alamat_sekarang);
                 let path = response.data.foto;
                 if (path) {
                     path = path.replace('public','/storage');

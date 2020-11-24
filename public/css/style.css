@@ -402,6 +402,7 @@
     font-weight: 500;
     text-transform: none;
     color: #2c4964;
+    font-weight: bolder;
 }
 
 .nav-menu .drop-down ul a:hover,

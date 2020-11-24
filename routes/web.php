@@ -94,7 +94,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/chart-surat/{id}', 'SuratController@chartSurat')->name('chart-surat');
 
     Route::get('/export-pemerintahan-desa', 'PemerintahanDesaController@export')->name('pemerintahan-desa.export');
-    Route::get('/cetak-pemerintahan-desa', 'PemerintahanDesaController@printAll')->name('pemerintahan-desa.print_all');
+    Route::post('/urutan-pemerintahan-desa', 'PemerintahanDesaController@urutan')->name('pemerintahan-desa.urutan');
+    Route::post('/cetak-pemerintahan-desa', 'PemerintahanDesaController@printAll')->name('pemerintahan-desa.print_all');
     Route::post('/import-pemerintahan-desa', 'PemerintahanDesaController@import')->name('pemerintahan-desa.import');
     Route::delete('/hapus-pemerintah-desa', 'PemerintahanDesaController@destroys')->name('pemerintah-desa.destroys');
     Route::resource('pemerintahan-desa', 'PemerintahanDesaController');

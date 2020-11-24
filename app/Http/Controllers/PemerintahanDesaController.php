@@ -23,13 +23,12 @@ class PemerintahanDesaController extends Controller
      */
     public function index(Request $request)
     {
-        $pemerintahan_desa = PemerintahanDesa::latest()->paginate(10);
-
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->paginate(10);
         if ($request->cari) {
             if ($request->cari == "Laki-laki") {
-                $pemerintahan_desa = PemerintahanDesa::where('jenis_kelamin',1)->latest()->paginate(10);
+                $pemerintahan_desa = PemerintahanDesa::where('jenis_kelamin',1)->orderBy('urutan')->paginate(10);
             } elseif ($request->cari == "Perempuan") {
-                $pemerintahan_desa = PemerintahanDesa::where('jenis_kelamin',2)->latest()->paginate(10);
+                $pemerintahan_desa = PemerintahanDesa::where('jenis_kelamin',2)->orderBy('urutan')->paginate(10);
             } else {
                 $pemerintahan_desa = PemerintahanDesa::where(function ($pemerintahan_desa) use ($request) {
                     $pemerintahan_desa->where('nik', 'like', "%$request->cari%");
@@ -52,7 +51,7 @@ class PemerintahanDesaController extends Controller
                     $pemerintahan_desa->orWhereHas('agama', function ($status) use ($request) {
                         $status->where('nama', 'like', "%$request->cari%");
                     });
-                })->latest()->paginate(10);
+                })->orderBy('urutan')->paginate(10);
             }
         }
 
@@ -100,6 +99,7 @@ class PemerintahanDesaController extends Controller
             'pangkat_atau_golongan'     => ['nullable','string','max:64'],
             'jabatan'                   => ['required','string','max:32'],
             'masa_jabatan'              => ['nullable','string','max:64'],
+            'alamat'                    => ['nullable'],
         ]);
 
         if ($request->foto) {
@@ -108,6 +108,14 @@ class PemerintahanDesaController extends Controller
 
         if ($request->gambar) {
             $data['foto'] = $request->gambar;
+        }
+
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan','desc')->first();
+
+        if ($pemerintahan_desa) {
+            $data['urutan'] = $pemerintahan_desa->urutan + 1;
+        } else {
+            $data['urutan'] = 1;
         }
 
         PemerintahanDesa::create($data);
@@ -167,6 +175,7 @@ class PemerintahanDesaController extends Controller
             'pangkat_atau_golongan'     => ['nullable','string','max:64'],
             'jabatan'                   => ['required','string','max:32'],
             'masa_jabatan'              => ['nullable','string','max:64'],
+            'alamat'                    => ['nullable'],
         ]);
 
         if ($request->foto) {
@@ -234,10 +243,45 @@ class PemerintahanDesaController extends Controller
         return redirect()->back()->with('success', 'File xlsx berhasil di import');
     }
 
-    public function printAll()
+    public function printAll(Request $request)
     {
+        $request->validate([
+            'diketahui'         => ['required','numeric'],
+            'ditandatangani'    => ['required','numeric']
+        ]);
+
         $desa = Desa::find(1);
-        $pemerintahan_desa = PemerintahanDesa::latest()->get();
-        return view('pemerintahan-desa.print', compact('pemerintahan_desa','desa'));
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
+        $diketahui = PemerintahanDesa::find($request->diketahui);
+        $ditandatangani = PemerintahanDesa::find($request->ditandatangani);
+        return view('pemerintahan-desa.print', compact('pemerintahan_desa','desa','ditandatangani','diketahui'));
+    }
+
+    public function urutan(Request $request)
+    {
+        $request->validate([
+            'urutan'    => ['required'],
+            'id'        => ['required']
+        ]);
+
+        $pemerintahan_desa1 = PemerintahanDesa::findOrFail($request->id);
+
+        if ($request->urutan == 'atas') {
+            $pemerintahan_desa2 = PemerintahanDesa::where('urutan', $pemerintahan_desa1->urutan - 1)->first();
+            $pemerintahan_desa1->urutan = $pemerintahan_desa1->urutan - 1;
+            $pemerintahan_desa2->urutan = $pemerintahan_desa2->urutan + 1;
+            $pemerintahan_desa1->save();
+            $pemerintahan_desa2->save();
+            return back()->with('success', 'Urutan berhasil dipindahkan');
+        } elseif ($request->urutan == 'bawah') {
+            $pemerintahan_desa2 = PemerintahanDesa::where('urutan', $pemerintahan_desa1->urutan + 1)->first();
+            $pemerintahan_desa1->urutan = $pemerintahan_desa1->urutan + 1;
+            $pemerintahan_desa2->urutan = $pemerintahan_desa2->urutan - 1;
+            $pemerintahan_desa1->save();
+            $pemerintahan_desa2->save();
+            return back()->with('success', 'Urutan berhasil dipindahkan');
+        } else {
+            return back()->with('error', 'Gagal memindahkan urutan');
+        }
     }
 }

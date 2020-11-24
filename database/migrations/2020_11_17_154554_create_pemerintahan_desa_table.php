@@ -15,11 +15,13 @@ class CreatePemerintahanDesaTable extends Migration
     {
         Schema::create('pemerintahan_desa', function (Blueprint $table) {
             $table->id();
+            $table->integer('urutan');
             $table->string('foto')->nullable();
             $table->string('nama',128);
             $table->string('nik',128);
             $table->string('nipd',32)->nullable();
             $table->string('nip',32)->nullable();
+            $table->text('alamat')->nullable();
             $table->string('tempat_lahir',32);
             $table->date('tanggal_lahir');
             $table->tinyInteger('jenis_kelamin')->comment('1: Laki-laki, 2: Perempuan');
