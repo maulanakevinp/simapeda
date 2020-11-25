@@ -123,6 +123,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'analisis' || Request::segment(1) == 'tambah-analisis') active @endif" href="{{ route('analisis.index') }}">
+                    <i class="ni ni-single-copy-04 text-info"></i>
+                    <span class="nav-link-inner--text">Kelola Analisis</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery.index') }}">
                     <i class="fas fa-images text-orange"></i>
                     <span class="nav-link-inner--text">Kelola Gallery</span>

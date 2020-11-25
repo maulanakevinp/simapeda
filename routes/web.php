@@ -99,6 +99,26 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/import-pemerintahan-desa', 'PemerintahanDesaController@import')->name('pemerintahan-desa.import');
     Route::delete('/hapus-pemerintah-desa', 'PemerintahanDesaController@destroys')->name('pemerintah-desa.destroys');
     Route::resource('pemerintahan-desa', 'PemerintahanDesaController');
+
+    Route::delete('/hapus-analisis', 'AnalisisController@destroys')->name('analisis.destroys');
+    Route::resource('analisis', 'AnalisisController');
+
+    Route::delete('/hapus-kategori', 'KategoriController@destroys')->name('kategori.destroys');
+    Route::delete('/hapus-indikator', 'IndikatorController@destroys')->name('indikator.destroys');
+    Route::delete('/hapus-klasifikasi', 'KlasifikasiController@destroys')->name('klasifikasi.destroys');
+    Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
+
+    Route::prefix('analisis/{analisis}')->group(function () {
+        Route::resource('kategori', 'KategoriController');
+        Route::resource('indikator', 'IndikatorController');
+        Route::resource('klasifikasi', 'KlasifikasiController');
+        Route::resource('periode', 'PeriodeController');
+        Route::resource('input', 'InputController');
+    });
+
+    Route::get('analisis/{analisis}/laporan-per-indikator', 'IndikatorController@laporan')->name('indikator.laporan');
+    Route::get('analisis/{analisis}/laporan-hasil-klasifikasi', 'KlasifikasiController@laporan')->name('klasifikasi.laporan');
+
 });
 
 Route::get('/{any}', 'ArtikelController@show')->where('any', '.*')->name('artikel.show');
