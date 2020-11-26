@@ -4,12 +4,6 @@
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-</style>
 @endsection
 
 @section('content-header')
@@ -66,7 +60,7 @@
         <div class="col-lg-4 col-md-6 surats">
             <div class="single-service bg-white rounded shadow">
                 <a href="{{ route('surat.show', $item) }}">
-                    <i class="fas {{ $item->icon }} ikon fa-5x mb-3"></i>
+                    <i class="fas fa-file-alt fa-5x mb-3"></i>
                     <h4>{{ $item->nama }}</h4>
                 </a>
                 <p>{{ $item->deskripsi }}</p>

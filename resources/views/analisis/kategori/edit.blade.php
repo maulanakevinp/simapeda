@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Kategori')
+@section('title', 'Edit Kategori')
 
 @section('content-header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
@@ -11,7 +11,7 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Tambah Kategori</h2>
+                                <h2 class="mb-0">Edit Kategori</h2>
                                 <p class="mb-0 text-sm">Kelola Analisis - {{ $kategori->analisis->nama }}</p>
                             </div>
                             <div class="mb-3">

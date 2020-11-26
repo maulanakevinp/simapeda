@@ -2,16 +2,6 @@
 
 @section('title', 'Kategori')
 
-@section('styles')
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-</style>
-@endsection
-
 @section('content-header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
@@ -25,11 +15,7 @@
                                 <p class="mb-0 text-sm">Kelola Analisis - {{ $analisis->nama }}</p>
                             </div>
                             <div class="mb-3">
-                                <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                                <a href="{{ route('kategori.create', $analisis) }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
-                                <a href="{{ route('analisis.show', $analisis) }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i></a>
+                                <a href="{{ route('analisis.index') }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>
@@ -55,7 +41,21 @@
 
 @section('content')
 @include('layouts.components.alert')
+@include('analisis.detail')
 <div class="card shadow">
+    <div class="card-header">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+            <div class="mb-1">
+                <h2 class="mb-0">Kategori</h2>
+            </div>
+            <div class="mb-1">
+                <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-sm btn-danger" id="delete" name="delete" >
+                    <i class="fas fa-trash"></i>
+                </button>
+                <a href="{{ route('kategori.create', $analisis) }}" class="btn btn-sm btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover table-sm table-stripped table-bordered">

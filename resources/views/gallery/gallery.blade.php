@@ -5,7 +5,6 @@
 <meta name="description" content="Gallery Desa {{ $desa->nama_desa }}, Kecamatan {{ $desa->nama_kecamatan }}, Kabupaten {{ $desa->nama_kabupaten }}">
 
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @endsection
 
 @section('content')

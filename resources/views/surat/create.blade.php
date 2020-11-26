@@ -4,12 +4,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-</style>
 @endsection
 
 @section('content-header')
@@ -53,23 +47,13 @@
                     <input type="hidden" name="tampilkan[]" value="0">
                     <h6 class="heading-small text-muted">Detail Surat</h6>
                     <div class="pl-lg-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label">Nama Surat</label>
-                                    <input class="form-control form-control-alternative" name="nama">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label">Icon</label>
-                                    @include('layouts.components.icon')
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Nama Surat</label>
+                            <input class="form-control form-control-alternative" name="nama" placeholder="Masukkan Nama Surat">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Deskripsi</label>
-                            <textarea class="form-control form-control-alternative" name="deskripsi"></textarea>
+                            <textarea class="form-control form-control-alternative" name="deskripsi" placeholder="Masukkan Deskripsi"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Persyaratan</label>

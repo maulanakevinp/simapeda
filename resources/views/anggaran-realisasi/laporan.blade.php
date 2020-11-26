@@ -3,7 +3,6 @@
 @section('title', 'Anggaran Pendapatan Belanja Desa')
 
 @section('styles')
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 <style>
     .table th, .table td {
         padding: 5px;

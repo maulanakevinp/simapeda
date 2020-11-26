@@ -57,23 +57,25 @@ class AnalisisController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Analisis  $analisi
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Analisis $analisi)
+    public function show($id)
     {
-        return view('analisis.show', compact('analisi'));
+        $analisis = Analisis::findOrFail($id);
+        return view('analisis.show', compact('analisis'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Analisis  $analisi
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Analisis $analisi)
+    public function edit($id)
     {
-        return view('analisis.edit', compact('analisi'));
+        $analisis = Analisis::findOrFail($id);
+        return view('analisis.edit', compact('analisis'));
     }
 
     /**

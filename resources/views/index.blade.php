@@ -7,13 +7,7 @@
 <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
-<link rel="stylesheet" href="{{ asset('/css/style.css') }}" >
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-
     .animate-up:hover {
         top: -5px;
     }

@@ -3,8 +3,6 @@
 
 @section('styles')
 <meta name="description" content="{{ $artikel[0]->menu }}, {{ $artikel[0]->submenu }} {{ $artikel[0]->sub_submenu ? ', '. $artikel[0]->sub_submenu : '' }}">
-<link rel="stylesheet" href="{{ asset('/css/style.css') }}" >
-
 <style>
     .animate-up:hover {
         top: -5px;

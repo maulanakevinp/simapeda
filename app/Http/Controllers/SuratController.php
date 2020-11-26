@@ -52,7 +52,10 @@ class SuratController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validationSurat($request);
+        $validator = Validator::make($request->all(), [
+            'nama'      => ['required', 'max:64'],
+            'isian.*'   => ['required']
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -114,7 +117,10 @@ class SuratController extends Controller
      */
     public function update(Request $request, Surat $surat)
     {
-        $validator = $this->validationSurat($request);
+        $validator = Validator::make($request->all(), [
+            'nama'      => ['required', 'max:64'],
+            'isian.*'   => ['required']
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -236,14 +242,5 @@ class SuratController extends Controller
         ];
 
         return $dataSurat;
-    }
-
-    public function validationSurat($request)
-    {
-        return Validator::make($request->all(), [
-            'nama'      => ['required', 'max:64'],
-            'icon'      => ['required', 'max:64'],
-            'isian.*'   => ['required']
-        ]);
     }
 }

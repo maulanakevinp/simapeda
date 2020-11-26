@@ -3,9 +3,9 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+<script src="{{ asset('js/plugins/highcarts/highstock.js')}}"></script>
+<script src="{{ asset('js/plugins/highcarts/exporting.js')}}"></script>
+<script src="{{ asset('js/plugins/highcarts/accessibility.js')}}"></script>
 @endsection
 
 @section('content-header')

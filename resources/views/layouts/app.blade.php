@@ -130,8 +130,6 @@
     <script src="{{ asset('/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/plugins/jquery-sticky/jquery.sticky.js') }}"></script>
 
-    <!--   Optional JS   -->
-
     <!--   Argon JS   -->
     <script src="{{ asset('/js/argon-dashboard.min.js?v=1.1.2') }}"></script>
     <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
@@ -143,6 +141,8 @@
                 application: "argon-dashboard-free"
             });
     </script>
+
+    <!--   Optional JS   -->
     <script src="{{ asset('/js/script.js') }}"></script>
     @stack('scripts')
 </body>

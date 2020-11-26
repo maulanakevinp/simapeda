@@ -3,8 +3,6 @@
 
 @section('styles')
 <meta name="description" content="{{ $artikel->judul }}.">
-<link rel="stylesheet" href="{{ asset('/css/style.css') }}" >
-
 <style>
     .animate-up:hover {
         top: -5px;

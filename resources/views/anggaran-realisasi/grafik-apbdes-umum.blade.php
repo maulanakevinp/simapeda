@@ -3,7 +3,6 @@
 
 @section('styles')
 <meta name="description" content="Statistik Penduduk Desa {{ App\Desa::find(1)->nama_desa }}, Kecamatan {{ App\Desa::find(1)->nama_kecamatan }}, Kabupaten {{ App\Desa::find(1)->nama_kabupaten }}.">
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 @endsection
 
 @section('header')
