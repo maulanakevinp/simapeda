@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Analisis;
 use App\Input;
+use App\Penduduk;
 use Illuminate\Http\Request;
 
 class InputController extends Controller
@@ -12,9 +14,15 @@ class InputController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Analisis $analisis)
     {
-        //
+        if ($analisis->subjek == 1) {
+            $penduduk = Penduduk::latest()->paginate(10);
+        } else {
+            $penduduk = Penduduk::whereHas('statusHubunganDalamKeluarga', function ($status) {$status->where('nama','Kepala Keluarga');})->latest()->paginate(10);
+        }
+
+        return view('analisis.input.index', compact('analisis','penduduk'));
     }
 
     /**
@@ -55,7 +63,7 @@ class InputController extends Controller
      * @param  \App\Input  $input
      * @return \Illuminate\Http\Response
      */
-    public function edit(Input $input)
+    public function edit(Analisis $analisis, Penduduk $penduduk)
     {
         //
     }

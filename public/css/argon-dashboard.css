@@ -2021,7 +2021,6 @@ pre code {
 }
 
 .form-control:focus {
-  color: #8898aa;
   background-color: #fff;
   border-color: rgba(50, 151, 211, 0.25);
   outline: 0;

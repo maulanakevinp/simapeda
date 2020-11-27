@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Analisis;
 use App\Klasifikasi;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,16 @@ class KlasifikasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Analisis $analisis)
     {
-        //
+        $klasifikasi = Klasifikasi::latest()->paginate(10);
+
+        if ($request->cari) {
+            $klasifikasi = Klasifikasi::where('nama','like',"%{$request->cari}%")->paginate(10);
+        }
+
+        $klasifikasi->appends($request->only('cari'));
+        return view('analisis.klasifikasi.index', compact('klasifikasi','analisis'));
     }
 
     /**
@@ -22,9 +30,9 @@ class KlasifikasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Analisis $analisis)
     {
-        //
+        return view('analisis.klasifikasi.create', compact('analisis'));
     }
 
     /**
@@ -33,9 +41,18 @@ class KlasifikasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Analisis $analisis)
     {
-        //
+        $data = $request->validate([
+            'nama'              => ['required','string','max:191'],
+            'minimal'           => ['required','numeric','max:'.$request->maximal],
+            'maximal'           => ['required','numeric','min:'.$request->minimal],
+        ]);
+
+        $data['analisis_id'] = $analisis->id;
+
+        Klasifikasi::create($data);
+        return redirect()->route('klasifikasi.index', $analisis)->with('success','Klasifikasi berhasil ditambahkan');
     }
 
     /**
@@ -46,7 +63,7 @@ class KlasifikasiController extends Controller
      */
     public function show(Klasifikasi $klasifikasi)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -55,9 +72,9 @@ class KlasifikasiController extends Controller
      * @param  \App\Klasifikasi  $klasifikasi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Klasifikasi $klasifikasi)
+    public function edit(Analisis $analisis, Klasifikasi $klasifikasi)
     {
-        //
+        return view('analisis.klasifikasi.edit', compact('klasifikasi','analisis'));
     }
 
     /**
@@ -69,7 +86,14 @@ class KlasifikasiController extends Controller
      */
     public function update(Request $request, Klasifikasi $klasifikasi)
     {
-        //
+        $data = $request->validate([
+            'nama'              => ['required','string','max:191'],
+            'minimal'           => ['required','numeric','max:'.$request->maximal],
+            'maximal'           => ['required','numeric','min:'.$request->minimal],
+        ]);
+
+        $klasifikasi->update($data);
+        return back()->with('success','Klasifikasi berhasil diperbarui');
     }
 
     /**
@@ -78,8 +102,28 @@ class KlasifikasiController extends Controller
      * @param  \App\Klasifikasi  $klasifikasi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Klasifikasi $klasifikasi)
+    public function destroy(Analisis $analisis, Klasifikasi $klasifikasi)
     {
-        //
+        $klasifikasi->delete();
+        return back()->with('success','Klasifikasi berhasil dihapus');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Klasifikasi  $klasifikasi
+     * @return \Illuminate\Http\Response
+     */
+    public function destroys(Request $request)
+    {
+        Klasifikasi::whereIn('id', $request->id)->delete();
+        return response()->json([
+            'message'   => 'Klasifikasi berhasil dihapus'
+        ]);
+    }
+
+    public function laporan(Analisis $analisis)
+    {
+        return view('analisis.klasifikasi.laporan', compact('analisis'));
     }
 }
