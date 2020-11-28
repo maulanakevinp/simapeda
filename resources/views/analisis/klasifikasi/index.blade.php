@@ -91,6 +91,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $klasifikasi->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

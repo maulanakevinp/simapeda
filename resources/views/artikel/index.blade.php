@@ -99,6 +99,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-12">
+            {{ $artikel->links('layouts.components.pagination') }}
+        </div>
     @empty
         <div class="col">
             <div class="single-service bg-white rounded shadow">

@@ -19,13 +19,13 @@
                                 <p class="mb-0 text-sm">Kelola Penduduk</p>
                             </div>
                             <div class="mb-3">
-                                <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
+                                <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="mb-1 btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a id="btn-import" href="#import" data-toggle="tooltip" class="btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
-                                <a href="{{ route('penduduk.export') }}" data-toggle="tooltip" class="btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
-                                <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
+                                <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="mb-1 btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
+                                <a id="btn-import" href="#import" data-toggle="tooltip" class="mb-1 btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
+                                <a href="{{ route('penduduk.export') }}" data-toggle="tooltip" class="mb-1 btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
+                                <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="mb-1 btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                         <form class="navbar-search mt-3 cari-none" action="{{ URL::current() }}" method="GET">
@@ -208,8 +208,8 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $penduduk->links('layouts.components.pagination') }}
         </div>
-        {{ $penduduk->links() }}
     </div>
 </div>
 

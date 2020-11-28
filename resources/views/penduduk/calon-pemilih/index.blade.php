@@ -169,7 +169,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $penduduk->links() }}
+        {{ $penduduk->links('layouts.components.pagination') }}
     </div>
 </div>
 @endsection

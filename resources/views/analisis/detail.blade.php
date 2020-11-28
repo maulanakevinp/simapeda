@@ -6,10 +6,10 @@
                 Pengaturan Analisis
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item {{ request()->segment(3) == 'kategori' ? 'active' : '' }}" href="{{ route('kategori.index', $analisis->id) }}">Kategori/Variabel</a>
-                <a class="dropdown-item {{ request()->segment(3) == 'indikator' ? 'active' : '' }}" href="{{ route('indikator.index', $analisis->id) }}">Indikator & Pertanyaan</a>
-                <a class="dropdown-item {{ request()->segment(3) == 'klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.index', $analisis->id) }}">Klasifikasi Analisis</a>
-                <a class="dropdown-item {{ request()->segment(3) == 'periode' ? 'active' : '' }}" href="{{ route('periode.index', $analisis->id) }}">Periode Sensus/Survei</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'kategori' ? 'active' : '' }}" href="{{ route('kategori.index', $analisis) }}">Kategori/Variabel</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'indikator' ? 'active' : '' }}" href="{{ route('indikator.index', $analisis) }}">Indikator & Pertanyaan</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.index', $analisis) }}">Klasifikasi Analisis</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'periode' ? 'active' : '' }}" href="{{ route('periode.index', $analisis) }}">Periode Sensus/Survei</a>
             </div>
         </div>
         <div class="dropdown mb-2">
@@ -17,7 +17,7 @@
                 Input
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item {{ request()->segment(3) == 'input' ? 'active' : '' }}" href="{{ route('input.index', $analisis->id) }}">Input Data Sensus/Survei</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'input' ? 'active' : '' }}" href="{{ route('input.index', [$analisis, 'periode' =>App\Periode::latest()->first() ?? '0']) }}">Input Data Sensus/Survei</a>
             </div>
         </div>
         <div class="dropdown mb-2">
@@ -25,8 +25,8 @@
                 Laporan Analisis
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item {{ request()->segment(3) == 'laporan-hasil-klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.laporan', $analisis->id) }}">Laporan Hasil Klasifikasi</a>
-                <a class="dropdown-item {{ request()->segment(3) == 'laporan-per-indikator' ? 'active' : '' }}" href="{{ route('indikator.laporan', $analisis->id) }}">Laporan Per Indikator</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'laporan-hasil-klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.laporan', $analisis) }}">Laporan Hasil Klasifikasi</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'laporan-per-indikator' ? 'active' : '' }}" href="{{ route('indikator.laporan', $analisis) }}">Laporan Per Indikator</a>
             </div>
         </div>
     </div>

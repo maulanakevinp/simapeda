@@ -87,7 +87,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $anggaran_realisasi->links() }}
+        {{ $anggaran_realisasi->links('layouts.components.pagination') }}
     </div>
 </div>
 

@@ -128,7 +128,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $cetakSurat->links() }}
+        {{ $cetakSurat->links('layouts.components.pagination') }}
     </div>
 </div>
 

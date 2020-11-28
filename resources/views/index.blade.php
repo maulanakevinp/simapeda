@@ -100,6 +100,7 @@
                     </div>
                 </div>
             @endforeach
+            {{ $artikel->links('layouts.components.pagination') }}
         </div>
         <div class="col-md-3 mb-3">
             <div class="card shadow mb-3">

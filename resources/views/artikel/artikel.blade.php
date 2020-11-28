@@ -76,7 +76,7 @@
             </div>
         @endforelse
         <div class="col-12">
-            {{ $artikel->links() }}
+            {{ $artikel->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

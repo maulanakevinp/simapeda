@@ -184,7 +184,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $pemerintahan_desa->links() }}
+        {{ $pemerintahan_desa->links('layouts.components.pagination') }}
     </div>
 </div>
 

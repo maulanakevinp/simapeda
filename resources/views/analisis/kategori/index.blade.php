@@ -87,6 +87,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $kategori->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

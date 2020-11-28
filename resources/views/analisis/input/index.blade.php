@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Input Data Sensus/Survei')
+@section('title', 'Data Sensus/Survei')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,7 +15,7 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Input Data Sensus/Survei</h2>
+                                <h2 class="mb-0">Data Sensus/Survei</h2>
                                 <p class="mb-0 text-sm">Kelola Analisis - {{ $analisis->nama }}</p>
                             </div>
                             <div class="mb-3">
@@ -47,44 +47,66 @@
 @include('layouts.components.alert')
 @include('analisis.detail')
 <div class="card shadow">
-    <div class="card-header font-weight-bold">Input Data Sensus/Survei</div>
+    <div class="card-header">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+            <div class="mb-1">
+                <h2 class="mb-0">Data Sensus/Survei</h2>
+            </div>
+            <div class="mb-1">
+                <label for="periode">Periode :</label>
+                <select name="periode" id="periode" class="form-control-sm">
+                    @foreach ($periode as $item)
+                        <option value="{{ $item->id }}" {{ request()->segment(4) == $item->id ? 'selected' : ""}}>{{ $item->nama }} - (Tahun {{ $item->tahun }})</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-sm table-stripped table-bordered">
+            <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
-                    <th class="text-center" width="10px">No</th>
-                    <th class="text-center" width="50px">Opsi</th>
-                    @if ($analisis->subjek == 1)
-                        <th class="text-center">NIK</th>
-                        <th class="text-center">Nama</th>
-                    @else
-                        <th class="text-center">Nomor KK</th>
-                        <th class="text-center">Kepala Keluarga</th>
-                    @endif
-                    <th class="text-center">L/P</th>
-                    <th class="text-center">Dusun</th>
-                    <th class="text-center">RW</th>
-                    <th class="text-center">RT</th>
-                    <th class="text-center">Status</th>
+                    <tr>
+                        <th class="text-center" width="10px">No</th>
+                        <th class="text-center" width="50px">Opsi</th>
+                        @if ($analisis->subjek == 1)
+                            <th class="text-center">NIK</th>
+                            <th class="text-center">Nama</th>
+                        @else
+                            <th class="text-center">Nomor KK</th>
+                            <th class="text-center">Kepala Keluarga</th>
+                        @endif
+                        <th class="text-center">L/P</th>
+                        <th class="text-center">Dusun</th>
+                        <th class="text-center">RW</th>
+                        <th class="text-center">RT</th>
+                        <th class="text-center">Status</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @forelse ($penduduk as $item)
                         <tr>
                             <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('input.edit', ['input' => $item, 'analisis' => $analisis]) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Input Data"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('input.edit', ['penduduk' => $item, 'analisis' => $analisis, 'periode' => request()->segment(4)]) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Data"><i class="fas fa-edit"></i></a>
                             </td>
                             @if ($analisis->subjek == 1)
-                                <th style="vertical-align: middle">{{ $item->nik }}</th>
+                                <td style="vertical-align: middle">{{ $item->nik }}</td>
                             @else
-                                <th style="vertical-align: middle">{{ $item->kk }}</th>
+                                <td style="vertical-align: middle">{{ $item->kk }}</td>
                             @endif
-                            <th style="vertical-align: middle">{{ $item->nama }}</th>
+                            <td style="vertical-align: middle">{{ $item->nama }}</td>
                             <td style="vertical-align: middle; text-align: center">{{ $item->jenis_kelamin == 1 ? "L" : "P" }}</td>
                             <td>{{ $item->detailDusun->dusun->nama ?? '-'}}</td>
                             <td>{{ $item->detailDusun->rw ?? '-'}}</td>
                             <td>{{ $item->detailDusun->rt ?? '-'}}</td>
-                            <td style="vertical-align: middle; text-align: center">-</td>
+                            <td style="vertical-align: middle; text-align: center">
+                                @if (App\Input::where('penduduk_id', $item->id)->where('periode_id', request()->segment(4))->count() == count($analisis->indikator))
+                                    <i class="fas fa-check text-success"></i>
+                                @else
+                                    -
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
@@ -93,8 +115,18 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $penduduk->links('layouts.components.pagination') }}
         </div>
-        {{ $penduduk->links() }}
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $("#periode").change(function () {
+            location.replace(baseURL + '/analisis/' + '{{ $analisis->id }}' + '/input/' + $(this).val());
+        });
+    });
+</script>
+@endpush

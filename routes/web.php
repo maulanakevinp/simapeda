@@ -109,11 +109,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
 
     Route::prefix('analisis/{analisis}')->group(function () {
+        Route::get('/input/{periode}', 'InputController@index')->name('input.index');
+        Route::get('/input/{penduduk}/edit/{periode}', 'InputController@edit')->name('input.edit');
+        Route::post('/input', 'InputController@store')->name('input.store');
         Route::resource('kategori', 'KategoriController');
         Route::resource('indikator', 'IndikatorController');
         Route::resource('klasifikasi', 'KlasifikasiController');
         Route::resource('periode', 'PeriodeController');
-        Route::resource('input', 'InputController');
     });
 
     Route::get('analisis/{analisis}/laporan-per-indikator', 'IndikatorController@laporan')->name('indikator.laporan');

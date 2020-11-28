@@ -16,7 +16,7 @@ class IndikatorController extends Controller
      */
     public function index(Request $request, Analisis $analisis)
     {
-        $indikator = Indikator::latest()->paginate(10);
+        $indikator = Indikator::paginate(10);
 
         if ($request->cari) {
             $indikator = Indikator::where('nama','like',"%{$request->cari}%")->paginate(10);
@@ -71,12 +71,14 @@ class IndikatorController extends Controller
 
         $indikator = Indikator::create($data);
 
-        for ($i=1; $i < count($request->jawaban); $i++) {
-            Parameter::create([
-                'indikator_id'  => $indikator->id,
-                'jawaban'       => $request->jawaban[$i],
-                'nilai'         => $request->nilai[$i],
-            ]);
+        if ($request->tipe == 1) {
+            for ($i=1; $i < count($request->jawaban); $i++) {
+                Parameter::create([
+                    'indikator_id'  => $indikator->id,
+                    'jawaban'       => $request->jawaban[$i],
+                    'nilai'         => $request->nilai[$i],
+                ]);
+            }
         }
 
         return response()->json([

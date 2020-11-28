@@ -85,6 +85,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $analisis->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

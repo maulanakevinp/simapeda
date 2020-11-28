@@ -95,6 +95,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $periode->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>
