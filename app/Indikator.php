@@ -23,4 +23,9 @@ class Indikator extends Model
     {
         return $this->hasMany('App\Parameter');
     }
+
+    public function input()
+    {
+        return $this->hasMany('App\Input');
+    }
 }

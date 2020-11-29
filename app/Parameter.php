@@ -13,4 +13,9 @@ class Parameter extends Model
     {
         return $this->belongsTo('App\Indikator');
     }
+
+    public function input()
+    {
+        return $this->hasMany('App\Input');
+    }
 }

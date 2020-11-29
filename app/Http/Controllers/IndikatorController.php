@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Analisis;
 use App\Indikator;
+use App\Input;
 use App\Parameter;
 use Illuminate\Http\Request;
 
@@ -188,5 +189,44 @@ class IndikatorController extends Controller
     public function laporan(Analisis $analisis)
     {
         return view('analisis.indikator.laporan', compact('analisis'));
+    }
+
+    public function responden(Analisis $analisis, Indikator $indikator, $parameter)
+    {
+        if ($indikator->tipe == 1) {
+            $input = Input::where('parameter_id', $parameter)->paginate(10);
+        } else {
+            $input = Input::where('indikator_id', $indikator->id)->where('jawaban', $parameter)->paginate(10);
+        }
+
+        return view('analisis.indikator.responden', compact('analisis', 'indikator', 'input'));
+    }
+
+    public function statistik(Analisis $analisis, Indikator $indikator)
+    {
+        return view('analisis.indikator.statistik', compact('analisis', 'indikator'));
+    }
+
+    public function chart(Indikator $indikator)
+    {
+        $data = array();
+
+        if ($indikator->tipe == 1) {
+            foreach ($indikator->parameter as $item) {
+                $data[] = [
+                    'name' => $item->jawaban,
+                    'y' => count($item->input)
+                ];
+            }
+        } else {
+            foreach ($indikator->input->groupBy('jawaban') as $item) {
+                $data[] = [
+                    'name' => $item[0]->jawaban,
+                    'y' => count($item)
+                ];
+            }
+        }
+
+        return response()->json($data);
     }
 }

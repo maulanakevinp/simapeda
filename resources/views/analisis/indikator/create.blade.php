@@ -35,12 +35,6 @@
             <input type="hidden" name="jawaban[]" value="0">
             <input type="hidden" name="nilai[]" value="0">
             <div class="form-group row">
-                <label class="form-control-label col-form-label col-md-2" for="nomor">Nomor Pertanyaan</label>
-                <div class="col-md-10">
-                    <input type="number" class="form-control" name="nomor" placeholder="Masukkan Nomor Pertanyaan ..." value="">
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="form-control-label col-form-label col-md-2" for="kategori_id">Kategori</label>
                 <div class="col-md-10">
                     <select class="form-control" name="kategori_id">
@@ -52,9 +46,15 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="form-control-label col-form-label col-md-2" for="nomor">Nomor Pertanyaan</label>
+                <div class="col-md-10">
+                    <input type="number" class="form-control" name="nomor" placeholder="Masukkan Nomor Pertanyaan ..." value="">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="form-control-label col-form-label col-md-2" for="bobot">Bobot</label>
                 <div class="col-md-10">
-                    <input type="number" class="form-control" name="bobot" placeholder="Masukkan Bobot ..." value="">
+                    <input type="number" class="form-control" name="bobot" id="bobot" placeholder="Masukkan Bobot ..." value="">
                 </div>
             </div>
             <div class="form-group row">

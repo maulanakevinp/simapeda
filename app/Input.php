@@ -13,4 +13,24 @@ class Input extends Model
     {
         return $this->belongsTo('App\Analisis');
     }
+
+    public function penduduk()
+    {
+        return $this->belongsTo('App\Penduduk');
+    }
+
+    public function indikator()
+    {
+        return $this->belongsTo('App\Indikator');
+    }
+
+    public function parameter()
+    {
+        return $this->belongsTo('App\Parameter');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo('App\Periode');
+    }
 }

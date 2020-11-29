@@ -1,25 +1,7 @@
-if ($("#tipe").val() == 3) {
-    $("#angka").css('display','block');
-    $("#pilihan").css('display','none');
-} else if ($("#tipe").val() == 1) {
-    $("#angka").css('display','none');
-    $("#pilihan").css('display','block');
-} else {
-    $("#angka").css('display','none');
-    $("#pilihan").css('display','none');
-}
+tipe();
 
 $("#tipe").change(function () {
-    if ($(this).val() == 3) {
-        $("#angka").css('display','block');
-        $("#pilihan").css('display','none');
-    } else if ($(this).val() == 1) {
-        $("#angka").css('display','none');
-        $("#pilihan").css('display','block');
-    } else {
-        $("#angka").css('display','none');
-        $("#pilihan").css('display','none');
-    }
+    tipe();
 });
 
 $(document).on("click", ".tambah", function (event){
@@ -95,6 +77,22 @@ $('form').on('submit', function(event) {
         }
     });
 });
+
+function tipe() {
+    if ($("#tipe").val() == 3) {
+        $("#angka").css('display','block');
+        $("#pilihan").css('display','none');
+        $("#bobot").attr('readonly','readonly');
+    } else if ($("#tipe").val() == 1) {
+        $("#angka").css('display','none');
+        $("#pilihan").css('display','block');
+        $("#bobot").removeAttr('readonly');
+    } else {
+        $("#angka").css('display','none');
+        $("#pilihan").css('display','none');
+        $("#bobot").attr('readonly','readonly');
+    }
+}
 
 function changePosition(change, current) {
     const dataChange = change.innerHTML;

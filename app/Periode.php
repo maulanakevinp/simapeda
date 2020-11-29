@@ -13,4 +13,9 @@ class Periode extends Model
     {
         return $this->belongsTo('App\Analisis');
     }
+
+    public function input()
+    {
+        return $this->hasMany('App\Input');
+    }
 }

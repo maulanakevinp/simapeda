@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Analisis;
+use App\HasilKlasifikasi;
+use App\Indikator;
 use App\Klasifikasi;
+use App\Penduduk;
+use App\Periode;
 use Illuminate\Http\Request;
 
 class KlasifikasiController extends Controller
@@ -84,7 +88,7 @@ class KlasifikasiController extends Controller
      * @param  \App\Klasifikasi  $klasifikasi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Klasifikasi $klasifikasi)
+    public function update(Request $request, Analisis $analisis, Klasifikasi $klasifikasi)
     {
         $data = $request->validate([
             'nama'              => ['required','string','max:191'],
@@ -122,8 +126,21 @@ class KlasifikasiController extends Controller
         ]);
     }
 
-    public function laporan(Analisis $analisis)
+    public function laporan(Analisis $analisis, Periode $periode)
     {
-        return view('analisis.klasifikasi.laporan', compact('analisis'));
+        $hasil_klasifikasi = HasilKlasifikasi::where('analisis_id', $analisis->id)->where('periode_id', $periode->id)->paginate(10);
+        $periode = Periode::latest()->get();
+
+        return view('analisis.klasifikasi.laporan', compact('analisis','hasil_klasifikasi','periode'));
+    }
+
+    public function detail_laporan(Analisis $analisis, Penduduk $penduduk, Periode $periode)
+    {
+        if ($analisis->subjek == 2) {
+            $penduduk = Penduduk::where('kk', $penduduk->kk)->orderBy('nomor_urut_dalam_kk')->get();
+        }
+
+        $indikator = Indikator::where('analisis_id', $analisis->id)->get()->groupBy('kategori_id');
+        return view('analisis.klasifikasi.detail-laporan', compact('penduduk','analisis','indikator'));
     }
 }

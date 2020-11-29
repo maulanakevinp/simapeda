@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Analisis;
+use App\HasilKlasifikasi;
 use App\Indikator;
 use App\Input;
 use App\Penduduk;
@@ -43,19 +44,30 @@ class InputController extends Controller
             'jawaban.*'     => ['required'],
         ]);
 
+        $akumulasi = 0;
+
         foreach ($request->jawaban as $key => $jawaban) {
-            $input = Input::where('penduduk_id', $request->penduduk_id)->where('periode_id', $request->periode_id)->where('indikator_id',$request->indikator_id[$key])->first();
-            if ($input) {
-                $input->delete();
-            }
-            Input::create([
+            Input::where('penduduk_id', $request->penduduk_id)->where('periode_id', $request->periode_id)->where('indikator_id',$request->indikator_id[$key])->delete();
+            $input = Input::create([
                 'penduduk_id'   => $request->penduduk_id,
                 'indikator_id'  => $request->indikator_id[$key],
                 'parameter_id'  => $request->parameter_id[$key],
                 'periode_id'    => $request->periode_id,
                 'jawaban'       => $jawaban,
             ]);
+
+            if ($input->parameter) {
+                $akumulasi += $input->indikator->bobot * $input->parameter->nilai;
+            }
         }
+
+        HasilKlasifikasi::where('penduduk_id', $request->penduduk_id)->where('periode_id', $request->periode_id)->where('analisis_id',$request->analisis_id)->delete();
+        HasilKlasifikasi::create([
+            'analisis_id'   => $request->analisis_id,
+            'periode_id'    => $request->periode_id,
+            'penduduk_id'   => $request->penduduk_id,
+            'akumulasi'     => $akumulasi
+        ]);
 
         return response()->json([
             'message'   => 'Input data sensus/survei berhasil diperbarui',

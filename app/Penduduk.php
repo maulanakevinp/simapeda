@@ -93,4 +93,9 @@ class Penduduk extends Model
     {
         return $this->belongsTo('App\Pendidikan','pendidikan_sedang_ditempuh_id');
     }
+
+    public function input()
+    {
+        return $this->hasMany('App\Input');
+    }
 }
