@@ -17,6 +17,8 @@ class DesaSeeder extends Seeder
             'nama_desa'         => 'Arjasa',
             'nama_kecamatan'    => 'Arjasa',
             'nama_kabupaten'    => 'Jember',
+            'nama_provinsi'     => 'Jawa Timur',
+            'kodepos'           => '68191',
             'alamat'            => 'Jl. Rengganis Nomor 01 Arjasa 68191',
             'nama_kepala_desa'  => "WASI'A",
             'alamat_kepala_desa'=> "Dusun Gumitir Desa Arjasa  Kecamatan  Arjasa Kabupaten Jember",

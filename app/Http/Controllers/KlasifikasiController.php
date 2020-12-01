@@ -19,10 +19,10 @@ class KlasifikasiController extends Controller
      */
     public function index(Request $request, Analisis $analisis)
     {
-        $klasifikasi = Klasifikasi::latest()->paginate(10);
+        $klasifikasi = Klasifikasi::where('analisis_id', $analisis->id)->latest()->paginate(10);
 
         if ($request->cari) {
-            $klasifikasi = Klasifikasi::where('nama','like',"%{$request->cari}%")->paginate(10);
+            $klasifikasi = Klasifikasi::where('nama','like',"%{$request->cari}%")->where('analisis_id', $analisis->id)->latest()->paginate(10);
         }
 
         $klasifikasi->appends($request->only('cari'));
@@ -126,8 +126,14 @@ class KlasifikasiController extends Controller
         ]);
     }
 
-    public function laporan(Analisis $analisis, Periode $periode)
+    public function laporan(Analisis $analisis, $periode)
     {
+        $periode = Periode::find($periode);
+
+        if (!$periode) {
+            return back()->with('error', 'Silahkan buat periode terlebih dahulu');
+        }
+
         $hasil_klasifikasi = HasilKlasifikasi::where('analisis_id', $analisis->id)->where('periode_id', $periode->id)->paginate(10);
         $periode = Periode::latest()->get();
 

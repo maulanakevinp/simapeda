@@ -17,10 +17,14 @@ class IndikatorController extends Controller
      */
     public function index(Request $request, Analisis $analisis)
     {
-        $indikator = Indikator::paginate(10);
+        $indikator = Indikator::where('analisis_id', $analisis->id)->paginate(10);
+
+        if (count($analisis->kategori) == 0) {
+            return back()->with('error', 'Harap menambah kategori terlebih dahulu');
+        }
 
         if ($request->cari) {
-            $indikator = Indikator::where('nama','like',"%{$request->cari}%")->paginate(10);
+            $indikator = Indikator::where('nama','like',"%{$request->cari}%")->where('analisis_id', $analisis->id)->paginate(10);
         }
 
         $indikator->appends($request->only('cari'));
@@ -34,6 +38,10 @@ class IndikatorController extends Controller
      */
     public function create(Analisis $analisis)
     {
+        if (count($analisis->kategori) == 0) {
+            return back()->with('error', 'Harap menambah kategori terlebih dahulu');
+        }
+
         return view('analisis.indikator.create', compact('analisis'));
     }
 

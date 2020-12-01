@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusPendudukSeeder::class);
         $this->call(StatusRekamSeeder::class);
         $this->call(TempatDilahirkanSeeder::class);
+        $this->call(KodeSuratSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

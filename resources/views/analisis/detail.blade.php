@@ -17,7 +17,7 @@
                 Input
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item {{ request()->segment(3) == 'input' ? 'active' : '' }}" href="{{ route('input.index', [$analisis, 'periode' =>App\Periode::latest()->first() ?? '0']) }}">Input Data Sensus/Survei</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'input' ? 'active' : '' }}" href="{{ route('input.index', [$analisis, 'periode' =>App\Periode::where('analisis_id', $analisis->id)->latest()->first() ?? '0']) }}">Input Data Sensus/Survei</a>
             </div>
         </div>
         <div class="dropdown mb-2">
@@ -25,7 +25,7 @@
                 Laporan Analisis
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item {{ request()->segment(3) == 'laporan-hasil-klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.laporan', [$analisis, 'periode' =>App\Periode::latest()->first() ?? '0']) }}">Laporan Hasil Klasifikasi</a>
+                <a class="dropdown-item {{ request()->segment(3) == 'laporan-hasil-klasifikasi' ? 'active' : '' }}" href="{{ route('klasifikasi.laporan', [$analisis, 'periode' =>App\Periode::where('analisis_id', $analisis->id)->latest()->first() ?? '0']) }}">Laporan Hasil Klasifikasi</a>
                 <a class="dropdown-item {{ request()->segment(3) == 'laporan-per-indikator' ? 'active' : '' }}" href="{{ route('indikator.laporan', $analisis) }}">Laporan Per Indikator</a>
             </div>
         </div>

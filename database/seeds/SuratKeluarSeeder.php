@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AnalisisSeeder extends Seeder
+class SuratKeluarSeeder extends Seeder
 {
     /**
      * Run the database seeds.

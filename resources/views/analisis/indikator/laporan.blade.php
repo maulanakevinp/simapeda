@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($analisis->indikator as $item)
+                    @forelse ($analisis->indikator as $item)
                         <tr>
                             <td style="vertical-align: middle; text-align:center">{{ $loop->iteration }}</td>
                             <td style="vertical-align: middle">{{ $item->pertanyaan }}</td>
@@ -80,7 +80,9 @@
                             <td style="vertical-align: middle">{{ $item->tipe == 1 ? 'Pilihan' : ($item->tipe == 2 ? 'Isian' : ($item->tipe == 3 ? 'Angka' : '-')) }}</td>
                             <td style="vertical-align: middle">{{ $item->kategori->nama }}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr><td colspan="15" class="text-center">Data belum tersedia</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

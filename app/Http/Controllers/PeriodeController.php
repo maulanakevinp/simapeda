@@ -15,10 +15,10 @@ class PeriodeController extends Controller
      */
     public function index(Request $request, Analisis $analisis)
     {
-        $periode = Periode::latest()->paginate(10);
+        $periode = Periode::where('analisis_id', $analisis->id)->latest()->paginate(10);
 
         if ($request->cari) {
-            $periode = Periode::where('nama','like',"%{$request->cari}%")->paginate(10);
+            $periode = Periode::where('nama','like',"%{$request->cari}%")->where('analisis_id', $analisis->id)->latest()->paginate(10);
         }
 
         $periode->appends($request->only('cari'));

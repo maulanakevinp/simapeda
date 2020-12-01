@@ -74,6 +74,22 @@
             </li>
         </ul>
         <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Profil Desa</h6>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'identitas-desa') active @endif" href="{{ route('identitas-desa') }}">
+                    <i class="fas fa-id-card text-info"></i>
+                    <span class="nav-link-inner--text">Identitas Desa</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa.index') }}">
+                    <i class="fa fa-sitemap  text-success"></i>
+                    <span class="nav-link-inner--text">Pemerintahan Desa</span>
+                </a>
+            </li>
+        </ul>
+        <hr class="my-3">
         <h6 class="navbar-heading text-muted">Kelola Penduduk</h6>
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -92,6 +108,22 @@
                 <a class="nav-link @if (Request::segment(1) == 'calon-pemilih') active @endif" href="{{ route('penduduk.calon_pemilih') }}?tanggal={{ date('d-m-Y') }}">
                     <i class="fas fa-podcast text-success"></i>
                     <span class="nav-link-inner--text">Calon Pemilih</span>
+                </a>
+            </li>
+        </ul>
+        <hr class="my-3">
+        <h6 class="navbar-heading text-muted">Sekretariat</h6>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'surat-masuk') active @endif" href="{{ route('surat-masuk.index') }}">
+                    <i class="fas fa-file-import text-primary"></i>
+                    <span class="nav-link-inner--text">Kelola Surat Masuk</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'surat-keluar') active @endif" href="{{ route('surat-keluar.index') }}">
+                    <i class="fa fa-file-export  text-success"></i>
+                    <span class="nav-link-inner--text">Kelola Surat Keluar</span>
                 </a>
             </li>
         </ul>
@@ -138,22 +170,6 @@
                 <a class="nav-link @if (Request::segment(1) == 'slider') active @endif" href="{{ route('slider.index') }}">
                     <i class="fas fa-images text-purple"></i>
                     <span class="nav-link-inner--text">Kelola Slider</span>
-                </a>
-            </li>
-        </ul>
-        <hr class="my-3">
-        <h6 class="navbar-heading text-muted">Profil Desa</h6>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'identitas-desa') active @endif" href="{{ route('identitas-desa') }}">
-                    <i class="fas fa-id-card text-info"></i>
-                    <span class="nav-link-inner--text">Identitas Desa</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa.index') }}">
-                    <i class="fa fa-sitemap  text-success"></i>
-                    <span class="nav-link-inner--text">Pemerintahan Desa</span>
                 </a>
             </li>
         </ul>

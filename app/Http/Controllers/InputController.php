@@ -17,8 +17,18 @@ class InputController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Analisis $analisis, Periode $periode)
+    public function index(Request $request, Analisis $analisis, $periode)
     {
+        $periode = Periode::find($periode);
+
+        if (!$periode) {
+            return back()->with('error', 'Harap menambah periode terlebih dahulu');
+        }
+
+        if (count($analisis->indikator) == 0) {
+            return back()->with('error', 'Harap menambah indikator terlebih dahulu');
+        }
+
         if ($analisis->subjek == 1) {
             $penduduk = Penduduk::latest()->paginate(10);
         } else {

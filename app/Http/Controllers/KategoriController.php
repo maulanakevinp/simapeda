@@ -15,10 +15,10 @@ class KategoriController extends Controller
      */
     public function index(Request $request,Analisis $analisis)
     {
-        $kategori = Kategori::latest()->paginate(10);
+        $kategori = Kategori::where('analisis_id', $analisis->id)->latest()->paginate(10);
 
         if ($request->cari) {
-            $kategori = Kategori::where('nama','like',"%{$request->cari}%")->paginate(10);
+            $kategori = Kategori::where('nama','like',"%{$request->cari}%")->where('analisis_id', $analisis->id)->latest()->paginate(10);
         }
 
         $kategori->appends($request->only('cari'));

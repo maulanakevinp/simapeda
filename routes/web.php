@@ -123,6 +123,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::resource('periode', 'PeriodeController');
     });
     Route::get('/indikator/{indikator}/chart', 'IndikatorController@chart')->name('indikator.chart');
+
+    Route::resource('surat-masuk', 'SuratMasukController');
+    Route::resource('surat-keluar', 'SuratKeluarController');
 });
 
 Route::get('/{any}', 'ArtikelController@show')->where('any', '.*')->name('artikel.show');
