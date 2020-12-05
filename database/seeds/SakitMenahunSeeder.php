@@ -2,6 +2,7 @@
 
 use App\SakitMenahun;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SakitMenahunSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class SakitMenahunSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         SakitMenahun::truncate();
         SakitMenahun::create(['nama' => 'JANTUNG']);
         SakitMenahun::create(['nama' => 'LEVER']);
@@ -27,5 +29,6 @@ class SakitMenahunSeeder extends Seeder
         SakitMenahun::create(['nama' => 'TBC']);
         SakitMenahun::create(['nama' => 'ASTHMA']);
         SakitMenahun::create(['nama' => 'TIDAK ADA/TIDAK SAKIT']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

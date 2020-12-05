@@ -2,6 +2,7 @@
 
 use App\StatusRekam;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatusRekamSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class StatusRekamSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         StatusRekam::truncate();
         StatusRekam::create(['nama' => 'BELUM REKAM']);
         StatusRekam::create(['nama' => 'SUDAH REKAM']);
@@ -20,5 +22,6 @@ class StatusRekamSeeder extends Seeder
         StatusRekam::create(['nama' => 'CARD SHIPPED']);
         StatusRekam::create(['nama' => 'SENT FOR CARD PRINTING']);
         StatusRekam::create(['nama' => 'CARD ISSUED']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

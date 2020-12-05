@@ -2,6 +2,7 @@
 
 use App\JenisCacat;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class JenisCacatSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class JenisCacatSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         JenisCacat::truncate();
         JenisCacat::create(['nama' => 'CACAT FISIK']);
         JenisCacat::create(['nama' => 'CACAT NETRA/BUTA']);
@@ -20,5 +22,6 @@ class JenisCacatSeeder extends Seeder
         JenisCacat::create(['nama' => 'CACAT FISIK DAN MENTAL']);
         JenisCacat::create(['nama' => 'CACAT LAINNYA']);
         JenisCacat::create(['nama' => 'TIDAK CACAT']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

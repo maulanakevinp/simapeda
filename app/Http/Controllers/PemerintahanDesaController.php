@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Agama;
 use App\Desa;
-use App\Exports\PemerintahanDesaExport;
-use App\Imports\PemerintahanDesaImport;
 use App\PemerintahanDesa;
 use App\Pendidikan;
 use App\Penduduk;
@@ -224,23 +222,6 @@ class PemerintahanDesaController extends Controller
         return response()->json([
             'message' => 'Pemerintahan Desa berhasil dihapus'
         ]);
-    }
-
-    public function export()
-    {
-        return Excel::download(new PemerintahanDesaExport, 'pemerintahan-desa.xlsx');
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'xlsx' => ['required','file','max:2048']
-        ],[
-            'xlsx.required' => 'File wajib diisi'
-        ]);
-
-        Excel::import(new PemerintahanDesaImport, $request->file('xlsx'));
-        return redirect()->back()->with('success', 'File xlsx berhasil di import');
     }
 
     public function printAll(Request $request)

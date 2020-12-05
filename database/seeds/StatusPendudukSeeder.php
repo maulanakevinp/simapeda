@@ -2,6 +2,7 @@
 
 use App\StatusPenduduk;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatusPendudukSeeder extends Seeder
 {
@@ -12,9 +13,11 @@ class StatusPendudukSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         StatusPenduduk::truncate();
         StatusPenduduk::create(['nama' => 'TETAP']);
         StatusPenduduk::create(['nama' => 'TIDAK TETAP']);
         StatusPenduduk::create(['nama' => 'PENDATANG']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

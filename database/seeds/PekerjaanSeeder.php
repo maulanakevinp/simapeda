@@ -2,6 +2,7 @@
 
 use App\Pekerjaan;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PekerjaanSeeder extends Seeder
 {
@@ -12,9 +13,8 @@ class PekerjaanSeeder extends Seeder
      */
     public function run()
     {
-        foreach (Pekerjaan::all() as $item) {
-            $item->delete();
-        }
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Pekerjaan::truncate();
         Pekerjaan::create(['nama' => 'Ahli Pengobatan Alternatif']);
         Pekerjaan::create(['nama' => 'Akuntan']);
         Pekerjaan::create(['nama' => 'Anggota kabinet kementrian']);
@@ -110,5 +110,6 @@ class PekerjaanSeeder extends Seeder
         Pekerjaan::create(['nama' => 'Wartawan']);
         Pekerjaan::create(['nama' => 'Wiraswasta']);
         Pekerjaan::create(['nama' => 'Lainnya']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

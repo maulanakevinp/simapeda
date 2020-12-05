@@ -2,6 +2,7 @@
 
 use App\KodeSurat;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class KodeSuratSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class KodeSuratSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         KodeSurat::truncate();
         KodeSurat::create([
             'kode'      => '000',
@@ -11683,5 +11685,6 @@ class KodeSuratSeeder extends Seeder
             'nama'      => '-',
             'uraian'    => '-'
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

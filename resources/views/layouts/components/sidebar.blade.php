@@ -83,6 +83,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'dusun' || Request::segment(1) == 'tambah-dusun') active @endif" href="{{ route('dusun.index') }}">
+                    <i class="fas fa-map text-yellow"></i>
+                    <span class="nav-link-inner--text">Wilayah Administratif</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'pemerintahan-desa') active @endif" href="{{ route('pemerintahan-desa.index') }}">
                     <i class="fa fa-sitemap  text-success"></i>
                     <span class="nav-link-inner--text">Pemerintahan Desa</span>
@@ -126,16 +132,16 @@
                     <span class="nav-link-inner--text">Kelola Surat Keluar</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" @if (Request::segment(1) == 'inventaris') active @endif href="{{ route('tanah.index') }}" >
+                    <i class="fa fa-cubes text-warning"></i>
+                    <span class="nav-link-inner--text">Kelola Inventaris</span>
+                </a>
+            </li>
         </ul>
         <hr class="my-3">
         <h6 class="navbar-heading text-muted">Menu</h6>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'dusun' || Request::segment(1) == 'tambah-dusun') active @endif" href="{{ route('dusun.index') }}">
-                    <i class="fas fa-map-marker-alt text-yellow"></i>
-                    <span class="nav-link-inner--text">Kelola Dusun</span>
-                </a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'anggaran-realisasi' || Request::segment(1) == 'tambah-anggaran-realisasi') active @endif" href="{{ url('anggaran-realisasi?jenis=pendapatan&tahun='.date('Y')) }}">
                     <i class="fas fa-coins text-success"></i>

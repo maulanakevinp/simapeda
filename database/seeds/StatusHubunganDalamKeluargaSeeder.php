@@ -2,6 +2,7 @@
 
 use App\StatusHubunganDalamKeluarga;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatusHubunganDalamKeluargaSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class StatusHubunganDalamKeluargaSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         StatusHubunganDalamKeluarga::truncate();
         StatusHubunganDalamKeluarga::create(['nama' => 'Adik']);
         StatusHubunganDalamKeluarga::create(['nama' => 'Anak Angkat']);
@@ -35,5 +37,6 @@ class StatusHubunganDalamKeluargaSeeder extends Seeder
         StatusHubunganDalamKeluarga::create(['nama' => 'Suami']);
         StatusHubunganDalamKeluarga::create(['nama' => 'Tante']);
         StatusHubunganDalamKeluarga::create(['nama' => 'Teman']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

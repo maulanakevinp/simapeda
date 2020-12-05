@@ -2,6 +2,7 @@
 
 use App\Pendidikan;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PendidikanSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class PendidikanSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Pendidikan::truncate();
         Pendidikan::create(['nama' => 'Belum masuk TK/Kelompok Bermain',]);
         Pendidikan::create(['nama' => 'Sedang TK/Kelompok Bermain',]);
@@ -43,5 +45,6 @@ class PendidikanSeeder extends Seeder
         Pendidikan::create(['nama' => 'Tidak pernah sekolah']);
         Pendidikan::create(['nama' => 'Tidak dapat membaca dan menulis huruf Latin/Arab']);
         Pendidikan::create(['nama' => 'Tidak tamat SD/sederajat']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

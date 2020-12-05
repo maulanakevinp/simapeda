@@ -60,7 +60,7 @@
             </table>
         </div>
         <div style="">
-            <P style="border: 1px solid black; width:100px" class="text-center p-2">Model A.4</P>
+            <p style="border: 1px solid black; width:100px" class="text-center p-2">Model A.4</p>
         </div>
     </div>
     <table class="table table-bordered">

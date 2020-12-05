@@ -2,6 +2,7 @@
 
 use App\KelompokJenisAnggaran;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class KelompokJenisAnggaranSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class KelompokJenisAnggaranSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         KelompokJenisAnggaran::truncate();
         KelompokJenisAnggaran::create([
             'id'                => 41,
@@ -62,5 +64,6 @@ class KelompokJenisAnggaranSeeder extends Seeder
             'id'                => 62,
             'nama'              => 'Pengeluaran Biaya'
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

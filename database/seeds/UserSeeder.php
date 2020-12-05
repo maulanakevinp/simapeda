@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         User::truncate();
         User::create([
             'nama'              => 'Admin',
@@ -19,5 +21,6 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password'          => bcrypt('asdqwe123'),
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

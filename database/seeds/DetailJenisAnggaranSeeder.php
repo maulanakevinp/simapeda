@@ -2,6 +2,7 @@
 
 use App\DetailJenisAnggaran;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DetailJenisAnggaranSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class DetailJenisAnggaranSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DetailJenisAnggaran::truncate();
         DetailJenisAnggaran::create([
             'id'                        => 411,
@@ -203,6 +205,7 @@ class DetailJenisAnggaranSeeder extends Seeder
             'kelompok_jenis_anggaran_id'=> 62,
             'nama'                      => 'Pengeluaran Pembiayaan Lainnya'
         ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
 }

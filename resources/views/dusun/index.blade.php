@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dusun')
+@section('title', 'Wilayah Administratif')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,8 +15,8 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Dusun</h2>
-                                <p class="mb-0 text-sm">Kelola Dusun</p>
+                                <h2 class="mb-0">Wilayah Administratif</h2>
+                                <p class="mb-0 text-sm">Kelola Wilayah Administratif</p>
                             </div>
                             <div class="mb-3">
                                 <a href="{{ route('dusun.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Dusun</a>
@@ -51,18 +51,18 @@
             <table class="table table-hover table-sm table-stripped table-bordered">
                 <thead>
                     <th class="text-center" width="20px">#</th>
+                    <th class="text-center" width="100px">Opsi</th>
                     <th class="text-center">Nama Dusun</th>
-                    <th class="text-center">Opsi</th>
                 </thead>
                 <tbody>
                     @forelse ($dusun as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->nama }}</td>
                             <td>
                                 <a href="{{ route('dusun.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("dusun.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
+                            <td>{{ $item->nama }}</td>
                         </tr>
                     @empty
                         <tr>

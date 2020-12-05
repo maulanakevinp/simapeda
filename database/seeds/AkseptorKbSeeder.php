@@ -2,6 +2,7 @@
 
 use App\AkseptorKb;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AkseptorKbSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class AkseptorKbSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         AkseptorKb::truncate();
         AkseptorKb::create(['nama' => 'KB Alamiah/Kalender']);
         AkseptorKb::create(['nama' => 'Pil']);
@@ -24,5 +26,6 @@ class AkseptorKbSeeder extends Seeder
         AkseptorKb::create(['nama' => 'Obat Tradisional']);
         AkseptorKb::create(['nama' => 'Suntik']);
         AkseptorKb::create(['nama' => 'Lainnya']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
