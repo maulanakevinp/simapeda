@@ -108,6 +108,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/hapus-klasifikasi', 'KlasifikasiController@destroys')->name('klasifikasi.destroys');
     Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
     Route::delete('/hapus-tanah', 'InventarisTanahController@destroys')->name('tanah.destroys');
+    Route::delete('/hapus-peralatan', 'InventarisPeralatanController@destroys')->name('peralatan.destroys');
 
     Route::prefix('analisis/{analisis}')->group(function () {
         Route::get('/input/{periode}', 'InputController@index')->name('input.index');
@@ -136,6 +137,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
             Route::patch('mutasi/{tanah}', 'InventarisTanahController@mutasi_update')->name("tanah.mutasi.update");
         });
         Route::resource('tanah', 'InventarisTanahController');
+
+        Route::prefix('peralatan')->group(function () {
+            Route::post('print', 'InventarisPeralatanController@print')->name("peralatan.print");
+            Route::get('mutasi', 'InventarisPeralatanController@mutasi')->name("peralatan.mutasi");
+            Route::get('mutasi/{peralatan}/edit', 'InventarisPeralatanController@mutasi_edit')->name("peralatan.mutasi.edit");
+            Route::patch('mutasi/{peralatan}', 'InventarisPeralatanController@mutasi_update')->name("peralatan.mutasi.update");
+        });
+        Route::resource('peralatan', 'InventarisPeralatanController');
     });
 });
 

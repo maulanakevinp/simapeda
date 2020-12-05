@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Barang;
 use App\Desa;
-use App\InventarisTanah;
+use App\InventarisPeralatan;
 use App\PemerintahanDesa;
 use Illuminate\Http\Request;
 
-class InventarisTanahController extends Controller
+class InventarisPeralatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,22 +17,22 @@ class InventarisTanahController extends Controller
      */
     public function index(Request $request)
     {
-        $tanah = InventarisTanah::where('mutasi',0)->latest()->paginate(10);
+        $peralatan = InventarisPeralatan::where('mutasi',0)->latest()->paginate(10);
 
         if ($request->cari) {
-            $tanah = InventarisTanah::where('nama_barang','like',"%{$request->cari}%")->where('mutasi',0)->latest()->paginate(10);
+            $peralatan = InventarisPeralatan::where('nama_barang','like',"%{$request->cari}%")->where('mutasi',0)->latest()->paginate(10);
         }
 
         $total = 0;
 
-        foreach (InventarisTanah::where('mutasi',0)->get() as $item) {
+        foreach (InventarisPeralatan::where('mutasi',0)->get() as $item) {
             $total += $item->harga;
         }
 
-        $tahun = InventarisTanah::where('mutasi',0)->latest()->get()->groupBy('tahun_pengadaan');
+        $tahun = InventarisPeralatan::where('mutasi',0)->latest()->get()->groupBy('tahun_pembelian');
         $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
-        $tanah->appends($request->only('cari'));
-        return view('inventaris.tanah.index', compact('tanah','total','tahun','pemerintahan_desa'));
+        $peralatan->appends($request->only('cari'));
+        return view('inventaris.peralatan.index', compact('peralatan','total','tahun','pemerintahan_desa'));
     }
     /**
      * Display a listing of the resource.
@@ -41,20 +41,20 @@ class InventarisTanahController extends Controller
      */
     public function mutasi(Request $request)
     {
-        $tanah = InventarisTanah::where('mutasi',1)->latest()->paginate(10);
+        $peralatan = InventarisPeralatan::where('mutasi',1)->latest()->paginate(10);
 
         if ($request->cari) {
-            $tanah = InventarisTanah::where('nama_barang','like',"%{$request->cari}%")->where('mutasi',1)->latest()->paginate(10);
+            $peralatan = InventarisPeralatan::where('nama_barang','like',"%{$request->cari}%")->where('mutasi',1)->latest()->paginate(10);
         }
 
         $total = 0;
 
-        foreach (InventarisTanah::where('mutasi',1)->get() as $item) {
+        foreach (InventarisPeralatan::where('mutasi',1)->get() as $item) {
             $total += $item->harga;
         }
 
-        $tanah->appends($request->only('cari'));
-        return view('inventaris.tanah.mutasi.index', compact('tanah','total'));
+        $peralatan->appends($request->only('cari'));
+        return view('inventaris.peralatan.mutasi.index', compact('peralatan','total'));
     }
 
     /**
@@ -64,9 +64,9 @@ class InventarisTanahController extends Controller
      */
     public function create()
     {
-        $barang = Barang::where('golongan',1)->get();
+        $barang = Barang::where('golongan',2)->get();
         $desa = Desa::find(1);
-        return view('inventaris.tanah.create', compact('barang','desa'));
+        return view('inventaris.peralatan.create', compact('barang','desa'));
     }
 
     private function validator()
@@ -75,14 +75,16 @@ class InventarisTanahController extends Controller
             'nama_barang'           => ['required','string','max:128'],
             'kode_barang'           => ['required','string','max:64'],
             'nomor_register'        => ['required','string','max:64'],
-            'luas_peralatan'        => ['required','numeric','min:0'],
-            'tahun_pengadaan'       => ['required','digits:4'],
-            'letak_atau_alamat'     => ['required'],
-            'hak_peralatan'         => ['required','string','max:32'],
+            'merk_atau_type'        => ['required','string','max:128'],
+            'ukuran_atau_cc'        => ['required'],
+            'bahan'                 => ['required'],
+            'tahun_pembelian'       => ['required','digits:4'],
+            'nomor_pabrik'          => ['required','string','max:128'],
+            'nomor_rangka'          => ['required','string','max:128'],
+            'nomor_mesin'           => ['required','string','max:128'],
+            'nomor_polisi'          => ['required','string','max:128'],
+            'bpkb'                  => ['required','string','max:128'],
             'penggunaan_barang'     => ['required','digits:2'],
-            'tanggal_sertifikat'    => ['required','date'],
-            'nomor_sertifikat'      => ['required','string','max:128'],
-            'penggunaan'            => ['required','string','max:64'],
             'asal_usul'             => ['required','string','max:64'],
             'harga'                 => ['required','numeric','min:1'],
             'keterangan'            => ['required'],
@@ -98,69 +100,63 @@ class InventarisTanahController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate($this->validator());
-
         $data['mutasi'] = 0;
-
-        InventarisTanah::create($data);
-
+        InventarisPeralatan::create($data);
         return response()->json([
-            'message'   => 'Inventaris tanah berhasil ditambahkan',
-            'redirect'  => route('tanah.index')
+            'message'   => 'Inventaris peralatan berhasil ditambahkan',
+            'redirect'  => route('peralatan.index')
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function show(InventarisTanah $tanah)
+    public function show(InventarisPeralatan $peralatan)
     {
         $desa = Desa::find(1);
-        return view('inventaris.tanah.show', compact('tanah','desa'));
+        return view('inventaris.peralatan.show', compact('peralatan','desa'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function edit(InventarisTanah $tanah)
+    public function edit(InventarisPeralatan $peralatan)
     {
-        $barang = Barang::where('golongan',1)->get();
+        $barang = Barang::where('golongan',2)->get();
         $desa = Desa::find(1);
-        return view('inventaris.tanah.edit', compact('tanah','barang','desa'));
+        return view('inventaris.peralatan.edit', compact('peralatan','barang','desa'));
     }
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function mutasi_edit(InventarisTanah $tanah)
+    public function mutasi_edit(InventarisPeralatan $peralatan)
     {
-        return view('inventaris.tanah.mutasi.edit', compact('tanah'));
+        return view('inventaris.peralatan.mutasi.edit', compact('peralatan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InventarisTanah $tanah)
+    public function update(Request $request, InventarisPeralatan $peralatan)
     {
         $data = $request->validate($this->validator());
-
         $data['mutasi'] = 0;
-
-        $tanah->update($data);
-
+        $peralatan->update($data);
         return response()->json([
-            'message'   => 'Inventaris tanah berhasil diperbarui',
+            'message'   => 'Inventaris peralatan berhasil diperbarui',
         ]);
     }
 
@@ -168,14 +164,14 @@ class InventarisTanahController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function mutasi_update(Request $request, InventarisTanah $tanah)
+    public function mutasi_update(Request $request, InventarisPeralatan $peralatan)
     {
         $validator = [
             'jenis_mutasi'      => ['required','string','max:64'],
-            'tahun_mutasi'      => ['required','date','after:'.$tanah->tanggal_sertifikat],
+            'tahun_mutasi'      => ['required','date'],
             'mutasi'            => ['required','numeric'],
             'keterangan_mutasi' => ['required'],
         ];
@@ -190,36 +186,36 @@ class InventarisTanahController extends Controller
 
         $data = $request->validate($validator);
 
-        $tanah->update($data);
+        $peralatan->update($data);
 
         return response()->json([
-            'message'   => 'Mutasi inventaris tanah berhasil diperbarui',
+            'message'   => 'Mutasi inventaris peralatan berhasil diperbarui',
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InventarisTanah $tanah)
+    public function destroy(InventarisPeralatan $peralatan)
     {
-        $tanah->delete();
-        return back()->with('success','Inventaris tanah berhasil dihapus');
+        $peralatan->delete();
+        return back()->with('success','Inventaris peralatan berhasil dihapus');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\InventarisTanah  $tanah
+     * @param  \App\InventarisPeralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
     public function destroys(Request $request)
     {
-        InventarisTanah::whereIn('id', $request->id)->delete();
+        InventarisPeralatan::whereIn('id', $request->id)->delete();
         return response()->json([
-            'message'   => 'Inventaris tanah berhasil dihapus'
+            'message'   => 'Inventaris peralatan berhasil dihapus'
         ]);
     }
 
@@ -236,16 +232,16 @@ class InventarisTanahController extends Controller
         $total = 0;
 
         if ($tahun) {
-            $tanah = InventarisTanah::where('mutasi',0)->where('tahun_pengadaan', $tahun)->latest()->get();
+            $peralatan = InventarisPeralatan::where('mutasi',0)->where('tahun_pembelian', $tahun)->latest()->get();
 
         } else {
-            $tanah = InventarisTanah::where('mutasi',0)->latest()->get();
+            $peralatan = InventarisPeralatan::where('mutasi',0)->latest()->get();
         }
 
-        foreach ($tanah as $item) {
+        foreach ($peralatan as $item) {
             $total += $item->harga;
         }
 
-        return view('inventaris.tanah.print', compact('desa','ditandatangani','tanah','tahun','total'));
+        return view('inventaris.peralatan.print', compact('desa','ditandatangani','peralatan','tahun','total'));
     }
 }
