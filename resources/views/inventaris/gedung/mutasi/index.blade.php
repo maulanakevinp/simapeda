@@ -58,8 +58,8 @@
 <div class="card shadow">
     <div class="card-header">
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
-            <div class="mb-1">
-                <h2 class="mb-0">{{ request()->segment(3) == 'mutasi' ? 'Mutasi Inventaris' : 'Daftar Inventaris' }}</h2>
+            <div class="mb-1 font-weight-bold">
+                {{ request()->segment(3) == 'mutasi' ? 'Mutasi Inventaris' : 'Daftar Inventaris' }}
             </div>
             <div class="mb-1">
                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-sm btn-danger" id="delete" name="delete" >

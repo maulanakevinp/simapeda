@@ -103,7 +103,7 @@ class InventarisPeralatanController extends Controller
         $data['mutasi'] = 0;
         InventarisPeralatan::create($data);
         return response()->json([
-            'message'   => 'Inventaris peralatan berhasil ditambahkan',
+            'message'   => 'Inventaris peralatan dan mesin berhasil ditambahkan',
             'redirect'  => route('peralatan.index')
         ]);
     }
@@ -156,7 +156,7 @@ class InventarisPeralatanController extends Controller
         $data['mutasi'] = 0;
         $peralatan->update($data);
         return response()->json([
-            'message'   => 'Inventaris peralatan berhasil diperbarui',
+            'message'   => 'Inventaris peralatan dan mesin berhasil diperbarui',
         ]);
     }
 
@@ -189,7 +189,7 @@ class InventarisPeralatanController extends Controller
         $peralatan->update($data);
 
         return response()->json([
-            'message'   => 'Mutasi inventaris peralatan berhasil diperbarui',
+            'message'   => 'Mutasi inventaris peralatan dan mesin berhasil diperbarui',
         ]);
     }
 
@@ -202,7 +202,7 @@ class InventarisPeralatanController extends Controller
     public function destroy(InventarisPeralatan $peralatan)
     {
         $peralatan->delete();
-        return back()->with('success','Inventaris peralatan berhasil dihapus');
+        return back()->with('success','Inventaris peralatan dan mesin berhasil dihapus');
     }
 
     /**
@@ -215,7 +215,7 @@ class InventarisPeralatanController extends Controller
     {
         InventarisPeralatan::whereIn('id', $request->id)->delete();
         return response()->json([
-            'message'   => 'Inventaris peralatan berhasil dihapus'
+            'message'   => 'Inventaris peralatan dan mesin berhasil dihapus'
         ]);
     }
 

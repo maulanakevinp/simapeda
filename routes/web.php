@@ -110,6 +110,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/hapus-tanah', 'InventarisTanahController@destroys')->name('tanah.destroys');
     Route::delete('/hapus-peralatan', 'InventarisPeralatanController@destroys')->name('peralatan.destroys');
     Route::delete('/hapus-gedung', 'InventarisGedungController@destroys')->name('gedung.destroys');
+    Route::delete('/hapus-jalan', 'InventarisJalanController@destroys')->name('jalan.destroys');
 
     Route::prefix('analisis/{analisis}')->group(function () {
         Route::get('/input/{periode}', 'InputController@index')->name('input.index');
@@ -154,6 +155,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
             Route::patch('mutasi/{gedung}', 'InventarisGedungController@mutasi_update')->name("gedung.mutasi.update");
         });
         Route::resource('gedung', 'InventarisGedungController');
+
+        Route::prefix('jalan')->group(function () {
+            Route::post('print', 'InventarisJalanController@print')->name("jalan.print");
+            Route::get('mutasi', 'InventarisJalanController@mutasi')->name("jalan.mutasi");
+            Route::get('mutasi/{jalan}/edit', 'InventarisJalanController@mutasi_edit')->name("jalan.mutasi.edit");
+            Route::patch('mutasi/{jalan}', 'InventarisJalanController@mutasi_update')->name("jalan.mutasi.update");
+        });
+        Route::resource('jalan', 'InventarisJalanController');
     });
 });
 

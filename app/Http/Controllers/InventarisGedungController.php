@@ -106,7 +106,7 @@ class InventarisGedungController extends Controller
         $data['mutasi'] = 0;
         InventarisGedung::create($data);
         return response()->json([
-            'message'   => 'Inventaris gedung berhasil ditambahkan',
+            'message'   => 'Inventaris gedung dan bangunan berhasil ditambahkan',
             'redirect'  => route('gedung.index')
         ]);
     }
@@ -159,7 +159,7 @@ class InventarisGedungController extends Controller
         $data['mutasi'] = 0;
         $gedung->update($data);
         return response()->json([
-            'message'   => 'Inventaris gedung berhasil diperbarui',
+            'message'   => 'Inventaris gedung dan bangunan berhasil diperbarui',
         ]);
     }
 
@@ -192,7 +192,7 @@ class InventarisGedungController extends Controller
         $gedung->update($data);
 
         return response()->json([
-            'message'   => 'Mutasi inventaris gedung berhasil diperbarui',
+            'message'   => 'Mutasi inventaris gedung dan bangunan berhasil diperbarui',
         ]);
     }
 
@@ -205,7 +205,7 @@ class InventarisGedungController extends Controller
     public function destroy(InventarisGedung $gedung)
     {
         $gedung->delete();
-        return back()->with('success','Inventaris gedung berhasil dihapus');
+        return back()->with('success','Inventaris gedung dan bangunan berhasil dihapus');
     }
 
     /**
@@ -218,7 +218,7 @@ class InventarisGedungController extends Controller
     {
         InventarisGedung::whereIn('id', $request->id)->delete();
         return response()->json([
-            'message'   => 'Inventaris gedung berhasil dihapus'
+            'message'   => 'Inventaris gedung dan bangunan berhasil dihapus'
         ]);
     }
 
