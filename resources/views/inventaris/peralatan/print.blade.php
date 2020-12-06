@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
-    <title>KIB A</title>
+    <title>KIB B</title>
     <link rel="stylesheet" href="{{asset('js/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="icon" href="{{ url(Storage::url($desa->logo)) }}" type="image/png">
     <style type="text/css" media="print">
@@ -39,7 +39,7 @@
 
 <body onload="window.print()" oncontextmenu="return false;">
     <div class="text-center mb-3" style="margin-top:20px">
-        <h5 class="font-weight-bold text-uppercase">KARTU INVENTARIS BARANG (KIB)<br>A. TANAH</h5>
+        <h5 class="font-weight-bold text-uppercase">KARTU INVENTARIS BARANG (KIB)<br>B. Peralatan Dan Mesin</h5>
     </div>
     <div class="row">
         <div class="col-4">
@@ -78,7 +78,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th rowspan="2" style="vertical-align: middle" class="text-center" width="10px">NO</th>
+                <th rowspan="2" style="vertical-align: middle" class="text-center" width="10px">No</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Jenis Barang / Nama Barang</th>
                 <th rowspan="1" colspan="2" style="vertical-align: middle" class="text-center">Nomor</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Merk/Type</th>

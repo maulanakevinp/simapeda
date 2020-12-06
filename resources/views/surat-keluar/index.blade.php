@@ -54,8 +54,8 @@
             <table class="table table-hover table-sm table-stripped table-bordered">
                 <thead>
                     <th class="text-center" width="20px">#</th>
-                    <th class="text-center">No. Urut</th>
-                    <th class="text-center">Opsi</th>
+                    <th class="text-center" width="20px">No. Urut</th>
+                    <th class="text-center" width="100px">Opsi</th>
                     <th class="text-center">Tanggal Surat</th>
                     <th class="text-center">Ditujukan Kepada</th>
                     <th class="text-center">Isi Singkat</th>

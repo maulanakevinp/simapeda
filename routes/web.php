@@ -109,6 +109,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
     Route::delete('/hapus-tanah', 'InventarisTanahController@destroys')->name('tanah.destroys');
     Route::delete('/hapus-peralatan', 'InventarisPeralatanController@destroys')->name('peralatan.destroys');
+    Route::delete('/hapus-gedung', 'InventarisGedungController@destroys')->name('gedung.destroys');
 
     Route::prefix('analisis/{analisis}')->group(function () {
         Route::get('/input/{periode}', 'InputController@index')->name('input.index');
@@ -145,6 +146,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
             Route::patch('mutasi/{peralatan}', 'InventarisPeralatanController@mutasi_update')->name("peralatan.mutasi.update");
         });
         Route::resource('peralatan', 'InventarisPeralatanController');
+
+        Route::prefix('gedung')->group(function () {
+            Route::post('print', 'InventarisGedungController@print')->name("gedung.print");
+            Route::get('mutasi', 'InventarisGedungController@mutasi')->name("gedung.mutasi");
+            Route::get('mutasi/{gedung}/edit', 'InventarisGedungController@mutasi_edit')->name("gedung.mutasi.edit");
+            Route::patch('mutasi/{gedung}', 'InventarisGedungController@mutasi_update')->name("gedung.mutasi.update");
+        });
+        Route::resource('gedung', 'InventarisGedungController');
     });
 });
 

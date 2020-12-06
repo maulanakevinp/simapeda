@@ -74,7 +74,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-sm table-stripped table-bordered">
+            <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
                     <tr>
                         <th style="vertical-align: middle" rowspan="2" class="text-center" width="10px">

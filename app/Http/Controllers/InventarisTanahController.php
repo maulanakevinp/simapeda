@@ -84,7 +84,7 @@ class InventarisTanahController extends Controller
             'nomor_sertifikat'      => ['required','string','max:128'],
             'penggunaan'            => ['required','string','max:64'],
             'asal_usul'             => ['required','string','max:64'],
-            'harga'                 => ['required','numeric','min:1'],
+            'harga'                 => ['required','numeric','min:0'],
             'keterangan'            => ['required'],
         ];
     }

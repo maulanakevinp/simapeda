@@ -86,7 +86,7 @@ class InventarisPeralatanController extends Controller
             'bpkb'                  => ['required','string','max:128'],
             'penggunaan_barang'     => ['required','digits:2'],
             'asal_usul'             => ['required','string','max:64'],
-            'harga'                 => ['required','numeric','min:1'],
+            'harga'                 => ['required','numeric','min:0'],
             'keterangan'            => ['required'],
         ];
     }

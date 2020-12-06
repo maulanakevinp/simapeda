@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tanah')
+@section('title', 'Gedung Dan Bangunan')
 
 @section('content-header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
@@ -11,7 +11,7 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Tanah</h2>
+                                <h2 class="mb-0">Gedung Dan Bangunan</h2>
                                 <p class="mb-0 text-sm">Kelola Inventaris</p>
                             </div>
                             <div class="mb-3">
@@ -26,8 +26,8 @@
                                         Inventaris
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item active" href="{{ route('tanah.index') }}">Daftar Inventaris</a>
-                                        <a class="dropdown-item" href="{{ route('tanah.mutasi') }}">Mutasi Inventaris</a>
+                                        <a class="dropdown-item active" href="{{ route('gedung.index') }}">Daftar Inventaris</a>
+                                        <a class="dropdown-item" href="{{ route('gedung.mutasi') }}">Mutasi Inventaris</a>
                                     </div>
                                 </div>
                             </div>
@@ -65,8 +65,8 @@
                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-sm btn-danger" id="delete" name="delete" >
                     <i class="fas fa-trash"></i>
                 </button>
-                <a href="{{ route('tanah.create') }}" class="btn btn-sm btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
-                @if (count($tanah) > 0)
+                <a href="{{ route('gedung.create') }}" class="btn btn-sm btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                @if (count($gedung) > 0)
                     <a href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-sm btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
                 @endif
             </div>
@@ -77,40 +77,45 @@
             <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center" width="10px">
+                        <th style="vertical-align: middle" rowspan="2" class="text-center" width="10px">
                             <input type="checkbox" name="check_all" id="check_all">
                         </th>
-                        <th class="text-center" width="10px">No</th>
-                        <th class="text-center" width="50px">Opsi</th>
-                        <th class="text-center">Nama Barang</th>
-                        <th class="text-center">Kode Barang</th>
-                        <th class="text-center">Luas (M<sup>2</sup>) </th>
-                        <th class="text-center">Tahun Pengadaan</th>
-                        <th class="text-center">Letak/Alamat</th>
-                        <th class="text-center">Nomor Sertifikat</th>
-                        <th class="text-center">Asal Usul</th>
-                        <th class="text-center">Harga</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center" width="10px">No</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center" width="50px">Opsi</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Nama Barang</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Kode Barang</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Kondisi Bangunan</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Letak/Lokasi</th>
+                        <th style="vertical-align: middle" rowspan="1" colspan="2" class="text-center">Dokumen</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Status Tanah</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Asal Usul</th>
+                        <th style="vertical-align: middle" rowspan="2" class="text-center">Harga</th>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align: middle" rowspan="1" class="text-center">Tanggal</th>
+                        <th style="vertical-align: middle" rowspan="1" class="text-center">Nomor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($tanah as $item)
+                    @forelse ($gedung as $item)
                         <tr>
                             <td style="vertical-align: middle">
-                                <input type="checkbox" class="tanah-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
+                                <input type="checkbox" class="gedung-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
-                            <td style="vertical-align: middle" class="text-center">{{ ($tanah->currentpage()-1) * $tanah->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($gedung->currentpage()-1) * $gedung->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('tanah.mutasi.edit',$item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Mutasi"><i class="fas fa-external-link-alt"></i></a>
-                                <a href="{{ route('tanah.show',$item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('tanah.edit',$item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_barang }}" data-action="{{ route("tanah.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('gedung.mutasi.edit',$item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Mutasi"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="{{ route('gedung.show',$item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('gedung.edit',$item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_barang }}" data-action="{{ route("gedung.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama_barang }}</td>
                             <td style="vertical-align: middle">{{ $item->kode_barang }}</td>
-                            <td style="vertical-align: middle">{{ $item->luas_tanah }}</td>
-                            <td style="vertical-align: middle; text-align: center">{{ $item->tahun_pengadaan }}</td>
-                            <td style="vertical-align: middle">{{ $item->letak_atau_alamat }}</td>
-                            <td style="vertical-align: middle">{{ $item->nomor_sertifikat }}</td>
+                            <td style="vertical-align: middle">{{ $item->kondisi_bangunan }}</td>
+                            <td style="vertical-align: middle">{{ $item->letak_atau_lokasi }}</td>
+                            <td style="vertical-align: middle">{{ tgl($item->tanggal_dokumen_bangunan) }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor_kode_tanah }}</td>
+                            <td style="vertical-align: middle">{{ $item->status_tanah }}</td>
                             <td style="vertical-align: middle">{{ $item->asal_usul }}</td>
                             <td style="vertical-align: middle; text-align: right">Rp. {{ substr(number_format($item->harga, 2, ',', '.'),0,-3) }}</td>
                         </tr>
@@ -122,12 +127,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="10" class="text-right">Total</th>
+                        <th colspan="11" class="text-right">Total</th>
                         <th class="text-right">Rp. {{ substr(number_format($total, 2, ',', '.'),0,-3) }}</th>
                     </tr>
                 </tfoot>
             </table>
-            {{ $tanah->links('layouts.components.pagination') }}
+            {{ $gedung->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>
@@ -137,7 +142,7 @@
         <div class="modal-content bg-gradient-danger">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus Tanah?</h6>
+                <h6 class="modal-title" id="modal-title-delete">Hapus Gedung Dan Bangunan?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -148,7 +153,7 @@
                 <div class="py-3 text-center">
                     <i class="ni ni-bell-55 ni-3x"></i>
                     <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus tanah akan menghapus semua data yang dimilikinya</p>
+                    <p>Menghapus gedung akan menghapus semua data yang dimilikinya</p>
                     <p><strong id="nama-hapus"></strong></p>
                 </div>
 
@@ -177,7 +182,7 @@
             </div>
 
             <div class="modal-body pt-0">
-                <form action="{{ route("tanah.print") }}" method="POST" >
+                <form action="{{ route("gedung.print") }}" method="POST" >
                     @csrf
                     <div class="form-group">
                         <label class="form-control-label" for="tahun">Tahun</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
@@ -221,12 +226,12 @@
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-                $(".tanah-checkbox:checked").each(function () {
+                $(".gedung-checkbox:checked").each(function () {
                     id.push($(this).val());
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('tanah.destroys') }}",
+                        url     : "{{ route('gedung.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",
@@ -238,16 +243,16 @@
                         }
                     });
                 } else {
-                    alertFail('Harap pilih salah satu tanah');
+                    alertFail('Harap pilih salah satu gedung');
                 }
             }
         });
 
         $("#check_all").click(function(){
             if (this.checked) {
-                $(".tanah-checkbox").prop('checked',true);
+                $(".gedung-checkbox").prop('checked',true);
             } else {
-                $(".tanah-checkbox").prop('checked',false);
+                $(".gedung-checkbox").prop('checked',false);
             }
         });
     });

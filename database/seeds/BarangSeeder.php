@@ -8573,8 +8573,8 @@ class BarangSeeder extends Seeder
             'kelompok'          => '02',
             'sub_kelompok'      => '03',
             'sub_sub_kelompok'  => '999',
-            'nama'              => 'PERKAKAS BENGKEL SERVICE LAINNYA (ALAT BENGKEL TAK BERMESIN)
-        ']);
+            'nama'              => 'PERKAKAS BENGKEL SERVICE LAINNYA (ALAT BENGKEL TAK BERMESIN)'
+        ]);
         Barang::create([
             'golongan'          => '2',
             'bidang'            => '03',
