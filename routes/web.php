@@ -134,6 +134,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::resource('surat-keluar', 'SuratKeluarController');
 
     Route::prefix('inventaris')->group(function () {
+        Route::get('laporan', 'InventarisLaporanController@index')->name("laporan.index");
+        Route::post('laporan/print', 'InventarisLaporanController@print')->name("laporan.print");
         Route::prefix('tanah')->group(function () {
             Route::post('print', 'InventarisTanahController@print')->name("tanah.print");
             Route::get('mutasi', 'InventarisTanahController@mutasi')->name("tanah.mutasi");

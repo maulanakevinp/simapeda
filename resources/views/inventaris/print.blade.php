@@ -39,7 +39,7 @@
 
 <body onload="window.print()" oncontextmenu="return false;">
     <div class="text-center mb-3" style="margin-top:20px">
-        <h5 class="font-weight-bold text-uppercase">KARTU INVENTARIS BARANG (KIB)<br>@yield('kategori')</h5>
+        <h5 class="font-weight-bold text-uppercase">@yield('judul')</h5>
     </div>
     <div class="row">
         <div class="col-4">

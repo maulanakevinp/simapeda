@@ -1,6 +1,8 @@
 @extends('inventaris.print')
 @section('title', 'KIB B')
-@section('kategori', 'B. Peralatan Dan Mesin')
+@section('judul')
+KARTU INVENTARIS BARANG (KIB)<br>B. Peralatan Dan Mesin
+@endsection
 @section('table')
     <table class="table table-bordered">
         <thead>
