@@ -154,18 +154,6 @@
     -ms-transition: all .3s ease-in-out;
 }
 
-@media(max-width:767px) {
-    .cari-none {
-        display: block;
-    }
-}
-
-@media(min-width:768px) {
-    .cari-none {
-        display: none;
-    }
-}
-
 .block-with-text {
     display: block;
     display: -webkit-box;

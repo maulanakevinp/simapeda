@@ -61,7 +61,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link @if (Request::segment(1) == 'dashboard') active @endif" href="{{ route('dashboard') }}">
                     <i class="fas fa-tachometer-alt text-blue"></i>
                     <span class="nav-link-inner--text">Dashboard</span>
                 </a>
@@ -133,7 +133,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" @if (Request::segment(1) == 'inventaris') active @endif href="{{ route('tanah.index') }}" >
+                <a class="nav-link @if (Request::segment(1) == 'inventaris') active @endif" href="{{ route('tanah.index') }}" >
                     <i class="fa fa-cubes text-warning"></i>
                     <span class="nav-link-inner--text">Kelola Inventaris</span>
                 </a>

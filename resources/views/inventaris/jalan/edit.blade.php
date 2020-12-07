@@ -209,7 +209,7 @@
             $('#kode_barang').val("{{ $desa->kode_provinsi .'.'. $desa->kode_kabupaten .'.'. $desa->kode_kecamatan .'.'. $desa->kode_desa }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
         });
 
-        $("#nama_barang").change(function(){
+        $("#barang").change(function(){
             $('#nomor_register').val($('#barang').val().split("_").pop());
             $('#nama_barang').val($('#barang').val().slice(0,-22));
         });

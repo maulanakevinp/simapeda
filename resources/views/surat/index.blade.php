@@ -22,16 +22,6 @@
                                 <a href="{{ route('surat.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Surat</a>
                             </div>
                         </div>
-                        <form class="navbar-search mt-3 cari-none">
-                            <div class="form-group mb-0">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Cari ...." type="text" name="cari" value="{{ request('cari') }}">
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -47,7 +37,20 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" placeholder="Cari ...." type="text" name="cari" value="{{ request('cari') }}">
+            <input class="form-control" placeholder="Cari ...." type="search" name="cari" value="{{ request('cari') }}">
+        </div>
+    </div>
+</form>
+@endsection
+
+@section('form-search-mobile')
+<form class="mt-4 mb-3 d-md-none">
+    <div class="input-group input-group-rounded input-group-merge">
+        <input type="search" name="cari" class="form-control form-control-rounded form-control-prepended" placeholder="cari" aria-label="cari" value="{{ request('cari') }}">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span class="fa fa-search"></span>
+            </div>
         </div>
     </div>
 </form>
