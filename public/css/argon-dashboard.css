@@ -16894,6 +16894,8 @@ textarea[resize="horizontal"] {
 
 .navbar-vertical .navbar-nav .nav-link.active {
   position: relative;
+  background: #f6f9fc;
+  font-weight: 600;
 }
 
 .navbar-vertical .navbar-nav .nav-link.active:before {

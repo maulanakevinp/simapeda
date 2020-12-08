@@ -167,7 +167,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'gallery') active @endif" href="{{ route('gallery.index') }}">
+                <a class="nav-link @if (Request::segment(1) == 'kelola-gallery') active @endif" href="{{ route('gallery.index') }}">
                     <i class="fas fa-images text-orange"></i>
                     <span class="nav-link-inner--text">Kelola Gallery</span>
                 </a>
