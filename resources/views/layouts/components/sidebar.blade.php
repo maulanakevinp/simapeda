@@ -133,6 +133,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'produk-hukum') active @endif" href="{{ route('sk-kades.index') }}">
+                    <i class="fa fa-book-reader text-info"></i>
+                    <span class="nav-link-inner--text">Kelola Produk Hukum</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'inventaris') active @endif" href="{{ route('tanah.index') }}" >
                     <i class="fa fa-cubes text-warning"></i>
                     <span class="nav-link-inner--text">Kelola Inventaris</span>

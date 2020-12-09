@@ -79,7 +79,7 @@
                     @forelse ($surat_masuk as $item)
                         <tr>
                             <td style="vertical-align: middle">
-                                <input type="checkbox" class="analisis-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
+                                <input type="checkbox" class="surat-masuk-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
                             <td class="text-center">{{ $item->nomor_urut }}</td>
                             <td>
@@ -147,12 +147,12 @@
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-                $(".analisis-checkbox:checked").each(function () {
+                $(".surat-masuk-checkbox:checked").each(function () {
                     id.push($(this).val());
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('analisis.destroys') }}",
+                        url     : "{{ route('surat-masuk.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",
@@ -164,16 +164,16 @@
                         }
                     });
                 } else {
-                    alertFail('Harap pilih salah satu analisis');
+                    alertFail('Harap pilih salah satu surat masuk');
                 }
             }
         });
 
         $("#check_all").click(function(){
             if (this.checked) {
-                $(".analisis-checkbox").prop('checked',true);
+                $(".surat-masuk-checkbox").prop('checked',true);
             } else {
-                $(".analisis-checkbox").prop('checked',false);
+                $(".surat-masuk-checkbox").prop('checked',false);
             }
         });
     });
