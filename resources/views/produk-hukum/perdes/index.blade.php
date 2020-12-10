@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'SK Kades')
+@section('title', 'Perdes')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,14 +15,14 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">SK Kades</h2>
+                                <h2 class="mb-0">Perdes</h2>
                                 <p class="mb-0 text-sm">Kelola Produk Hukum</p>
                             </div>
                             <div class="mb-3">
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a href="{{ route('sk-kades.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('perdes.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -79,24 +79,24 @@
                     <th class="text-center">Dimuat Pada</th>
                 </thead>
                 <tbody>
-                    @forelse ($sk_kades as $item)
+                    @forelse ($perdes as $item)
                         <tr>
                             <td style="vertical-align: middle">
-                                <input type="checkbox" class="sk-kades-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
+                                <input type="checkbox" class="perdes-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
-                            <td style="vertical-align: middle" class="text-center">{{ ($sk_kades->currentpage()-1) * $sk_kades->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($perdes->currentpage()-1) * $perdes->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('sk-kades.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('perdes.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if ($item->aktif == 1)
-                                    <a href="{{ route('sk-kades.nonaktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Non Aktifkan"><i class="fas fa-unlock"></i></a>
+                                    <a href="{{ route('perdes.nonaktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Non Aktifkan"><i class="fas fa-unlock"></i></a>
                                 @else
-                                    <a href="{{ route('sk-kades.aktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Aktifkan"><i class="fas fa-lock"></i></a>
+                                    <a href="{{ route('perdes.aktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Aktifkan"><i class="fas fa-lock"></i></a>
                                 @endif
-                                <a target="_blank" href="{{ route('sk-kades.download', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul_dokumen }}" data-action="{{ route("sk-kades.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a target="_blank" href="{{ route('perdes.download', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
+                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul_dokumen }}" data-action="{{ route("perdes.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td>{{ $item->judul_dokumen }}</td>
-                            <td>{{ $item->nomor_keputusan_kades }} / {{ tgl($item->tanggal_keputusan_kades) }}</td>
+                            <td>{{ $item->nomor_ditetapkan }} / {{ tgl($item->tanggal_ditetapkan) }}</td>
                             <td>{{ $item->uraian_singkat }}</td>
                             <td>{{ $item->aktif == 1 ? 'Ya' : 'Tidak' }}</td>
                             <td>{{ tgl(date('Y-m-d', strtotime($item->created_at))) }} {{ date('H:i', strtotime($item->created_at)) }}</td>
@@ -117,7 +117,7 @@
         <div class="modal-content bg-gradient-danger">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus SK Kades?</h6>
+                <h6 class="modal-title" id="modal-title-delete">Hapus Perdes?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -153,12 +153,12 @@
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-                $(".sk-kades-checkbox:checked").each(function () {
+                $(".perdes-checkbox:checked").each(function () {
                     id.push($(this).val());
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('sk-kades.destroys') }}",
+                        url     : "{{ route('perdes.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",
@@ -170,16 +170,16 @@
                         }
                     });
                 } else {
-                    alertFail('Harap pilih salah satu SK Kades');
+                    alertFail('Harap pilih salah satu Perdes');
                 }
             }
         });
 
         $("#check_all").click(function(){
             if (this.checked) {
-                $(".sk-kades-checkbox").prop('checked',true);
+                $(".perdes-checkbox").prop('checked',true);
             } else {
-                $(".sk-kades-checkbox").prop('checked',false);
+                $(".perdes-checkbox").prop('checked',false);
             }
         });
     });

@@ -41,6 +41,7 @@ class SkKadesController extends Controller
     {
         $data = [
             'judul_dokumen'             => ['required','string','max:128'],
+            'dokumen'                   => ['nullable','file','max:2048'],
             'uraian_singkat'            => ['required'],
             'tanggal_keputusan_kades'   => ['required','date'],
             'nomor_keputusan_kades'     => ['required','string','max:128'],
@@ -66,7 +67,6 @@ class SkKadesController extends Controller
     {
         $data = $request->validate($this->validator(1));
         $data['dokumen'] = $request->dokumen->store('public/sk-kades');
-        $data['aktif'] = 1;
         SkKades::create($data);
 
         return redirect()->route('sk-kades.index')->with('success','SK Kades berhasil ditambahkan');
@@ -159,5 +159,19 @@ class SkKadesController extends Controller
     public function download(SkKades $sk_kades)
     {
         return response()->download(storage_path('app/'.$sk_kades->dokumen),$sk_kades->judul_dokumen.'.'.substr(strrchr(storage_path('app/'.$sk_kades->dokumen),'.'),1));
+    }
+
+    public function aktifkan(SkKades $sk_kades)
+    {
+        $sk_kades->aktif = 1;
+        $sk_kades->save();
+        return back()->with('success','SK Kades berhasil diaktifkan');
+    }
+
+    public function nonaktifkan(SkKades $sk_kades)
+    {
+        $sk_kades->aktif = 0;
+        $sk_kades->save();
+        return back()->with('success','SK Kades berhasil dinonaktifkan');
     }
 }
