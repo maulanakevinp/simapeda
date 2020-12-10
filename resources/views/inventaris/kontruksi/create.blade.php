@@ -47,14 +47,20 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-3 form-control-label col-form-label" for="kondisi_bangunan">Fisik Bangunan</label>
+                <label class="col-sm-3 form-control-label col-form-label" for="fisik_bangunan">Fisik Bangunan</label>
                 <div class="col-sm-9">
-                    <select name="kondisi_bangunan" id="kondisi_bangunan" class="form-control">
+                    <select name="fisik_bangunan" id="fisik_bangunan" class="form-control">
                         <option value="">Pilih Fisik Bangunan</option>
-                        <option value="Daruruat">Daruruat</option>
+                        <option value="Darurat">Darurat</option>
                         <option value="Permanen">Permanen</option>
                         <option value="Semi Permanen">Semi Permanen</option>
                     </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label col-form-label" for="bangunan_bertingkat">Bangunan Bertingkat</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="bangunan_bertingkat" name="bangunan_bertingkat" type="number" placeholder="Masukkan Bangunan Bertingkat ..."/>
                 </div>
             </div>
             <div class="form-group row">
@@ -70,6 +76,12 @@
                 <label class="col-sm-3 form-control-label col-form-label" for="luas">Luas (M<sup>2</sup>)</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="luas" name="luas" type="number" placeholder="Masukkan Luas ..."/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label col-form-label" for="letak_atau_lokasi">Letak / Lokasi</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" id="letak_atau_lokasi" name="letak_atau_lokasi" placeholder="Masukkan Letak / Lokasi ..."></textarea>
                 </div>
             </div>
             <div class="form-group row">

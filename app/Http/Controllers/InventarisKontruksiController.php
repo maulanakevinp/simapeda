@@ -29,10 +29,9 @@ class InventarisKontruksiController extends Controller
             $total += $item->harga;
         }
 
-        $tahun = InventarisKontruksi::where('mutasi',0)->latest()->get()->groupBy('tahun_pembelian');
         $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
         $kontruksi->appends($request->only('cari'));
-        return view('inventaris.kontruksi.index', compact('kontruksi','total','tahun','pemerintahan_desa'));
+        return view('inventaris.kontruksi.index', compact('kontruksi','total','pemerintahan_desa'));
     }
     /**
      * Display a listing of the resource.
@@ -187,8 +186,7 @@ class InventarisKontruksiController extends Controller
         $total = 0;
 
         if ($tahun) {
-            $kontruksi = InventarisKontruksi::where('mutasi',0)->where('tahun_pembelian', $tahun)->latest()->get();
-
+            $kontruksi = InventarisKontruksi::where('mutasi',0)->whereYear('tanggal_mulai', $tahun)->latest()->get();
         } else {
             $kontruksi = InventarisKontruksi::where('mutasi',0)->latest()->get();
         }

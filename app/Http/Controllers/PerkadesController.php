@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Desa;
 use App\PemerintahanDesa;
-use App\Perdes;
+use App\Perkades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class PerdesController extends Controller
+class PerkadesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,17 +17,17 @@ class PerdesController extends Controller
      */
     public function index(Request $request)
     {
-        $perdes = Perdes::latest()->paginate(10);
+        $perkades = Perkades::latest()->paginate(10);
 
         if ($request->cari) {
-            $perdes = Perdes::where('judul_dokumen','like',"%{$request->cari}%")
+            $perkades = Perkades::where('judul_dokumen','like',"%{$request->cari}%")
                             ->orWhere('uraian_singkat','like',"%{$request->cari}%")
                             ->latest()->paginate(10);
         }
 
-        $perdes->appends($request->only('cari'));
+        $perkades->appends($request->only('cari'));
         $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
-        return view('produk-hukum.perdes.index', compact('perdes','pemerintahan_desa'));
+        return view('produk-hukum.perkades.index', compact('perkades','pemerintahan_desa'));
     }
 
     /**
@@ -37,7 +37,7 @@ class PerdesController extends Controller
      */
     public function create()
     {
-        return view('produk-hukum.perdes.create');
+        return view('produk-hukum.perkades.create');
     }
 
     private function validator($berkas = null)
@@ -47,8 +47,8 @@ class PerdesController extends Controller
             'dokumen'                                   => ['nullable','file','max:2048'],
             'uraian_singkat'                            => ['required'],
             'jenis_peraturan'                           => ['required','string','max:128'],
-            'tanggal_ditetapkan'                        => ['required','date'],
-            'nomor_ditetapkan'                          => ['required','string','max:128'],
+            'tanggal_keputusan_kades'                   => ['required','date'],
+            'nomor_keputusan_kades'                     => ['required','string','max:128'],
             'tanggal_kesepakatan'                       => ['required','date'],
             'tanggal_dilaporkan'                        => ['required','date'],
             'nomor_dilaporkan'                          => ['required','string','max:128'],
@@ -75,19 +75,19 @@ class PerdesController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate($this->validator(1));
-        $data['dokumen'] = $request->dokumen->store('public/perdes');
-        Perdes::create($data);
+        $data['dokumen'] = $request->dokumen->store('public/perkades');
+        Perkades::create($data);
 
-        return redirect()->route('perdes.index')->with('success','Perdes berhasil ditambahkan');
+        return redirect()->route('perkades.index')->with('success','Perkades berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Perdes  $perdes
+     * @param  \App\Perkades  $perkades
      * @return \Illuminate\Http\Response
      */
-    public function show(Perdes $perdes)
+    public function show(Perkades $perkades)
     {
         return abort(404);
     }
@@ -95,93 +95,93 @@ class PerdesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Perdes  $perdes
+     * @param  \App\Perkades  $perkades
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $perdes = Perdes::find($id);
-        return view('produk-hukum.perdes.edit', compact('perdes'));
+        $perkades = Perkades::find($id);
+        return view('produk-hukum.perkades.edit', compact('perkades'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Perdes  $perdes
+     * @param  \App\Perkades  $perkades
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $data = $request->validate($this->validator(1));
-        $perdes = Perdes::find($id);
+        $perkades = Perkades::find($id);
 
         if ($request->dokumen) {
-            if ($perdes->dokumen) {
-                File::delete(storage_path('app/' . $perdes->dokumen));
+            if ($perkades->dokumen) {
+                File::delete(storage_path('app/' . $perkades->dokumen));
             }
-            $data['dokumen'] = $request->dokumen->store('public/perdes');
+            $data['dokumen'] = $request->dokumen->store('public/perkades');
         }
 
-        $perdes->update($data);
+        $perkades->update($data);
 
-        return back()->with('success','Perdes berhasil diperbarui');
+        return back()->with('success','Perkades berhasil diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Perdes  $perdes
+     * @param  \App\Perkades  $perkades
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $perdes = Perdes::find($id);
-        if ($perdes->dokumen) {
-            File::delete(storage_path('app/' . $perdes->dokumen));
+        $perkades = Perkades::find($id);
+        if ($perkades->dokumen) {
+            File::delete(storage_path('app/' . $perkades->dokumen));
         }
-        $perdes->delete();
-        return back()->with('success','Perdes berhasil dihapus');
+        $perkades->delete();
+        return back()->with('success','Perkades berhasil dihapus');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Perdes  $perdes
+     * @param  \App\Perkades  $perkades
      * @return \Illuminate\Http\Response
      */
     public function destroys(Request $request)
     {
         foreach ($request->id as $id) {
-            $perdes = Perdes::find($id);
-            if ($perdes->dokumen) {
-                File::delete(storage_path('app/' . $perdes->dokumen));
+            $perkades = Perkades::find($id);
+            if ($perkades->dokumen) {
+                File::delete(storage_path('app/' . $perkades->dokumen));
             }
-            $perdes->delete();
+            $perkades->delete();
         }
 
         return response()->json([
-            'message'   => 'Perdes berhasil dihapus'
+            'message'   => 'Perkades berhasil dihapus'
         ]);
     }
 
-    public function download(Perdes $perdes)
+    public function download(Perkades $perkades)
     {
-        return response()->download(storage_path('app/'.$perdes->dokumen),$perdes->judul_dokumen.'.'.substr(strrchr(storage_path('app/'.$perdes->dokumen),'.'),1));
+        return response()->download(storage_path('app/'.$perkades->dokumen),$perkades->judul_dokumen.'.'.substr(strrchr(storage_path('app/'.$perkades->dokumen),'.'),1));
     }
 
-    public function aktifkan(Perdes $perdes)
+    public function aktifkan(Perkades $perkades)
     {
-        $perdes->aktif = 1;
-        $perdes->save();
-        return back()->with('success','Perdes berhasil diaktifkan');
+        $perkades->aktif = 1;
+        $perkades->save();
+        return back()->with('success','Perkades berhasil diaktifkan');
     }
 
-    public function nonaktifkan(Perdes $perdes)
+    public function nonaktifkan(Perkades $perkades)
     {
-        $perdes->aktif = 0;
-        $perdes->save();
-        return back()->with('success','Perdes berhasil dinonaktifkan');
+        $perkades->aktif = 0;
+        $perkades->save();
+        return back()->with('success','Perkades berhasil dinonaktifkan');
     }
 
     public function print(Request $request)
@@ -196,11 +196,11 @@ class PerdesController extends Controller
         $ditandatangani = PemerintahanDesa::find($request->ditandatangani);
 
         if ($request->tahun) {
-            $perdes = Perdes::whereYear('tanggal_ditetapkan', $request->tahun)->latest()->get();
+            $perkades = Perkades::whereYear('tanggal_keputusan_kades', $request->tahun)->latest()->get();
         } else {
-            $perdes = Perdes::latest()->get();
+            $perkades = Perkades::latest()->get();
         }
 
-        return view('produk-hukum.perdes.print', compact('perdes','desa','ditandatangani','diketahui'));
+        return view('produk-hukum.perkades.print', compact('perkades','desa','ditandatangani','diketahui'));
     }
 }

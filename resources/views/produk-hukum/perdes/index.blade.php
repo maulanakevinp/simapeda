@@ -19,6 +19,11 @@
                                 <p class="mb-0 text-sm">Kelola Produk Hukum</p>
                             </div>
                             <div class="mb-3">
+                                @if (count($perdes) > 0)
+                                    <button type="button" data-toggle="tooltip" title="Print" class="btn btn-primary" id="btn-print" name="btn-print" >
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                @endif
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
@@ -145,11 +150,69 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="print" tabindex="-1" role="dialog" aria-labelledby="print" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-delete">Print</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body pt-0">
+                <form action="{{ route("perdes.print") }}" method="POST" >
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="tahun">Tahun</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
+                        <select class="form-control @error('tahun') is-invalid @enderror" name="tahun" id="tahun">
+                            <option selected value="">Semua Tahun</option>
+                            @for ($i = date('Y'); $i >= 1900; $i--)
+                                <option value="{{ $i }}" {{ old('tahun') == $i ? 'selected="true"' : ''  }}>{{ $i }}</option>
+                            @endfor
+                        </select>
+                        @error('tahun')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="diketahui">Diketahui</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
+                        <select required class="form-control @error('diketahui') is-invalid @enderror" name="diketahui" id="diketahui">
+                            <option selected value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ old('diketahui') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                        @error('diketahui')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="ditandatangani">Ditandatangani</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
+                        <select required class="form-control @error('ditandatangani') is-invalid @enderror" name="ditandatangani" id="ditandatangani">
+                            <option selected value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ old('ditandatangani') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                        @error('ditandatangani')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Print</button>
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function () {
+        $("#btn-print").click(function (e) {
+            e.preventDefault();
+            $("#print").modal('show');
+        });
+
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {

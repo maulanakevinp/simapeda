@@ -100,7 +100,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 form-control-label col-form-label" for="tanggal_mulai">Tanggal Mulai</label>
                 <div class="col-sm-9">
-                    <input class="form-control" name="tanggal_mulai" id="tanggal_mulai" type="number" placeholder="Masukkan Tanggal Mulai ..." value="{{ $kontruksi->tanggal_mulai }}"/>
+                    <input class="form-control" name="tanggal_mulai" id="tanggal_mulai" type="date" placeholder="Masukkan Tanggal Mulai ..." value="{{ $kontruksi->tanggal_mulai }}"/>
                 </div>
             </div>
             <div class="form-group row">

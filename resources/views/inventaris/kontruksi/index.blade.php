@@ -85,7 +85,6 @@
                         <th style="vertical-align: middle" rowspan="2" class="text-center" width="10px">No</th>
                         <th style="vertical-align: middle" rowspan="2" class="text-center" width="50px">Opsi</th>
                         <th style="vertical-align: middle" rowspan="2" class="text-center">Nama Barang</th>
-                        <th style="vertical-align: middle" rowspan="2" class="text-center">Kode Barang</th>
                         <th style="vertical-align: middle" rowspan="2" class="text-center">Fisik Bangunan</th>
                         <th style="vertical-align: middle" rowspan="2" class="text-center">Luas</th>
                         <th style="vertical-align: middle" rowspan="1" colspan="2" class="text-center">Dokumen</th>
@@ -112,7 +111,6 @@
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_barang }}" data-action="{{ route("kontruksi.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama_barang }}</td>
-                            <td style="vertical-align: middle">{{ $item->kode_barang }}</td>
                             <td style="vertical-align: middle">{{ $item->fisik_bangunan }}</td>
                             <td style="vertical-align: middle">{{ $item->luas }}</td>
                             <td style="vertical-align: middle">{{ tgl($item->tanggal_dokumen_bangunan) }}</td>
@@ -130,7 +128,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="12" class="text-right">Total</th>
+                        <th colspan="11" class="text-right">Total</th>
                         <th class="text-right">Rp. {{ substr(number_format($total, 2, ',', '.'),0,-3) }}</th>
                     </tr>
                 </tfoot>
@@ -191,9 +189,9 @@
                         <label class="form-control-label" for="tahun">Tahun</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
                         <select class="form-control @error('tahun') is-invalid @enderror" name="tahun" id="tahun">
                             <option selected value="">Semua Tahun</option>
-                            @foreach ($tahun as $key => $item)
-                                <option value="{{ $key }}" {{ old('tahun') == $key ? 'selected="true"' : ''  }}>{{ $key }}</option>
-                            @endforeach
+                            @for ($i = date('Y'); $i >= 1900; $i--)
+                                <option value="{{ $i }}" {{ old('tahun') == $i ? 'selected="true"' : ''  }}>{{ $i }}</option>
+                            @endfor
                         </select>
                         @error('tahun')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>

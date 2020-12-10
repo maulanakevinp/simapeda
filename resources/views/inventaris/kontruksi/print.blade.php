@@ -14,7 +14,7 @@ KARTU INVENTARIS BARANG (KIB)<br>F. Kontruksi Dalam Pengerjaan
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Luas</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Letak/Lokasi</th>
                 <th colspan="2" style="vertical-align: middle" class="text-center">Dokumen</th>
-                <th colspan="2" style="vertical-align: middle" class="text-center">Tanggal Mulai</th>
+                <th rowspan="2" style="vertical-align: middle" class="text-center">Tanggal Mulai</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Status Tanah</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Nomor Kode Tanah</th>
                 <th rowspan="2" style="vertical-align: middle" class="text-center">Asal Usul Pembiayaan</th>
@@ -29,7 +29,7 @@ KARTU INVENTARIS BARANG (KIB)<br>F. Kontruksi Dalam Pengerjaan
             </tr>
         </thead>
         <tbody>
-            @foreach ($gedung as $item)
+            @foreach ($kontruksi as $item)
                 <tr>
                     <td style="vertical-align: middle; text-align: center;">{{ $loop->iteration }}</td>
                     <td style="vertical-align: middle;">{{ $item->nama_barang }}</td>

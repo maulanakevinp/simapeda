@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Desa;
+use App\PemerintahanDesa;
 use App\SkKades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -24,7 +26,8 @@ class SkKadesController extends Controller
         }
 
         $sk_kades->appends($request->only('cari'));
-        return view('produk-hukum.sk-kades.index', compact('sk_kades'));
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
+        return view('produk-hukum.sk-kades.index', compact('sk_kades','pemerintahan_desa'));
     }
 
     /**
@@ -173,5 +176,25 @@ class SkKadesController extends Controller
         $sk_kades->aktif = 0;
         $sk_kades->save();
         return back()->with('success','SK Kades berhasil dinonaktifkan');
+    }
+
+    public function print(Request $request)
+    {
+        $request->validate([
+            'diketahui'         => ['required','numeric'],
+            'ditandatangani'    => ['required','numeric']
+        ]);
+
+        $desa = Desa::find(1);
+        $diketahui = PemerintahanDesa::find($request->diketahui);
+        $ditandatangani = PemerintahanDesa::find($request->ditandatangani);
+
+        if ($request->tahun) {
+            $sk_kades = SkKades::whereYear('tanggal_keputusan_kades', $request->tahun)->latest()->get();
+        } else {
+            $sk_kades = SkKades::latest()->get();
+        }
+
+        return view('produk-hukum.sk-kades.print', compact('sk_kades','desa','ditandatangani','diketahui'));
     }
 }
