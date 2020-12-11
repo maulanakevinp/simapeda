@@ -7,7 +7,7 @@
         <p>{{ tgl(date('Y-m-d')) }}</p>
     </div>
     <table class="table table-bordered">
-        <thead style="background-color: skyblue">
+        <thead>
             <tr>
                 <th style="vertical-align: middle" class="text-center">NO</th>
                 <th style="vertical-align: middle" class="text-center">KODE KELUARGA</th>

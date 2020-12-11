@@ -20,12 +20,16 @@
                 size: 330mm 215mm;
             }
         }
+        .table th {
+            background-color: rgb(225, 225, 225) !important;
+            border: 1px solid black !important;
+        }
+        .table td {
+            border: 1px solid black !important;
+        }
         .table th, .table td {
             padding: 4px;
             font-size: 0.7rem;
-        }
-        .table-sm td, .table-sm th {
-            padding: 0px;
         }
     </style>
 </head>
@@ -34,9 +38,9 @@
     <div class="text-center mb-3" style="margin-top:20px">
         <h5 class="font-weight-bold text-uppercase">Data Aparat Pemerintahan Desa</h5>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-3">
         <div class="table-responsive">
-            <table class="table table-sm table-borderless">
+            <table style="padding: 0px; font-size: 0.7rem">
                 <tr>
                     <th width="150px">Desa</th>
                     <td width="10px">:</td>

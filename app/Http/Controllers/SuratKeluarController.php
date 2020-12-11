@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Desa;
 use App\KodeSurat;
 use App\PemerintahanDesa;
 use App\SuratKeluar;
@@ -28,7 +29,8 @@ class SuratKeluarController extends Controller
         }
 
         $surat_keluar->appends($request->only('cari'));
-        return view('surat-keluar.index', compact('surat_keluar'));
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
+        return view('surat-keluar.index', compact('surat_keluar','pemerintahan_desa'));
     }
 
     /**
@@ -149,5 +151,26 @@ class SuratKeluarController extends Controller
         return response()->json([
             'message'   => 'Surat keluar berhasil dihapus'
         ]);
+    }
+
+    public function print(Request $request)
+    {
+        $request->validate([
+            'diketahui'         => ['required','numeric'],
+            'ditandatangani'    => ['required','numeric']
+        ]);
+
+        $desa = Desa::find(1);
+        $diketahui = PemerintahanDesa::find($request->diketahui);
+        $ditandatangani = PemerintahanDesa::find($request->ditandatangani);
+
+        $tahun = $request->tahun;
+        if ($tahun) {
+            $surat_keluar = SuratKeluar::whereYear('tanggal_penerimaan', $tahun)->latest()->get();
+        } else {
+            $surat_keluar = SuratKeluar::latest()->get();
+        }
+
+        return view('surat-keluar.print', compact('surat_keluar','tahun','desa','ditandatangani','diketahui'));
     }
 }

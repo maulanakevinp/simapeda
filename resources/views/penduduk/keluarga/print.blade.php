@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
     <title>Salinan Kartu Keluarga - Desa {{ $desa->nama }}</title>
-    <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('js/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="icon" href="{{ url(Storage::url($desa->logo)) }}" type="image/png">
     <style type="text/css" media="print">
         body{
@@ -19,6 +19,13 @@
                 margin: 0.5cm;
                 size: 330mm 215mm;
             }
+        }
+        .table th {
+            background-color: rgb(225, 225, 225) !important;
+            border: 1px solid black !important;
+        }
+        .table td {
+            border: 1px solid black !important;
         }
         .table th, .table td {
             padding: 4px;
@@ -33,9 +40,9 @@
         <p>No. {{ $penduduk[0]->kk }}</p>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-4">
-            <table class="table table-sm table-borderless">
+            <table style="padding:0px; font-size: 0.7rem">
                 <tr>
                     <td>ALAMAT</td>
                     <td>:</td>
@@ -59,8 +66,8 @@
             </table>
         </div>
         <div class="col-4"></div>
-        <div class="col-4">
-            <table class="table table-sm table-borderless">
+        <div class="col-4 d-flex justify-content-end">
+            <table style="padding:0px; font-size: 0.7rem">
                 <tr>
                     <td>KABUPATEN</td>
                     <td>:</td>

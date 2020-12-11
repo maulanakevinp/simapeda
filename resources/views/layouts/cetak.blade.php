@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
     <title>@yield('title') - Desa {{ $desa->nama }}</title>
-    <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('js/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="icon" href="{{ url(Storage::url($desa->logo)) }}" type="image/png">
     <style type="text/css" media="print">
         body{
@@ -19,6 +19,13 @@
                 margin: 0.5cm;
                 size: 330mm 215mm;
             }
+        }
+        .table th {
+            background-color: rgb(225, 225, 225) !important;
+            border: 1px solid black !important;
+        }
+        .table td {
+            border: 1px solid black !important;
         }
         .table th, .table td {
             padding: 4px;

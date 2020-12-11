@@ -135,7 +135,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     });
     Route::get('/indikator/{indikator}/chart', 'IndikatorController@chart')->name('indikator.chart');
 
+    Route::post('/surat-masuk/print', 'SuratMasukController@print')->name('surat-masuk.print');
     Route::resource('surat-masuk', 'SuratMasukController');
+
+    Route::post('/surat-keluar/print', 'SuratKeluarController@print')->name('surat-keluar.print');
     Route::resource('surat-keluar', 'SuratKeluarController');
 
     Route::prefix('inventaris')->group(function () {
