@@ -173,7 +173,7 @@
                             <input type="date" class="form-control @error('tanggal_sk_pemberhentian') is-invalid @enderror" name="tanggal_sk_pemberhentian" id="tanggal_sk_pemberhentian" placeholder="Masukkan Tanggal SK Pemberhentian ..." value="{{ old('tanggal_sk_pemberhentian', $pemerintahan_desa->tanggal_sk_pemberhentian) }}">
                             @error('tanggal_sk_pemberhentian')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-12">
                             <label class="form-control-label" for="alamat">Alamat</label>
                             <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" placeholder="Masukkan Alamat  ..." value="{{ old('alamat', $pemerintahan_desa->alamat) }}">
                             @error('alamat')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror

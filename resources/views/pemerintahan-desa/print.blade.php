@@ -64,6 +64,7 @@
         </div>
     </div>
     <table class="table table-bordered">
+        <thead>
             <tr>
                 <th style="vertical-align: middle" class="text-center" width="10px">NO</th>
                 <th style="vertical-align: middle" class="text-center">NAMA</th>

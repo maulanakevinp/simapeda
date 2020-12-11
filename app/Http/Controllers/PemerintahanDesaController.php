@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Agama;
 use App\Desa;
+use App\Exports\PemerintahanDesaExport;
+use App\Http\Requests\PemerintahanDesaRequest;
+use App\Imports\PemerintahanDesaImport;
 use App\PemerintahanDesa;
 use App\Pendidikan;
 use App\Penduduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PemerintahanDesaController extends Controller
@@ -78,27 +80,7 @@ class PemerintahanDesaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama'                      => ['required','string','max:128'],
-            'foto'                      => ['nullable','image','max:2048'],
-            'nik'                       => ['required','digits:16','unique:pemerintahan_desa,nik'],
-            'nip'                       => ['nullable','string','max:32','unique:pemerintahan_desa,nip'],
-            'nipd'                      => ['nullable','string','max:32','unique:pemerintahan_desa,nipd'],
-            'tempat_lahir'              => ['required','string','max:32'],
-            'tanggal_lahir'             => ['required','date','before:'.now()],
-            'jenis_kelamin'             => ['required','numeric'],
-            'agama_id'                  => ['required','numeric'],
-            'pendidikan_id'             => ['required','numeric'],
-            'status_pegawai_desa'       => ['required','numeric'],
-            'nomor_sk_pengangkatan'     => ['nullable','string','32'],
-            'tanggal_sk_pengangkatan'   => ['nullable','date'],
-            'nomor_sk_pemberhentian'    => ['nullable','string','32'],
-            'tanggal_sk_pemberhentian'  => ['nullable','date'],
-            'pangkat_atau_golongan'     => ['nullable','string','max:64'],
-            'jabatan'                   => ['required','string','max:32'],
-            'masa_jabatan'              => ['nullable','string','max:64'],
-            'alamat'                    => ['nullable'],
-        ]);
+        $data = $request->validated();
 
         if ($request->foto) {
             $data['foto'] = $request->foto->store('public/gallery');
@@ -152,29 +134,9 @@ class PemerintahanDesaController extends Controller
      * @param  \App\PemerintahanDesa  $pemerintahan_desa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PemerintahanDesa $pemerintahan_desa)
+    public function update(PemerintahanDesaRequest $request, PemerintahanDesa $pemerintahan_desa)
     {
-        $data = $request->validate([
-            'nama'                      => ['required','string','max:128'],
-            'foto'                      => ['nullable','image','max:2048'],
-            'nik'                       => ['required','digits:16',Rule::unique('pemerintahan_desa','nik')->ignore($pemerintahan_desa)],
-            'nip'                       => ['nullable','string','max:32',Rule::unique('pemerintahan_desa','nip')->ignore($pemerintahan_desa)],
-            'nipd'                      => ['nullable','string','max:32',Rule::unique('pemerintahan_desa','nipd')->ignore($pemerintahan_desa)],
-            'tempat_lahir'              => ['required','string','max:32'],
-            'tanggal_lahir'             => ['required','date','before:'.now()],
-            'jenis_kelamin'             => ['required','numeric'],
-            'agama_id'                  => ['required','numeric'],
-            'pendidikan_id'             => ['required','numeric'],
-            'status_pegawai_desa'       => ['required','numeric'],
-            'nomor_sk_pengangkatan'     => ['nullable','string','32'],
-            'tanggal_sk_pengangkatan'   => ['nullable','date'],
-            'nomor_sk_pemberhentian'    => ['nullable','string','32'],
-            'tanggal_sk_pemberhentian'  => ['nullable','date'],
-            'pangkat_atau_golongan'     => ['nullable','string','max:64'],
-            'jabatan'                   => ['required','string','max:32'],
-            'masa_jabatan'              => ['nullable','string','max:64'],
-            'alamat'                    => ['nullable'],
-        ]);
+        $data = $request->validated();
 
         if ($request->foto) {
             if ($pemerintahan_desa->foto) {
@@ -265,4 +227,22 @@ class PemerintahanDesaController extends Controller
             return back()->with('error', 'Gagal memindahkan urutan');
         }
     }
+
+    public function export()
+    {
+        return Excel::download(new PemerintahanDesaExport, 'Pemerintahan Desa.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'xlsx' => ['required','file','max:2048']
+        ],[
+            'xlsx.required' => 'File wajib diisi'
+        ]);
+
+        Excel::import(new PemerintahanDesaImport, $request->file('xlsx'));
+        return redirect()->back()->with('success', 'File xlsx berhasil di import');
+    }
+
 }

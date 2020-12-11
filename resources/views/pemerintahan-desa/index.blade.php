@@ -23,6 +23,8 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
+                                <a id="btn-import" href="#import" data-toggle="tooltip" class="mb-1 btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
+                                <a href="{{ route('pemerintahan-desa.export') }}" data-toggle="tooltip" class="mb-1 btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
                                 <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
@@ -163,9 +165,15 @@
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("pemerintahan-desa.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
-                            <td style="vertical-align: middle"><a href="{{ App\Penduduk::where("nik",$item->nik)->first() ? route('penduduk.show', $item->nik) : '' }}">{{ $item->nik }}</a></td>
-                            <td style="vertical-align: middle">{{ $item->nip }}</td>
-                            <td style="vertical-align: middle">{{ $item->nipd }}</td>
+                            <td style="vertical-align: middle">
+                                @if (App\Penduduk::where("nik",$item->nik)->first())
+                                    <a title="Detail" href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a>
+                                @else
+                                    {{ $item->nik }}
+                                @endif
+                            </td>
+                            <td style="vertical-align: middle">{{ $item->nip ?? '-' }}</td>
+                            <td style="vertical-align: middle">{{ $item->nipd ?? '-' }}</td>
                             <td style="vertical-align: middle">{{ $item->tempat_lahir }}</td>
                             <td style="vertical-align: middle">{{ tgl(date('Y-m-d',strtotime($item->tanggal_lahir))) }}</td>
                             <td style="vertical-align: middle">{{ $item->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan" }}</td>
@@ -295,6 +303,11 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
+        $('#btn-import').click(function (e) {
+            e.preventDefault();
+            $("#import").modal('show');
+        });
+
         $(".atas").click(function () {
             $('input[name="urutan"]').val('atas');
             $('input[name="id"]').val($(this).data('id'));
