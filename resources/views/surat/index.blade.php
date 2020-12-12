@@ -19,6 +19,9 @@
                                 <p class="mb-0 text-sm">Kelola Surat</p>
                             </div>
                             <div class="mb-3">
+                                <button type="button" data-toggle="tooltip" title="Pengaturan" class="btn btn-primary" id="btn-pengaturan" name="btn-pengaturan">
+                                    <i class="fas fa-cog"></i>
+                                </button>
                                 <a href="{{ route('surat.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Surat</a>
                             </div>
                         </div>
@@ -120,11 +123,48 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="pengaturan" tabindex="-1" role="dialog" aria-labelledby="pengaturan" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-pengaturan">Pengaturan</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route("surat.pengaturan") }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="ditandatangani">Ditandatangani</label>
+                        <select class="form-control" type="text" id="ditandatangani" name="ditandatangani">
+                            <option value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ $desa->ditandatangani == $item->id ? 'selected' : '' }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function(){
+        $('#btn-pengaturan').click(function (e) {
+            e.preventDefault();
+            $("#pengaturan").modal('show');
+        });
+
         $('[name="cari"]').on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("#card .surats").filter(function() {

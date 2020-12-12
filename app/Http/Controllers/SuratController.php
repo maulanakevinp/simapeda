@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CetakSurat;
 use App\Desa;
 use App\IsiSurat;
+use App\PemerintahanDesa;
 use App\Surat;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -19,7 +20,9 @@ class SuratController extends Controller
     public function index()
     {
         $surat = Surat::latest()->get();
-        return view('surat.index', compact('surat'));
+        $desa = Desa::find(1);
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
+        return view('surat.index', compact('surat','pemerintahan_desa','desa'));
     }
 
     /**

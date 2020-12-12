@@ -41,6 +41,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::patch('/update-desa/{desa}', 'DesaController@update')->name('update-desa');
 
     Route::get('/tambah-surat', 'SuratController@create')->name('surat.create');
+    Route::post('/surat/pengaturan', 'DesaController@pengaturan_surat')->name('surat.pengaturan');
     Route::resource('/cetakSurat', 'CetakSuratController')->except('create','store','index');
     Route::resource('/surat', 'SuratController')->except('create');
 
