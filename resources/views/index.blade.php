@@ -76,18 +76,18 @@
                 <div class="card shadow mb-3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4 text-center">
+                            <div class="col-md-4 text-center mb-2">
                                 <a href="{{ $url }}">
-                                    <img style="max-height: 200px; object-fit: cover" class="mw-100" src="{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}" alt="Gambar {{ $item->judul }}">
+                                    <img style="max-height: 200px" class="mw-100" src="{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}" alt="Gambar {{ $item->judul }}">
                                 </a>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8 mb-2">
                                 <a href="{{ $url }}">
                                     <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
                                 </a>
                                 <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
                                 <a href="{{ $url }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
-                                <div class="mt-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
+                                <div class="mt-2 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
                                     <span>
                                         <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
                                     </span>

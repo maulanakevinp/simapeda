@@ -302,19 +302,18 @@
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
 }
 
-#header .logo h1 {
-    font-size: 26px;
+#header .logo h2 {
+    font-size: 16px;
     margin: 0;
     padding: 6px 0;
     line-height: 1;
-    font-weight: 500;
-    letter-spacing: 3px;
+    font-weight: 600;
     text-transform: uppercase;
 }
 
-#header .logo h1 a,
-#header .logo h1 a:hover {
-    color: #2c4964;
+#header .logo h2 a,
+#header .logo h2 a:hover {
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -402,11 +401,10 @@
 
 .nav-menu .drop-down>a:after {
     font-family: "Font Awesome 5 Free";
+    font-size: 13px;
     content: "\f107";
     display: inline-block;
     padding-right: 3px;
-    vertical-align: middle;
-    font-weight:900;
     padding-left: 5px;
 }
 
@@ -454,7 +452,7 @@
 .mobile-nav-toggle {
     position: fixed;
     right: 15px;
-    top: 15px;
+    top: 12px;
     z-index: 9998;
     border: 0;
     background: none;

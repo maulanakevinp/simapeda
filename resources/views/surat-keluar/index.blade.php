@@ -103,6 +103,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $sk_keluar->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

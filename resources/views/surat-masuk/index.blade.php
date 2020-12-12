@@ -107,6 +107,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $sk_masuk->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

@@ -113,6 +113,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $sk_kades->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

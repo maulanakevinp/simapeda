@@ -7,6 +7,9 @@ use App\Desa;
 use App\Gallery;
 use App\PemerintahanDesa;
 use App\Penduduk;
+use App\Perdes;
+use App\Perkades;
+use App\SkKades;
 use App\Surat;
 use App\Video;
 use Illuminate\Http\Request;
@@ -164,5 +167,22 @@ class HomeController extends Controller
     {
         $desa = Desa::find(1);
         return view('panduan', compact('desa'));
+    }
+
+    public function produk_hukum(Request $request)
+    {
+        if ($request->kategori == 'sk-kades') {
+            $produk_hukum   = SkKades::where('aktif',1)->paginate(10);
+        } elseif ($request->kategori == 'perdes') {
+            $produk_hukum   = Perdes::where('aktif',1)->paginate(10);
+        } elseif ($request->kategori == 'perkades') {
+            $produk_hukum   = Perkades::where('aktif',1)->paginate(10);
+        } else {
+            return redirect('produk-hukum?kategori=sk-kades');
+        }
+
+        $desa = Desa::find(1);
+
+        return view('produk-hukum.index', compact('produk_hukum','desa'));
     }
 }

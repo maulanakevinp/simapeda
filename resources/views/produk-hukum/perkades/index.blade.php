@@ -113,6 +113,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $perkades->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>

@@ -113,6 +113,7 @@
                     @endforelse
                 </tbody>
             </table>
+            {{ $perdes->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>
