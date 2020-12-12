@@ -142,7 +142,7 @@
                         <select class="form-control" type="text" id="ditandatangani" name="ditandatangani">
                             <option value="">Pilih Aparat Pemerintahan Desa</option>
                             @foreach ($pemerintahan_desa as $item)
-                                <option value="{{ $item->id }}" {{ $desa->ditandatangani == $item->id ? 'selected' : '' }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                                <option value="{{ $item->id }}" {{ $desa->pemerintahan_desa_id == $item->id ? 'selected' : '' }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
                             @endforeach
                         </select>
                     </div>

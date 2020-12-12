@@ -81,7 +81,7 @@ class DesaController extends Controller
     public function pengaturan_surat(Request $request)
     {
         $desa = Desa::find(1);
-        $desa->ditandatangani = $request->ditandatangani;
+        $desa->pemerintahan_desa_id = $request->ditandatangani;
         $desa->save();
         return redirect()->back()->with('success','Pengaturan surat berhasil di perbarui');
     }

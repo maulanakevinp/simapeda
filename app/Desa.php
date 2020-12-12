@@ -11,6 +11,6 @@ class Desa extends Model
 
     public function ttd()
     {
-        return $this->belongsTo('App\PemerintahanDesa','ditandatangani');
+        return $this->belongsTo('App\PemerintahanDesa','pemerintahan_desa_id');
     }
 }

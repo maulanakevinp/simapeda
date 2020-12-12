@@ -14,8 +14,8 @@ class AddColumnTtd extends Migration
     public function up()
     {
         Schema::table('desa', function (Blueprint $table) {
-            $table->unsignedBigInteger('ditandatangani')->nullable()->after('id');
-            $table->foreign('ditandatangani')->references('id')->on('pemerintahan_desa')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('pemerintahan_desa_id')->nullable()->after('id');
+            $table->foreign('pemerintahan_desa_id')->references('id')->on('pemerintahan_desa')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -27,8 +27,8 @@ class AddColumnTtd extends Migration
     public function down()
     {
         Schema::table('desa', function (Blueprint $table) {
-            $table->dropForeign('desa_ditandatangani_foreign');
-            $table->dropColumn('ditandatangani');
+            $table->dropForeign('desa_pemerintahan_desa_id_foreign');
+            $table->dropColumn('pemerintahan_desa_id');
         });
     }
 }
