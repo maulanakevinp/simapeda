@@ -23,7 +23,7 @@ class HomeController extends Controller
         $artikel = Artikel::latest()->paginate(10);
         $gallery = Gallery::where('slider', 1)->latest()->get();
         $pemerintahan_desa = PemerintahanDesa::all();
-        $galleries = array();
+        $galleries = Gallery::where('slider', null)->inRandomOrder()->limit(7)->get();
 
         if ($request->cari) {
             $artikel = Artikel::where('judul','like',"%{$request->cari}%")
@@ -35,32 +35,6 @@ class HomeController extends Controller
         }
 
         $artikel->appends($request->only('cari'));
-
-        foreach (Gallery::where('slider', null)->inRandomOrder()->limit(7)->get() as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gallery,
-                'id'        => $value->id,
-                'caption'   => $value->caption,
-                'jenis'     => 1,
-                'created_at'=> strtotime($value->created_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        foreach (Video::inRandomOrder()->limit(7)->get() as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gambar,
-                'id'        => $value->video_id,
-                'caption'   => $value->caption,
-                'jenis'     => 2,
-                'created_at'=> strtotime($value->published_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        usort($galleries, function($a, $b) {
-            return $a['created_at'] < $b['created_at'];
-        });
 
         return view('index', compact('surat', 'desa', 'gallery','galleries','artikel','pemerintahan_desa'));
     }
@@ -184,5 +158,11 @@ class HomeController extends Controller
         $desa = Desa::find(1);
 
         return view('produk-hukum.index', compact('produk_hukum','desa'));
+    }
+
+    public function load_gallery()
+    {
+        $galleries = Gallery::where('slider', null)->latest()->paginate(9);
+        return response()->json($galleries);
     }
 }

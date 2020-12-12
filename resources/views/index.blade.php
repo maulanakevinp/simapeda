@@ -177,17 +177,17 @@
             <div class="row justify-content-center">
                 @foreach ($galleries as $key => $item)
                     @if ($key < 6)
-                        @if ($item['jenis'] == 1)
+                        @if ($item->video_id)
                             <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                                <a href="{{ url(Storage::url($item['gambar'])) }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                                    <img class="mw-100" src="{{ url(Storage::url($item['gambar'])) }}" alt="">
+                                <a href="https://www.youtube.com/watch?v={{ $item->video_id }}" data-fancybox data-caption="{{ $item->caption }}">
+                                    <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
+                                    <img class="mw-100" src="{{ $item->gallery }}" alt="">
                                 </a>
                             </div>
                         @else
                             <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                                <a href="https://www.youtube.com/watch?v={{ $item['id'] }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                                    <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
-                                    <img class="mw-100" src="{{ $item['gambar'] }}" alt="">
+                                <a href="{{ url(Storage::url($item->gallery)) }}" data-fancybox data-caption="{{ $item->caption }}">
+                                    <img class="mw-100" src="{{ $item->gallery }}" alt="">
                                 </a>
                             </div>
                         @endif

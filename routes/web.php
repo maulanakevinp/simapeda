@@ -19,6 +19,7 @@ Route::get('/produk-hukum', 'HomeController@produk_hukum')->name('produk-hukum')
 Route::get('/laporan-apbdes', 'AnggaranRealisasiController@laporan_apbdes')->name('laporan-apbdes');
 Route::get('/layanan-surat', 'SuratController@layanan_surat')->name('layanan-surat');
 Route::get('/gallery', 'GalleryController@gallery')->name('gallery');
+Route::get('/load-gallery', 'HomeController@load_gallery')->name('load-gallery');
 Route::get('/buat-surat/{id}/{slug}', 'CetakSuratController@create')->name('buat-surat');
 Route::get('/panduan', 'HomeController@panduan')->name('panduan');
 Route::get('/statistik-penduduk', 'GrafikController@index')->name('statistik-penduduk');
@@ -53,15 +54,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::resource('/isiSurat', 'IsiSuratController')->except('index', 'create', 'edit', 'show');
 
-    Route::post('/gallery/store', 'GalleryController@storeGallery')->name('gallery.storeGallery');
     Route::get('/kelola-gallery', 'GalleryController@index')->name('gallery.index');
-    Route::resource('/gallery', 'GalleryController')->except('index','show', 'edit', 'update', 'create');
+    Route::post('/gallery', 'GalleryController@store')->name('gallery.store');
+    Route::patch('/gallery', 'GalleryController@update')->name('gallery.update');
+    Route::delete('/gallery/destroys', 'GalleryController@destroys')->name('gallery.destroys');
+    Route::delete('/gallery/{gallery}', 'GalleryController@destroy')->name('gallery.destroy');
 
     Route::get('/tambah-slider', 'GalleryController@create')->name('slider.create');
     Route::get('/slider', 'GalleryController@indexSlider')->name('slider.index');
-
-    Route::post('/video', 'VideoController@store')->name('video.store');
-    Route::patch('/video/update', 'VideoController@update')->name('video.update');
 
     Route::get('/surat-harian', 'HomeController@suratHarian')->name('surat-harian');
     Route::get('/surat-bulanan', 'HomeController@suratBulanan')->name('surat-bulanan');

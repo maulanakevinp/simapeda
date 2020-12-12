@@ -17,31 +17,13 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        @forelse ($galleries as $item)
-            @if ($item['jenis'] == 1)
-                <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                    <a href="{{ url(Storage::url($item['gambar'])) }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                        <img class="mw-100" src="{{ url(Storage::url($item['gambar'])) }}" alt="">
-                    </a>
-                </div>
-            @else
-                <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                    <a href="https://www.youtube.com/watch?v={{ $item['id'] }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                        <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
-                        <img class="mw-100" src="{{ $item['gambar'] }}" alt="">
-                    </a>
-                </div>
-            @endif
-        @empty
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body text-center">
-                        <h4>Data belum tersedia</h4>
-                    </div>
-                </div>
+    <div id="gallery" class="row mt-4 justify-content-center"></div>
+    <div id="loading" class="row">
+        @for ($i = 0; $i < 3; $i++)
+            <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
+                <a href="{{ url("img/img-lazy-loading.gif") }}" data-fancybox><img src="{{ url("img/img-lazy-loading.gif") }}" class="img-fluid"  alt="Loading"></a>
             </div>
-        @endforelse
+        @endfor
     </div>
 </div>
 
@@ -49,4 +31,73 @@
 
 @push('scripts')
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+<script>
+    let page = 1;
+    let dataExists = true;
+    load_more(page);
+
+    $(window).scroll(function() { //detect page scroll
+        if($(window).scrollTop() + $(window).height() >= $(document).height() - 70) { //if user scrolled from top to bottom of the page
+            if (dataExists) {
+                page++; //page number increment
+                load_more(page); //load content
+            }
+        }
+    });
+
+    function load_more(page) {
+        $.ajax({
+            url: baseURL + "/load-gallery?page=" + page,
+            method: "GET",
+            beforeSend: function () {
+                $("#loading").show();
+            },
+            success: function (response) {
+                $("#loading").hide();
+
+                if (response.next_page_url == null) {
+                    dataExists = false;
+                }
+
+                if (page == 1 && dataExists == false) {
+                    showNothing();
+                }
+
+                $.each(response.data, function(index,result){
+                    showGallery(result);
+                });
+            }
+        });
+    }
+
+    function showGallery(result){
+        let html = `<div class="col-lg-4 col-md-6 mb-3 img-scale-up">`;
+
+        if (result.video_id) {
+            html +=     `<a href="https://www.youtube.com/watch?v=${result.video_id}" data-fancybox="images" data-caption="${result.caption}">
+                            <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
+                            <img src="${result.gallery}" class="img-fluid" alt="${result.caption}">`;
+        } else {
+            let gallery = baseURL + result.gallery.replace('public','/storage');
+            html +=     `<a href="${gallery}" data-fancybox="images" data-caption="${result.caption}">
+                            <img src="${gallery}" class="img-fluid" alt="${result.caption}">`;
+        }
+
+        html +=         `</a>
+                    </div>`;
+        $("#gallery").append(html);
+    }
+
+    function showNothing(){
+        $("#gallery").append(`
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h4>Data belum tersedia</h4>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+</script>
 @endpush

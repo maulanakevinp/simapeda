@@ -26,8 +26,10 @@
                                 <p class="mb-0 text-sm">Kelola Gallery</p>
                             </div>
                             <div class="mb-3">
-                                <a href="#video-modal" data-toggle="modal" class="btn btn-primary"><i class="fas fa-video mr-2"></i> Pengaturan Video</a>
-                                <a href="#tambah-gambar" data-toggle="modal" class="btn btn-primary"><i class="fas fa-image mr-2"></i> Tambah Gambar</a>
+                                <input type="checkbox" id="check-all" title="centang semua" class="mb-1" data-toggle="tooltip" style="transform: scale(1.5)">
+                                <button type="button" id="delete-check" class="btn btn-danger mb-1"><i class="fas fa-trash"></i> Hapus Terpilih</button>
+                                <a href="#video-modal" data-toggle="modal" class="btn btn-success mb-1"><i class="fas fa-video mr-2"></i> Pengaturan Video</a>
+                                <a href="#tambah-gambar" data-toggle="modal" class="btn btn-primary mb-1"><i class="fas fa-image mr-2"></i> Tambah Gambar</a>
                             </div>
                         </div>
                     </div>
@@ -40,32 +42,13 @@
 
 @section('content')
 @include('layouts.components.alert')
-<div class="row mt-4 justify-content-center">
-    @forelse ($galleries as $item)
-        @if ($item['jenis'] == 1)
-            <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                <a href="{{ url(Storage::url($item['gambar'])) }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                    <img class="mw-100" src="{{ url(Storage::url($item['gambar'])) }}" alt="">
-                </a>
-                <a href="#modal-hapus" data-toggle="modal" data-action="{{ route('gallery.destroy',$item['id']) }}" class="mb-0 btn btn-sm btn-danger hapus-data" style="position: absolute; top: 0; left: 0; z-index: 1; left:15px">
-                    <i class="fas fa-trash" title="Hapus" data-toggle="tooltip"></i>
-                </a>
-            </div>
-        @else
-            <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
-                <a href="https://www.youtube.com/watch?v={{ $item['id'] }}" data-fancybox data-caption="{{ $item['caption'] }}">
-                    <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
-                    <img class="mw-100" src="{{ $item['gambar'] }}" alt="">
-                </a>
-            </div>
-        @endif
-    @empty
-        <div class="col">
-            <div class="single-service bg-white rounded shadow">
-                <h4>Data belum tersedia</h4>
-            </div>
+<div id="gallery" class="row mt-4 justify-content-center"></div>
+<div id="loading" class="row">
+    @for ($i = 0; $i < 3; $i++)
+        <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
+            <a href="{{ url("img/img-lazy-loading.gif") }}" data-fancybox><img src="{{ url("img/img-lazy-loading.gif") }}" class="img-fluid"  alt="Loading"></a>
         </div>
-    @endforelse
+    @endfor
 </div>
 
 <div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video-modal" aria-hidden="true">
@@ -85,17 +68,13 @@
             </div>
 
             <div class="modal-body pt-0">
-                <form class="d-inline" action="{{ route("video.update") }}" method="POST" >
+                <form class="d-inline" action="{{ route("gallery.update") }}" method="POST" >
                     @csrf @method('patch')
                     <div class="form-group">
                         <label class="form-control-label">Channel ID Youtube</label>
                         <input type="text" name="channel_id" id="channel_id" class="form-control" value="{{ $desa->channel_id }}">
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
-                <form class="d-inline" action="{{ route("video.store") }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-success"><i class="fas fa-sync"></i> Sync</button>
+                    <button type="submit" class="btn btn-primary">Perbarui</button>
                 </form>
                 <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
             </div>
@@ -176,6 +155,117 @@
 @push('scripts')
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
+    let page = 1;
+    let dataExists = true;
+    load_more(page);
+
+    $(window).scroll(function() { //detect page scroll
+        if($(window).scrollTop() + $(window).height() >= $(document).height() - 70) { //if user scrolled from top to bottom of the page
+            if (dataExists) {
+                page++; //page number increment
+                load_more(page); //load content
+            }
+        }
+    });
+
+    $(document).on("click", "#delete-check", function (){
+        let id = [];
+        let btn = this;
+
+        $(".gambar-check").each(function () {
+            if (this.checked) {
+                id.push(this.value);
+            }
+        });
+
+        if (id.length > 0) {
+            if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+                $.ajax({
+                    url     : baseURL + "/gallery/destroys",
+                    method  : "delete",
+                    data : {
+                        _token  : "{{ csrf_token() }}",
+                        id      : id
+                    },
+                    beforeSend : function () {
+                        $(btn).html("Loading ...");
+                        $(btn).attr("disabled", "disabled");
+                    },
+                    success : function (response) {
+                        if (response.success) {
+                            location.reload();
+                        }
+                    }
+                })
+            }
+        }
+    });
+
+    $(document).on("click", "#check-all", function(){
+        if (this.checked) {
+            $(".gambar-check").prop('checked',true);
+        } else {
+            $(".gambar-check").prop('checked',false);
+        }
+    });
+
+    function load_more(page) {
+        $.ajax({
+            url: baseURL + "/load-gallery?page=" + page,
+            method: "GET",
+            beforeSend: function () {
+                $("#loading").show();
+            },
+            success: function (response) {
+                $("#loading").hide();
+
+                if (response.next_page_url == null) {
+                    dataExists = false;
+                }
+
+                if (page == 1 && dataExists == false) {
+                    showNothing();
+                }
+
+                $.each(response.data, function(index,result){
+                    showGallery(result);
+                });
+            }
+        });
+    }
+
+    function showGallery(result){
+        let html = `<div class="col-lg-4 col-md-6 mb-3 img-scale-up">`;
+
+        if (result.video_id) {
+            html +=     `<a href="https://www.youtube.com/watch?v=${result.video_id}" data-fancybox="images" data-caption="${result.caption}">
+                            <i class="fas fa-play fa-2x" style="position: absolute; top:43%; left:46%;"></i>
+                            <img src="${result.gallery}" class="img-fluid" alt="${result.caption}">`;
+        } else {
+            let gallery = baseURL + result.gallery.replace('public','/storage');
+            html +=     `<a href="${gallery}" data-fancybox="images" data-caption="${result.caption}">
+                            <img src="${gallery}" class="img-fluid" alt="${result.caption}">`;
+        }
+
+        html +=         `</a>
+                        <input type="checkbox" class="gambar-check" name="delete[]" title="centang untuk menghapus beberapa gambar" value="${result.id}" style="transform:scale(1.5);position: absolute; top: 5px; left: 20px;">
+                        <button type="button" data-nama="gallery" data-action="${baseURL}/gallery/${result.id}" title="Hapus" class="btn btn-sm btn-danger hapus-data" style="position: absolute; top: 0; right: 15px;"><i class="fas fa-trash"></i></button>
+                    </div>`;
+        $("#gallery").append(html);
+    }
+
+    function showNothing(){
+        $("#gallery").append(`
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h4>Data belum tersedia</h4>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
     function uploadImage (inputFile) {
         if (inputFile.files && inputFile.files[0]) {
             var reader = new FileReader();
