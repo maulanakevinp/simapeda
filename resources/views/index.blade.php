@@ -187,7 +187,7 @@
                         @else
                             <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
                                 <a href="{{ url(Storage::url($item->gallery)) }}" data-fancybox data-caption="{{ $item->caption }}">
-                                    <img class="mw-100" src="{{ $item->gallery }}" alt="">
+                                    <img class="mw-100" src="{{ url(Storage::url($item->gallery)) }}" alt="">
                                 </a>
                             </div>
                         @endif
