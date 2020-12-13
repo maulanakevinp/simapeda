@@ -261,7 +261,7 @@ class PendudukController extends Controller
         ]);
 
         Excel::import(new PendudukImport, $request->file('xlsx'));
-        return redirect()->back()->with('success', 'File xlsx berhasil di import');
+        return back();
     }
 
     public function printAll()

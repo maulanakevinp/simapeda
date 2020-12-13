@@ -242,7 +242,7 @@ class PemerintahanDesaController extends Controller
         ]);
 
         Excel::import(new PemerintahanDesaImport, $request->file('xlsx'));
-        return redirect()->back()->with('success', 'File xlsx berhasil di import');
+        return back();
     }
 
 }
