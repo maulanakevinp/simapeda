@@ -4,6 +4,12 @@
 
 @section('styles')
 <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+<style>
+    .upload-image:hover{
+        cursor: pointer;
+        opacity: 0.7;
+    }
+</style>
 @endsection
 
 @section('content-header')

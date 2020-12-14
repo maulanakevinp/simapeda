@@ -14,7 +14,7 @@ class AddColumnTtd extends Migration
     public function up()
     {
         Schema::table('desa', function (Blueprint $table) {
-            $table->bigInteger('pemerintahan_desa_id');
+            $table->bigInteger('pemerintahan_desa_id')->nullable();
         });
     }
 

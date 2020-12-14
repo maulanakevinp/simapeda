@@ -184,6 +184,12 @@
                     <span class="nav-link-inner--text">Kelola Slider</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'database') active @endif" href="{{ route('database.index') }}">
+                    <i class="fas fa-database text-yellow"></i>
+                    <span class="nav-link-inner--text">Kelola Database</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

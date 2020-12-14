@@ -211,6 +211,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::post('perkades/print', 'PerkadesController@print')->name('perkades.print');
         Route::resource('perkades', 'PerkadesController');
     });
+
+    Route::get('/database', 'DatabaseController@index')->name('database.index');
+    Route::get('/database/backup', 'DatabaseController@backup')->name('database.backup');
+    Route::post('/database/restore', 'DatabaseController@restore')->name('database.restore');
 });
 
 Route::get('/{any}', 'ArtikelController@show')->where('any', '.*')->name('artikel.show');
