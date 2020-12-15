@@ -24,6 +24,7 @@ class DatabaseController extends Controller
             ->includeTables([
                 'anggaran_realisasi',
                 'artikel',
+                'artikel_galleries',
                 'surat',
                 'isi_surat',
                 'cetak_surat',
