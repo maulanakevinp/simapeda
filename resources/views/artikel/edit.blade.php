@@ -2,16 +2,6 @@
 
 @section('title', 'Edit Artikel')
 
-@section('styles')
-<link href="{{ asset('js/plugins/summernote/summernote.min.css') }}" rel="stylesheet">
-<style>
-    .upload-image:hover{
-        cursor: pointer;
-        opacity: 0.7;
-    }
-</style>
-@endsection
-
 @section('content-header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
@@ -56,36 +46,35 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label">Judul</label>
-                        <input class="form-control @error('judul') is-invalid @enderror" name="judul" placeholder="Masukkan Judul ..." value="{{ old('judul', $artikel->judul) }}">
-                        @error('judul') <span class="invalid-feedback font-weight-bold">{{ $message }}</span> @enderror
+                        <input class="form-control" name="judul" placeholder="Masukkan Judul ..." value="{{ $artikel->judul }}">
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-2">
                             <div class="form-group">
                                 <label class="form-control-label">Menu</label>
-                                <input class="form-control @error('menu') is-invalid @enderror" name="menu" placeholder="Masukkan Menu ..." value="{{ old('menu', $artikel->menu) }}">
-                                @error('menu') <span class="invalid-feedback font-weight-bold">{{ $message }}</span> @enderror
+                                <input class="form-control" name="menu" placeholder="Masukkan Menu ..." value="{{ $artikel->menu }}">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 mb-2">
                             <div class="form-group">
                                 <label class="form-control-label">Submenu</label>
-                                <input class="form-control @error('submenu') is-invalid @enderror" name="submenu" placeholder="Masukkan Submenu ..." value="{{ old('submenu', $artikel->submenu) }}">
-                                @error('submenu') <span class="invalid-feedback font-weight-bold">{{ $message }}</span> @enderror
+                                <input class="form-control" name="submenu" placeholder="Masukkan Submenu ..." value="{{ $artikel->submenu }}">
                             </div>
                         </div>
                         <div class="col-lg-4 mb-2">
                             <div class="form-group">
                                 <label class="form-control-label">Sub Submenu</label>
-                                <input class="form-control @error('sub_submenu') is-invalid @enderror" name="sub_submenu" placeholder="Masukkan Sub Submenu ..." value="{{ old('sub_submenu', $artikel->sub_submenu) }}">
-                                @error('sub_submenu') <span class="invalid-feedback font-weight-bold">{{ $message }}</span> @enderror
+                                <input class="form-control" name="sub_submenu" placeholder="Masukkan Sub Submenu ..." value="{{ $artikel->sub_submenu }}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label">Konten</label>
-                        <textarea class="form-control @error('konten') is-invalid @enderror" name="konten">{{ old('konten', $artikel->konten) }}</textarea>
-                        @error('konten') <span class="invalid-feedback font-weight-bold">{{ $message }}</span> @enderror
+                        <label class="form-control-label">Konten</label> <span class="text-danger font-weight-bold">*</span>
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <textarea class="form-control" name="konten">{{ $artikel->konten }}</textarea>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block" id="simpan">SIMPAN</button>
                 </form>
@@ -95,16 +84,4 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="{{ asset('js/plugins/summernote/summernote.min.js') }}"></script>
-<script>
-    $(document).ready(function () {
-
-        $("textarea").summernote({
-            dialogsInBody: true,
-            placeholder: 'Silahkan isi konten',
-            tabsize: 2,
-        });
-    });
-</script>
-@endpush
+@include('artikel.summernote')

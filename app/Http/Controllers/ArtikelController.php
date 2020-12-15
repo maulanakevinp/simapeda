@@ -51,9 +51,9 @@ class ArtikelController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'judul'     => ['required','string','max:191'],
-            'konten'    => ['required'],
-            'gambar'    => ['nullable','image','max:2048'],
+            'judul'         => ['required','string','max:191'],
+            'konten'        => ['required'],
+            'gambar'        => ['nullable','image','max:2048'],
             'menu'          => ['nullable','string','max:32'],
             'submenu'       => ['nullable','string','max:32'],
             'sub_submenu'   => ['nullable','string','max:32'],
@@ -65,7 +65,10 @@ class ArtikelController extends Controller
 
         Artikel::create($data);
 
-        return redirect()->route('artikel.index')->with('success','Artikel berhasil ditambahkan');
+        return response()->json([
+            'message'   => 'Artikel berhasil ditambahkan',
+            'redirect'  => strval(route('artikel.index'))
+        ]);
     }
 
     /**
@@ -167,7 +170,9 @@ class ArtikelController extends Controller
 
         $artikel->update($data);
 
-        return back()->with('success','Artikel berhasil diperbarui');
+        return response()->json([
+            'message'   => 'Artikel berhasil diperbarui',
+        ]);
     }
 
     /**
@@ -178,7 +183,12 @@ class ArtikelController extends Controller
      */
     public function destroy(Artikel $artikel)
     {
+        if ($artikel->gambar) {
+            File::delete(storage_path('app/' . $artikel->gambar));
+        }
+
         $artikel->delete();
+
         return back()->with('success','Artikel berhasil dihapus');
     }
 }

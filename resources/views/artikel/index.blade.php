@@ -102,10 +102,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-12">
-            {{ $artikel->links('layouts.components.pagination') }}
-        </div>
     @empty
         <div class="col">
             <div class="single-service bg-white rounded shadow">
@@ -113,6 +109,10 @@
             </div>
         </div>
     @endforelse
+
+    <div class="col-12">
+        {{ $artikel->links('layouts.components.pagination') }}
+    </div>
 </div>
 
 <div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="modal-hapus" aria-hidden="true">
