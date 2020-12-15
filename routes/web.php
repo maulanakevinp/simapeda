@@ -60,6 +60,10 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::delete('/gallery/destroys', 'GalleryController@destroys')->name('gallery.destroys');
     Route::delete('/gallery/{gallery}', 'GalleryController@destroy')->name('gallery.destroy');
 
+    Route::post('/artikel-gallery','ArtikelGalleryController@store')->name('artikel-gallery.store');
+    Route::patch('/artikel-gallery/{artikel_gallery}','ArtikelGalleryController@update')->name('artikel-gallery.update');
+    Route::delete('/artikel-gallery/{artikel_gallery}','ArtikelGalleryController@destroy')->name('artikel-gallery.destroy');
+
     Route::get('/tambah-slider', 'GalleryController@create')->name('slider.create');
     Route::get('/slider', 'GalleryController@indexSlider')->name('slider.index');
 

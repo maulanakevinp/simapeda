@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Artikel;
+use App\ArtikelGallery;
 use App\Desa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -57,13 +58,26 @@ class ArtikelController extends Controller
             'menu'          => ['nullable','string','max:32'],
             'submenu'       => ['nullable','string','max:32'],
             'sub_submenu'   => ['nullable','string','max:32'],
+            'galleries.*'   => ['required'],
+        ],[
+            'galleries.*.required' => 'gambar wajib diisi'
         ]);
 
         if ($request->gambar) {
-            $data['gambar'] = $request->gambar->store('public/gallery');
+            $data['gambar'] = $request->gambar->store('public/artikel');
         }
 
-        Artikel::create($data);
+        unset($data['galleries']);
+
+        $artikel = Artikel::create($data);
+
+        foreach ($request->gallery as $key => $item) {
+            ArtikelGallery::create([
+                'artikel_id'    => $artikel->id,
+                'gambar'        => $request->gallery[$key]->store('public/artikel'),
+                'caption'       => $request->caption[$key]
+            ]);
+        }
 
         return response()->json([
             'message'   => 'Artikel berhasil ditambahkan',
@@ -165,7 +179,7 @@ class ArtikelController extends Controller
             if ($artikel->gambar) {
                 File::delete(storage_path('app/' . $artikel->gambar));
             }
-            $data['gambar'] = $request->gambar->store('public/gallery');
+            $data['gambar'] = $request->gambar->store('public/artikel');
         }
 
         $artikel->update($data);
@@ -185,6 +199,11 @@ class ArtikelController extends Controller
     {
         if ($artikel->gambar) {
             File::delete(storage_path('app/' . $artikel->gambar));
+        }
+
+        foreach ($artikel->galleries as $item) {
+            File::delete(storage_path('app/' . $item->gambar));
+            $item->delete();
         }
 
         $artikel->delete();

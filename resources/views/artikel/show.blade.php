@@ -3,6 +3,7 @@
 
 @section('styles')
 <meta name="description" content="{{ $artikel->judul }}.">
+<link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
 <style>
     .animate-up:hover {
         top: -5px;
@@ -37,6 +38,15 @@
                 </span>
             </div>
             {!! $artikel->konten !!}
+            <div class="row my-3">
+                @foreach ($artikel->galleries as $item)
+                    <div class="col-lg-4 col-md-6 mb-3 img-scale-up">
+                        <a href="{{ url(Storage::url($item->gambar)) }}" data-fancybox data-caption="{{ $item->caption }}">
+                            <img class="mw-100" src="{{ url(Storage::url($item->gambar)) }}" alt="">
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
@@ -94,6 +104,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
         $.each($(".konten"), function (index,konten){

@@ -13,7 +13,7 @@
 <script src="{{ asset("js/form.js") }}"></script>
 <script>
     $(document).ready(function () {
-        $("textarea").summernote({
+        $('textarea[name="konten"]').summernote({
             dialogsInBody: true,
             placeholder: 'Silahkan isi konten',
             tabsize: 2,
@@ -22,7 +22,7 @@
                 ['view', ['fullscreen', 'codeview', 'help','undo','redo']],
                 ['font', ['bold', 'underline','italic','strikethrough','superscript','subscript', 'clear',]],
                 ['fontname', ['fontname','fontsize','fontsizeunit']],
-                ['color', ['color','forecolor','backcolor']],
+                ['color', ['color']],
                 ['insert', ['link', 'video','hr','table']],
                 ['para', ['ul', 'ol', 'paragraph','height','style']],
             ],
@@ -47,8 +47,18 @@
                     ['insert', ['link', 'picture']]
                 ]
             }
-
         });
     });
+
+    function uploadImage (inputFile) {
+        if (inputFile.files && inputFile.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(inputFile).siblings('img').attr("src", e.target.result);
+                $(inputFile).siblings('[name="galleries[]"]').val(e.target.result);
+            }
+            reader.readAsDataURL(inputFile.files[0]);
+        }
+    }
 </script>
 @endpush

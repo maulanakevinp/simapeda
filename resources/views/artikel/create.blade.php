@@ -76,7 +76,9 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="simpan">SIMPAN</button>
+                    <button type="button" class="btn btn-success gambar mb-3 tambah-gambar">Tambah Lebih Banyak Gambar <i class="fas fa-camera"></i></button>
+                    <div id="gallery" class="row"></div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3" id="simpan">SIMPAN</button>
                 </form>
             </div>
         </div>
@@ -85,3 +87,63 @@
 @endsection
 
 @include('artikel.summernote')
+
+@push('scripts')
+<script>
+    $(document).on('click','.tambah-gambar', function () {
+        $("#gallery").html(`
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card shadow h-100">
+                    <div class="card-body pb-0">
+                        <div class="form-group">
+                            <label class="form-control-label">Gambar</label>
+                            <div class="text-center">
+                                <img onclick="$(this).siblings('.images').click()" class="mw-100 upload-image" style="max-height: 300px" src="${baseURL}/storage/upload.jpg" alt="">
+                                <input accept="image/*" onchange="uploadImage(this)" type="file" name="gallery[]" class="images" style="display: none">
+                                <input type="hidden" name="galleries[]">
+                                <span class="invalid-feedback font-weight-bold"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Caption</label>
+                            <textarea class="form-control" name="caption[]"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 d-flex justify-content-between">
+                        <button type="button" class="btn btn-danger hapus" title="Hapus Gambar"><i class="fas fa-trash"></i></button>
+                        <button type="button" class="btn btn-primary tambah" title="Tambah Gambar"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        `);
+        $(this).removeClass('tambah-gambar');
+        $(this).removeClass('btn-success');
+        $(this).addClass('btn-danger');
+        $(this).addClass('hapus-semua-gambar');
+        $(this).html(`Hapus Semua Gambar <i class="fas fa-trash"></i>`);
+    })
+
+    $(document).on('click','.hapus-semua-gambar', function(){
+        $("#gallery").html('');
+        $(this).removeClass('hapus-semua-gambar');
+        $(this).removeClass('btn-danger');
+        $(this).addClass('btn-success');
+        $(this).addClass('tambah-gambar');
+        $(this).html(`Tambah Lebih Banyak Gambar <i class="fas fa-camera"></i>`);
+    });;
+
+    $(document).on("click", ".tambah", function (event){
+        let card = $(this).parent().parent().parent();
+        $("#gallery").append(card[0].outerHTML);
+        let nextCard = card[0].nextElementSibling;
+        $(nextCard).find('input').val('');
+        $(nextCard).find('textarea').val('');
+        $(nextCard).find('img').attr('src', baseURL + '/storage/upload.jpg');
+    });
+
+    $(document).on("click", ".hapus", function (event){
+        let card = $(this).parent().parent().parent();
+        card[0].remove();
+    });
+</script>
+@endpush
