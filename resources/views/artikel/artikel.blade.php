@@ -2,10 +2,11 @@
 @section('title', 'Website Resmi Pemerintah Desa '. $desa->nama_desa . ' - '. $artikel[0]->menu)
 
 @section('styles')
-<meta name="description" content="{{ $artikel[0]->menu }}, {{ $artikel[0]->submenu }} {{ $artikel[0]->sub_submenu ? ', '. $artikel[0]->sub_submenu : '' }}">
+<meta name="description" content="{{ $artikel[0]->menu }}, {{ $artikel[0]->submenu }}{{ $artikel[0]->sub_submenu ? ', '. $artikel[0]->sub_submenu : '' }}">
 <style>
-    .animate-up:hover {
-        top: -5px;
+    iframe {
+        width: 100%;
+        height: 300px;
     }
 </style>
 @endsection
@@ -20,63 +21,71 @@
                     @if (Request::segment(2) == Str::slug($artikel[0]->submenu))
                         {{ $artikel[0]->submenu }}
                         @if (Request::segment(3) == Str::slug($artikel[0]->sub_submenu))
-                            {{ $artikel[0]->sub_submenu }}
+                            {{ $artikel[0]->sub_submenu ? ' - ' . $artikel[0]->sub_submenu : '' }}
                         @endif
                     @endif
                 </p>
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        @forelse ($artikel as $item)
-            @php
-                $url = '/';
-                if ($item->menu) {
-                    $url .= Str::slug($item->menu) .'/';
-                }
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <form class="shadow" class="mb-3" action="{{ URL::current() }}" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" name="cari" id="cari" class="form-control" placeholder="cari ..." value="{{ request('cari') }}">
+                    <div class="input-group-append">
+                        <button title="cari" type="submit" class="input-group-text" id="icon-cari"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            @foreach ($artikel as $item)
+                @php
+                    $url = url('') . "/";
+                    if ($item->menu) {
+                        $url .= Str::slug($item->menu) .'/';
+                    }
 
-                if ($item->submenu) {
-                    $url .= Str::slug($item->submenu) .'/';
-                }
+                    if ($item->submenu) {
+                        $url .= Str::slug($item->submenu) .'/';
+                    }
 
-                if ($item->sub_submenu) {
-                    $url .= Str::slug($item->sub_submenu) .'/';
-                }
+                    if ($item->sub_submenu) {
+                        $url .= Str::slug($item->sub_submenu) .'/';
+                    }
 
-                $url .= $item->id .'/'. Str::slug($item->judul);
-            @endphp
-            <div class="col-lg-4 col-md-6 mb-3">
-                <div class="card animate-up shadow">
-                    <a href="{{ $url }}">
-                        <div class="card-img" style="background-image: url('{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}'); background-size: cover; height: 200px;"></div>
-                    </a>
+                    $url .= $item->id .'/'. Str::slug($item->judul);
+                @endphp
+                <div class="card shadow mb-3">
                     <div class="card-body">
-                        <a href="{{ $url }}">
-                            <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
-                        </a>
-                        <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
-                        <div class="mt-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
-                            <span>
-                                <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
-                            </span>
-                            <span>
-                                <i class="fas fa-eye"></i>  {{ $item->dilihat }} Kali Dibaca
-                            </span>
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-2">
+                                <a href="{{ $url }}">
+                                    <img style="max-height: 200px" class="mw-100" src="{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}" alt="Gambar {{ $item->judul }}">
+                                </a>
+                            </div>
+                            <div class="col-md-8 mb-2">
+                                <a href="{{ $url }}">
+                                    <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
+                                </a>
+                                <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
+                                <a href="{{ $url }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
+                                <div class="mt-2 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
+                                    <span>
+                                        <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-eye"></i>  {{ $item->dilihat }} Kali Dibaca
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            <div class="col">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h3>Data belum tersedia</h3>
-                    </div>
-                </div>
-            </div>
-        @endforelse
-        <div class="col-12">
+            @endforeach
             {{ $artikel->links('layouts.components.pagination') }}
+        </div>
+        <div class="col-md-4 mb-3">
+            @include('sidebar')
         </div>
     </div>
 </div>

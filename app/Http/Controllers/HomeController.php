@@ -18,11 +18,9 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $surat = Surat::whereTampilkan(1)->latest()->get();
         $desa = Desa::find(1);
         $artikel = Artikel::latest()->paginate(10);
         $gallery = Gallery::where('slider', 1)->latest()->get();
-        $pemerintahan_desa = PemerintahanDesa::all();
         $galleries = Gallery::where('slider', null)->inRandomOrder()->limit(7)->get();
 
         if ($request->cari) {
@@ -36,7 +34,7 @@ class HomeController extends Controller
 
         $artikel->appends($request->only('cari'));
 
-        return view('index', compact('surat', 'desa', 'gallery','galleries','artikel','pemerintahan_desa'));
+        return view('index', compact('desa', 'gallery','galleries','artikel'));
     }
 
     public function dashboard()
