@@ -48,6 +48,17 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"class="btn btn-facebook btn-sm">
+                            <i class="fab fa-fw fa-facebook"></i><b>BAGIKAN</b>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?text={{$artikel->judul}}&amp;url={{Request::url()}}"class="btn btn-twitter btn-sm">
+                            <i class="fab fa-fw fa-twitter"></i><b>BAGIKAN</b>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?phone=&text={{Request::url()}}"class="btn btn-success btn-sm">
+                            <i class="fab fa-fw fa-whatsapp"></i><b>BAGIKAN</b>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="container">

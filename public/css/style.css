@@ -429,7 +429,7 @@
     display: inline-block;
     padding-right: 3px;
     vertical-align: middle;
-    font-weight:900;
+    font-weight: 900;
     position: absolute;
     right: 15px;
 }
@@ -508,7 +508,7 @@
     display: inline-block;
     padding-right: 3px;
     vertical-align: middle;
-    font-weight:900;
+    font-weight: 900;
     padding-left: 10px;
     position: absolute;
     right: 15px;
@@ -699,4 +699,87 @@
     right: 15px;
     bottom: 15px;
     z-index: 99999;
+}
+
+
+/*--------------------------------------------------------------
+# Social button
+--------------------------------------------------------------*/
+
+.btn-facebook {
+    color: #fff;
+    background-color: #3b5999;
+    border-color: #3b5999;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-facebook:hover {
+    color: #fff;
+    background-color: #3b5999;
+    border-color: #3b5999;
+}
+
+.btn-facebook:focus,
+.btn-facebook.focus {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(59, 89, 153, 0.5);
+}
+
+.btn-facebook.disabled,
+.btn-facebook:disabled {
+    color: #fff;
+    background-color: #3b5999;
+    border-color: #3b5999;
+}
+
+.btn-facebook:not(:disabled):not(.disabled):active,
+.btn-facebook:not(:disabled):not(.disabled).active,
+.show>.btn-facebook.dropdown-toggle {
+    color: #fff;
+    background-color: #2d4474;
+    border-color: #3b5999;
+}
+
+.btn-facebook:not(:disabled):not(.disabled):active:focus,
+.btn-facebook:not(:disabled):not(.disabled).active:focus,
+.show>.btn-facebook.dropdown-toggle:focus {
+    box-shadow: none, 0 0 0 0 rgba(59, 89, 153, 0.5);
+}
+
+.btn-twitter {
+    color: #fff;
+    background-color: #1da1f2;
+    border-color: #1da1f2;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-twitter:hover {
+    color: #fff;
+    background-color: #1da1f2;
+    border-color: #1da1f2;
+}
+
+.btn-twitter:focus,
+.btn-twitter.focus {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(29, 161, 242, 0.5);
+}
+
+.btn-twitter.disabled,
+.btn-twitter:disabled {
+    color: #fff;
+    background-color: #1da1f2;
+    border-color: #1da1f2;
+}
+
+.btn-twitter:not(:disabled):not(.disabled):active,
+.btn-twitter:not(:disabled):not(.disabled).active,
+.show>.btn-twitter.dropdown-toggle {
+    color: #fff;
+    background-color: #0c85d0;
+    border-color: #1da1f2;
+}
+
+.btn-twitter:not(:disabled):not(.disabled):active:focus,
+.btn-twitter:not(:disabled):not(.disabled).active:focus,
+.show>.btn-twitter.dropdown-toggle:focus {
+    box-shadow: none, 0 0 0 0 rgba(29, 161, 242, 0.5);
 }
