@@ -219,6 +219,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/database', 'DatabaseController@index')->name('database.index');
     Route::get('/database/backup', 'DatabaseController@backup')->name('database.backup');
     Route::post('/database/restore', 'DatabaseController@restore')->name('database.restore');
+
+    Route::get('/folder/backup', 'DatabaseController@folder_backup')->name('folder.backup');
+    Route::post('/folder/restore', 'DatabaseController@folder_restore')->name('folder.restore');
 });
 
 Route::get('/{any}', 'ArtikelController@show')->where('any', '.*')->name('artikel.show');
