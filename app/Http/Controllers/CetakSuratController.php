@@ -105,7 +105,7 @@ class CetakSuratController extends Controller
     public function update(Request $request, CetakSurat $cetakSurat)
     {
         $request->validate([
-            'nomor'     => ['nullable','numeric','min:1'],
+            'nomor'     => ['nullable'],
             'isian.*'   => ['required']
         ]);
 
