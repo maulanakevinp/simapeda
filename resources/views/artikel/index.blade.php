@@ -65,29 +65,13 @@
 @include('layouts.components.alert')
 <div class="row mt-4 justify-content-center">
     @forelse ($artikel as $item)
-        @php
-            $url = '/';
-            if ($item->menu) {
-                $url .= Str::slug($item->menu) .'/';
-            }
-
-            if ($item->submenu) {
-                $url .= Str::slug($item->submenu) .'/';
-            }
-
-            if ($item->sub_submenu) {
-                $url .= Str::slug($item->sub_submenu) .'/';
-            }
-
-            $url .= $item->id .'/'. Str::slug($item->judul);
-        @endphp
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card animate-up shadow">
-                <a href="{{ $url }}">
+                <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}">
                     <div class="card-img" style="background-image: url('{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}'); background-size: cover; height: 200px;"></div>
                 </a>
                 <div class="card-body text-center">
-                    <a href="{{ $url }}">
+                    <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}">
                         <h3>{{ $item->judul }}</h3>
                         <p class="text-sm text-muted">{{ $item->menu ? $item->menu : '' }}{{ $item->submenu ? ', '. $item->submenu : '' }}{{ $item->sub_submenu ? ', '. $item->sub_submenu : '' }}</p>
                         <div class="mt-3 d-flex justify-content-between text-sm text-muted">

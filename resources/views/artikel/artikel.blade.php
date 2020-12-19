@@ -39,36 +39,20 @@
                 </div>
             </form>
             @foreach ($artikel as $item)
-                @php
-                    $url = url('') . "/";
-                    if ($item->menu) {
-                        $url .= Str::slug($item->menu) .'/';
-                    }
-
-                    if ($item->submenu) {
-                        $url .= Str::slug($item->submenu) .'/';
-                    }
-
-                    if ($item->sub_submenu) {
-                        $url .= Str::slug($item->sub_submenu) .'/';
-                    }
-
-                    $url .= $item->id .'/'. Str::slug($item->judul);
-                @endphp
                 <div class="card shadow mb-3">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 text-center mb-2">
-                                <a href="{{ $url }}">
+                                <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}">
                                     <img style="max-height: 200px" class="mw-100" src="{{ $item->gambar ? url(Storage::url($item->gambar)) : url(Storage::url('noimage.jpg')) }}" alt="Gambar {{ $item->judul }}">
                                 </a>
                             </div>
                             <div class="col-md-8 mb-2">
-                                <a href="{{ $url }}">
+                                <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}">
                                     <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
                                 </a>
                                 <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
-                                <a href="{{ $url }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
+                                <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
                                 <div class="mt-2 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
                                     <span>
                                         <i class="fas fa-clock"></i> {{ $item->created_at->diffForHumans() }}

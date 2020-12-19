@@ -138,7 +138,24 @@ class ArtikelController extends Controller
         if ($view == true && $views == false) {
             $artikels = Artikel::where('id','!=', $artikel->id)->inRandomOrder()->limit(3)->get();
             $artikel->update(['dilihat' => $artikel->dilihat + 1]);
-            return view('artikel.show',compact('artikel','desa','artikels'));
+            $next = null; $before = null;
+            $articels = Artikel::all();
+            foreach ($articels as $key => $item) {
+                if ($item->id == $artikel->id) {
+                    try {
+                        $next = $articels[$key + 1];
+                    } catch (\Throwable $th) {
+                        $next = null;
+                    }
+
+                    try {
+                        $before = $articels[$key - 1];
+                    } catch (\Throwable $th) {
+                        $before = null;
+                    }
+                }
+            }
+            return view('artikel.show',compact('artikel','desa','artikels','before','next'));
         } elseif ($view == false && $views == true) {
             return view('artikel.artikel', compact('desa','artikel'));
         } else {
