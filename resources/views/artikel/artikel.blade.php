@@ -3,6 +3,9 @@
 
 @section('styles')
 <meta name="description" content="{{ $artikel[0]->menu }}, {{ $artikel[0]->submenu }}{{ $artikel[0]->sub_submenu ? ', '. $artikel[0]->sub_submenu : '' }}">
+<link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
 <style>
     iframe {
         width: 100%;
@@ -76,6 +79,8 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
         $.each($(".konten"), function (index,konten){
@@ -86,6 +91,29 @@
                     $(e).css('font-size','0.8rem');
                 }
             });
+        });
+
+        $('#owl-two').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed:900,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                400: {
+                    items: 3
+                },
+                650: {
+                    items: 3
+                },
+                660: {
+                    items: 2
+                }
+            }
         });
     });
 </script>

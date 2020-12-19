@@ -3,6 +3,8 @@
 
 @section('styles')
 <meta name="description" content="{{ $artikel->judul }}.">
+<link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
 <style>
     iframe {
@@ -48,7 +50,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="">
+                    <div class="mb-3">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}"class="btn btn-facebook btn-sm">
                             <i class="fab fa-fw fa-facebook"></i><b>BAGIKAN</b>
                         </a>
@@ -59,21 +61,19 @@
                             <i class="fab fa-fw fa-whatsapp"></i><b>BAGIKAN</b>
                         </a>
                     </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 border border-left-0 text-center">
-                        @if ($before)
-                            <span style="font-size: 0.7rem"><i class="fas fa-arrow-left"></i> Postingan Sebelumnya</span><br>
-                            <a href="{{ url('') }}{{ $before->menu ? '/' . Str::slug($before->menu) : '' }}{{ $before->submenu ? '/' . Str::slug($before->submenu) : '' }}{{ $before->sub_submenu ? '/' . Str::slug($before->sub_submenu) : '' }}{{ '/' . $before->id . '/' . Str::slug($before->judul) }}" class="h5 font-weight-bolder">{{ $before->judul }}</a>
-                        @endif
-                    </div>
-                    <div class="col-md-6 border border-right-0 text-center">
-                        @if ($next)
-                            <span style="font-size: 0.7rem">Postingan Berikutnya <i class="fas fa-arrow-right"></i></span><br>
-                            <a href="{{ url('') }}{{ $next->menu ? '/' . Str::slug($next->menu) : '' }}{{ $next->submenu ? '/' . Str::slug($next->submenu) : '' }}{{ $next->sub_submenu ? '/' . Str::slug($next->sub_submenu) : '' }}{{ '/' . $next->id . '/' . Str::slug($next->judul) }}" class="h5 font-weight-bolder">{{ $next->judul }}</a>
-                        @endif
+                    <div class="row">
+                        <div class="col-md-6 border border-left-0 text-center">
+                            @if ($before)
+                                <span style="font-size: 0.7rem"><i class="fas fa-arrow-left"></i> Postingan Sebelumnya</span><br>
+                                <a href="{{ url('') }}{{ $before->menu ? '/' . Str::slug($before->menu) : '' }}{{ $before->submenu ? '/' . Str::slug($before->submenu) : '' }}{{ $before->sub_submenu ? '/' . Str::slug($before->sub_submenu) : '' }}{{ '/' . $before->id . '/' . Str::slug($before->judul) }}" class="h5 font-weight-bolder">{{ $before->judul }}</a>
+                            @endif
+                        </div>
+                        <div class="col-md-6 border border-right-0 text-center">
+                            @if ($next)
+                                <span style="font-size: 0.7rem">Postingan Berikutnya <i class="fas fa-arrow-right"></i></span><br>
+                                <a href="{{ url('') }}{{ $next->menu ? '/' . Str::slug($next->menu) : '' }}{{ $next->submenu ? '/' . Str::slug($next->submenu) : '' }}{{ $next->sub_submenu ? '/' . Str::slug($next->sub_submenu) : '' }}{{ '/' . $next->id . '/' . Str::slug($next->judul) }}" class="h5 font-weight-bolder">{{ $next->judul }}</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -111,6 +111,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
@@ -122,6 +123,29 @@
                     $(e).css('font-size','0.8rem');
                 }
             });
+        });
+
+        $('#owl-two').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed:900,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                400: {
+                    items: 3
+                },
+                650: {
+                    items: 3
+                },
+                660: {
+                    items: 2
+                }
+            }
         });
     });
 </script>

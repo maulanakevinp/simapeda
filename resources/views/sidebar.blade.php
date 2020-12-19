@@ -4,7 +4,7 @@
     </div>
     <div class="card-body overflow-auto" style="height: 500px">
         <div class="list-group">
-            @foreach (App\Surat::whereTampilkan(1)->latest()->get() as $item)
+            @foreach (App\Surat::select('id','nama')->whereTampilkan(1)->latest()->get() as $item)
                 <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}" class="list-group-item list-group-item-action" style="font-size: 0.8rem">{{ $item->nama }}</a>
             @endforeach
         </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
             <div id="owl-two" class="owl-carousel owl-theme" style="z-index: 0">
-                @foreach(App\PemerintahanDesa::orderBy('urutan')->get() as $key => $item)
+                @foreach(App\PemerintahanDesa::select('foto','nama','jabatan')->orderBy('urutan')->get() as $key => $item)
                     <div class="text-center">
                         <a class="text-center" href="{{ $item->foto ? asset(Storage::url($item->foto)) : asset('storage/noavatar.png') }}" data-caption="{{ $item->nama }} {{ $item->jabatan ? '(' . $item->jabatan . ')' : '' }}" data-fancybox>
                             <img class="mw-100" src="{{ $item->foto ? asset(Storage::url($item->foto)) : asset('storage/noavatar.png') }}" alt="Pemerintahan Desa {{ $key }}">
