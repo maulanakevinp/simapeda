@@ -54,7 +54,7 @@
                                 <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}">
                                     <h5 class="title-article block-with-text">{{ $item->judul }}</h5>
                                 </a>
-                                <div class="konten description-article block-with-text text-dark">{!! $item->konten !!}</div>
+                                <div class="description-article block-with-text text-dark" style="font-size: 0.8rem">{!! $item->konten !!}</div>
                                 <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}" style="font-size: 0.8rem">Baca Selengkapnya ...</a>
                                 <div class="mt-2 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
                                     <span>
@@ -83,16 +83,6 @@
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $.each($(".konten"), function (index,konten){
-            $.each(konten.children, function (i,e) {
-                if (e.children.length > 0) {
-                    $(e).html('');
-                } else {
-                    $(e).css('font-size','0.8rem');
-                }
-            });
-        });
-
         $('#owl-two').owlCarousel({
             loop: true,
             autoplay: true,

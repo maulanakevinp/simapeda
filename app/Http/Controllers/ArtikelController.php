@@ -137,11 +137,35 @@ class ArtikelController extends Controller
 
         if ($view == true && $views == false) {
             $artikels = Artikel::where('id','!=', $artikel->id)->inRandomOrder()->limit(3)->get();
+
+            foreach ($artikels as $item) {
+                preg_match_all("/<\s*img[^>]*>/", $item->konten, $img);
+                foreach($img[0] as $image){
+                    $item->konten = str_replace($image,'',$item->konten);
+                }
+                preg_match_all("/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/", $item->konten, $konten);
+                $item->konten = '';
+                foreach($konten[1] as $isi) {
+                    $item->konten .= $isi . ' ';
+                }
+            }
+
             $artikel->update(['dilihat' => $artikel->dilihat + 1]);
             $before = Artikel::select('id','judul','menu','submenu','sub_submenu')->where('id','<',$artikel->id)->orderBy('id','desc')->first();
             $next = Artikel::select('id','judul','menu','submenu','sub_submenu')->where('id','>',$artikel->id)->first();
             return view('artikel.show',compact('artikel','desa','artikels','before','next'));
         } elseif ($view == false && $views == true) {
+            foreach ($artikel as $item) {
+                preg_match_all("/<\s*img[^>]*>/", $item->konten, $img);
+                foreach($img[0] as $image){
+                    $item->konten = str_replace($image,'',$item->konten);
+                }
+                preg_match_all("/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/", $item->konten, $konten);
+                $item->konten = '';
+                foreach($konten[1] as $isi) {
+                    $item->konten .= $isi . ' ';
+                }
+            }
             return view('artikel.artikel', compact('desa','artikel'));
         } else {
             return abort(404);

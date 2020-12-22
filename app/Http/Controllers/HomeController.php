@@ -18,6 +18,18 @@ class HomeController extends Controller
     {
         $desa = Desa::find(1);
         $artikel = Artikel::latest()->paginate(10);
+        foreach ($artikel as $item) {
+            preg_match_all("/<\s*img[^>]*>/", $item->konten, $img);
+            foreach($img[0] as $image){
+                $item->konten = str_replace($image,'',$item->konten);
+            }
+            preg_match_all("/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/", $item->konten, $konten);
+            $item->konten = '';
+            foreach($konten[1] as $isi) {
+                $item->konten .= $isi . ' ';
+            }
+        }
+
         $gallery = Gallery::where('slider', 1)->latest()->get();
         $galleries = Gallery::where('slider', null)->inRandomOrder()->limit(7)->get();
 
