@@ -366,4 +366,67 @@ class PendudukController extends Controller
         $penduduk->appends(request()->input())->links();
         return view('penduduk.calon-pemilih.index', compact('penduduk'));
     }
+
+    public function cari(Request $request)
+    {
+        $penduduk = Penduduk::where('nik', $request->nik)->first();
+
+        if (!$penduduk) {
+            return response()->json([]);
+        }
+
+        $data = $penduduk->toArray();
+        $data['agama']                          = $penduduk->agama->nama ?? '';
+        $data['akseptor_kb']                    = $penduduk->akseptorKb->nama ?? '';
+        $data['alamat']                         = $penduduk->alamat_sekarang;
+        $data['asuransi']                       = $penduduk->asuransi->nama ?? '';
+        $data['darah']                          = $penduduk->darah->nama ?? '';
+        $data['rt']                             = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
+        $data['rw']                             = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
+        $data['dusun']                          = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
+        $data['jenis_cacat']                    = $penduduk->jenisCacat->nama ?? '';
+        $data['jenis_kelahiran']                = $penduduk->jenisKelahiran->nama ?? '';
+        $data['jenis_kelamin']                  = $penduduk->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan";
+        $data['kewarganegaraan']                = $penduduk->kewarganegaraan == 1 ? "WNI" : ($penduduk->kewarganegaraan == 2 ? $penduduk->kewarganegaraan = "WNA" : $penduduk->kewarganegaraan = "Dua Kewarganagaraan");
+        $data['pekerjaan']                      = $penduduk->pekerjaan->nama ?? '';
+        $data['pendidikan']                     = $penduduk->pendidikan->nama ?? '';
+        $data['penolong_kelahiran']             = $penduduk->penolongKelahiran->nama ?? '';
+        $data['sakit_menahun']                  = $penduduk->sakitMenahun->nama ?? '';
+        $data['status_hubungan_dalam_keluarga'] = $penduduk->statusHubunganDalamKeluarga->nama ?? '';
+        $data['status_penduduk']                = $penduduk->statusPenduduk->nama ?? '';
+        $data['status_perkawinan']              = $penduduk->statusPerkawinan->nama ?? '';
+        $data['status_rekam']                   = $penduduk->statusRekam->nama ?? '';
+        $data['tanggal_berakhir_paspor']        = date('d-m-Y', strtotime($penduduk->tgl_berakhir_paspor));
+        $data['tanggal_perceraian']             = date('d-m-Y', strtotime($penduduk->tanggal_perceraian));
+        $data['tanggal_perkawinan']             = date('d-m-Y', strtotime($penduduk->tanggal_perkawinan));
+        $data['tempat,_tanggal_lahir']          = $penduduk->tempat_lahir .', '. date('d-m-Y', strtotime($penduduk->tanggal_lahir));
+        $data['tempat_dilahirkan']              = $penduduk->tempatDilahirkan->nama ?? '';
+
+        unset(
+            $data['akseptor_kb_id'],
+            $data['alamat_sekarang'],
+            $data['agama_id'],
+            $data['asuransi_id'],
+            $data['created_at'],
+            $data['darah_id'],
+            $data['detail_dusun_id'],
+            $data['id'],
+            $data['jenis_cacat_id'],
+            $data['jenis_kelahiran_id'],
+            $data['pekerjaan_id'],
+            $data['pendidikan_id'],
+            $data['penolong_kelahiran_id'],
+            $data['sakit_menahun_id'],
+            $data['status_hubungan_dalam_keluarga_id'],
+            $data['status_penduduk_id'],
+            $data['status_perkawinan_id'],
+            $data['status_rekam_id'],
+            $data['tanggal_lahir'],
+            $data['tempat_lahir'],
+            $data['tempat_dilahirkan_id'],
+            $data['tgl_berakhir_paspor'],
+            $data['updated_at'],
+        );
+        return response()->json($data);
+    }
 }

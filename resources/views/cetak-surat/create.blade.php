@@ -6,23 +6,7 @@
 @endsection
 
 @section('content')
-<div class="row fixed-top m-3">
-    <div class="col-lg-6"></div>
-    <div class="col-lg-6">
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
-                <span class="alert-text">
-                    <strong>Gagal</strong>
-                    Data tidak boleh kosong!
-                </span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-    </div>
-</div>
+@include('layouts.components.alert')
 <div class="container my-5">
     <div class="header-body text-center mt-5 mb-3">
         <div class="row justify-content-center">
@@ -36,11 +20,20 @@
         <div class="card-body px-lg-5 py-lg-5">
             <form role="form" action="{{ route('cetak-surat.store', ['id' => $surat->id, 'slug' => Str::slug($surat->nama)]) }}" method="POST">
                 @csrf
+                <div class="form-group mb-5">
+                    <label for="nomor_induk_penduduk" class="form-control-label">NIK</label>
+                    <div class="input-group mb-3">
+                        <input required type="text" onkeypress="return hanyaAngka(this)" id="nomor_induk_penduduk" class="form-control form-control-alternative" name="nomor_induk_penduduk" autofocus placeholder="Masukkan NIK">
+                        <div class="input-group-append">
+                            <button id="cari-nik" type="submit" class="input-group-text">cari</button>
+                        </div>
+                    </div>
+                </div>
                 @foreach ($surat->isiSurat as $key => $isiSurat)
                     @if ($isiSurat->jenis_isi == 3)
                         <div class="form-group mb-3">
-                            <label for="{{ $isiSurat->isi .''.$key }}" class="form-control-label">{{ $isiSurat->isi }}</label>
-                            <input required id="{{ $isiSurat->isi .''.$key }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }}">
+                            <label for="{{ strtolower($isiSurat->isi) . ' ' . $key }}" class="form-control-label">{{ $isiSurat->isi }}</label>
+                            <input required id="{{ strtolower($isiSurat->isi) . ' ' . $key }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }}">
                         </div>
                     @endif
                     @if ($isiSurat->tampilkan == 1)
@@ -56,8 +49,8 @@
                             $hasil = substr($pertama,0,-1);
                         @endphp
                         <div class="form-group mb-3">
-                            <label for="{{ $hasil .''.$k }}" class="form-control-label">{{ $hasil }}</label>
-                            <input required id="{{ $hasil .''.$k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }}">
+                            <label for="{{ strtolower($hasil) . ' ' . $k }}" class="form-control-label">{{ $hasil }}</label>
+                            <input required id="{{ strtolower($hasil) . ' ' . $k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }}">
                         </div>
                     @endforeach
                 @endforeach
@@ -85,6 +78,22 @@
         $("form").submit(function () {
             $(this).children('.text-center').children('button').attr('disabled','disabled');
             $(this).children('.text-center').children('button').html(`<img height="20px" src="{{ url('/storage/loading.gif') }}" alt=""> Sedang diproses`);
+        });
+
+        $("#cari-nik").click(function (e){
+            e.preventDefault();
+            $.ajax({
+                url : baseURL + '/penduduk/cari',
+                type: 'GET',
+                data: {
+                    nik: $("#nomor_induk_penduduk").val()
+                },
+                success: function(response){
+                    $.each(response, function(i,e){
+                        $(`input[id*='${i.replaceAll('_',' ')}']`).val(e);
+                    });
+                }
+            })
         });
     });
 </script>

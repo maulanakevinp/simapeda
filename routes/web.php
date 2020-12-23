@@ -25,6 +25,7 @@ Route::get('/panduan', 'HomeController@panduan')->name('panduan');
 Route::get('/statistik-penduduk', 'GrafikController@index')->name('statistik-penduduk');
 Route::get('/statistik-penduduk/show', 'GrafikController@show')->name('statistik-penduduk.show');
 Route::get('/anggaran-realisasi-cart', 'AnggaranRealisasiController@cart')->name('anggaran-realisasi.cart');
+Route::get('/penduduk/cari','PendudukController@cari')->name('penduduk.cari');
 Route::post('/cetak-surat/{id}/{slug}', 'CetakSuratController@store')->name('cetak-surat.store');
 
 Route::group(['middleware' => ['web', 'guest']], function () {

@@ -19,27 +19,42 @@ class PendudukImport implements ToCollection
 {
     public function collection(Collection $rows)
     {
-        try {
             unset($rows[0]);
             set_time_limit(0);
 
-            Validator::make($rows->toArray(), [
-                '*.4'   => ['required'],
-                '*.6'   => ['required'],
-                '*.7'   => ['required'],
-                '*.8'   => ['required'],
-                '*.9'   => ['required'],
-                '*.17'  => ['required'],
-            ],[
-                '*.4.required'  => 'kode keluarga (kolom E) wajib diisi.',
-                '*.6.required'  => 'nomor urut dalam kk (kolom G) wajib diisi.',
-                '*.7.required'  => 'nik (kolom H) wajib diisi.',
-                '*.8.required'  => 'nama (kolom I) wajib diisi.',
-                '*.9.required'  => 'jenis kelamin (kolom J) wajib diisi.',
-                '*.17.required' => 'kewarganegaraan (kolom R) wajib diisi.',
-            ])->validate();
-
             foreach ($rows as $key => $row) {
+                $baris = $key+1;
+                Validator::make($row->toArray(), [
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['required'],
+                    ['nullable'],
+                    ['required'],
+                    ['required'],
+                    ['required'],
+                    ['required'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['required'],
+                    ['nullable'],
+                    ['nullable'],
+                    ['nullable'],
+                ],[
+                    '4.required'  => 'kode keluarga (kolom E baris ke-'. $baris .') wajib diisi.',
+                    '6.required'  => 'nomor urut dalam kk (kolom G baris ke-'. $baris .') wajib diisi.',
+                    '7.required'  => 'nik (kolom H baris ke-'. $baris .') wajib diisi.',
+                    '8.required'  => 'nama (kolom I baris ke-'. $baris .') wajib diisi.',
+                    '9.required'  => 'jenis kelamin (kolom J baris ke-'. $baris .') wajib diisi.',
+                    '17.required' => 'kewarganegaraan (kolom R baris ke-'. $baris .') wajib diisi.',
+                ])->validate();
+
                 preg_match_all('/\d+/', $row[4], $matches);
                 $kk = implode('',$matches[0]);
 
@@ -84,8 +99,5 @@ class PendudukImport implements ToCollection
                 }
             }
             return back()->with('success', 'File xlsx berhasil di import');
-        } catch (\Throwable $th) {
-            return back()->with('error',"File xlsx gagal di import");
-        }
     }
 }

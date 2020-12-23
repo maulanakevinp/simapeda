@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\CetakSurat;
 use App\DetailCetak;
+use App\Penduduk;
 use Illuminate\Http\Request;
 
 class CetakSuratController extends Controller
@@ -40,8 +41,16 @@ class CetakSuratController extends Controller
     public function store(Request $request, $id)
     {
         $request->validate([
-            'isian.*'  => ['required']
+            'isian.*'               => ['required'],
+            'nomor_induk_penduduk'  => ['required']
+        ],[
+            '*.required' => ['data wajib diisi.']
         ]);
+
+        $penduduk = Penduduk::where('nik', $request->nomor_induk_penduduk)->first();
+        if (!$penduduk) {
+            return back()->with('error','Mohon maaf anda tidak dapat membuat surat dikarenakan NIK anda tidak terdeteksi sebagai data penduduk. Silahkan ke Kantor Desa untuk konfirmasi');
+        }
 
         $desa = Desa::find(1);
         $surat = Surat::find($id);
