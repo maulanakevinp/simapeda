@@ -4,12 +4,6 @@
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-</style>
 @endsection
 
 @section('content-header')
@@ -22,22 +16,15 @@
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
                                 <h2 class="mb-0">Surat</h2>
-                                <p class="mb-0 text-sm">Kelola Surat {{ config('app.name') }}</p>
+                                <p class="mb-0 text-sm">Kelola Surat</p>
                             </div>
                             <div class="mb-3">
+                                <button type="button" data-toggle="tooltip" title="Pengaturan" class="btn btn-primary" id="btn-pengaturan" name="btn-pengaturan">
+                                    <i class="fas fa-cog"></i>
+                                </button>
                                 <a href="{{ route('surat.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Surat</a>
                             </div>
                         </div>
-                        <form class="navbar-search mt-3 cari-none">
-                            <div class="form-group mb-0">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Cari ...." type="text" name="cari" value="{{ request('cari') }}">
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -53,7 +40,20 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" placeholder="Cari ...." type="text" name="cari" value="{{ request('cari') }}">
+            <input class="form-control" placeholder="Cari ...." type="search" name="cari" value="{{ request('cari') }}">
+        </div>
+    </div>
+</form>
+@endsection
+
+@section('form-search-mobile')
+<form class="mt-4 mb-3 d-md-none">
+    <div class="input-group input-group-rounded input-group-merge">
+        <input type="search" name="cari" class="form-control form-control-rounded form-control-prepended" placeholder="cari" aria-label="cari" value="{{ request('cari') }}">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span class="fa fa-search"></span>
+            </div>
         </div>
     </div>
 </form>
@@ -66,7 +66,7 @@
         <div class="col-lg-4 col-md-6 surats">
             <div class="single-service bg-white rounded shadow">
                 <a href="{{ route('surat.show', $item) }}">
-                    <i class="fas {{ $item->icon }} ikon fa-5x mb-3"></i>
+                    <i class="fas fa-file-alt fa-5x mb-3"></i>
                     <h4>{{ $item->nama }}</h4>
                 </a>
                 <p>{{ $item->deskripsi }}</p>
@@ -123,11 +123,48 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="pengaturan" tabindex="-1" role="dialog" aria-labelledby="pengaturan" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-pengaturan">Pengaturan</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route("surat.pengaturan") }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="ditandatangani">Ditandatangani</label>
+                        <select class="form-control" type="text" id="ditandatangani" name="ditandatangani">
+                            <option value="">Pilih Aparat Pemerintahan Desa</option>
+                            @foreach ($pemerintahan_desa as $item)
+                                <option value="{{ $item->id }}" {{ $desa->pemerintahan_desa_id == $item->id ? 'selected' : '' }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function(){
+        $('#btn-pengaturan').click(function (e) {
+            e.preventDefault();
+            $("#pengaturan").modal('show');
+        });
+
         $('[name="cari"]').on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("#card .surats").filter(function() {

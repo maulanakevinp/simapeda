@@ -17,7 +17,9 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "riskihajar/terbilang": "^1.2"
+        "maatwebsite/excel": "^3.1",
+        "riskihajar/terbilang": "^1.2",
+        "spatie/db-dumper": "^2.18"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

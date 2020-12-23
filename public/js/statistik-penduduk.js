@@ -124,8 +124,8 @@ $(document).ready(function (){
             series: [{
                 name:"",
                 colorByPoint: true,
-                data:[]}
-            ]
+                data:[]
+            }]
         };
 
         let chart_agama = Highcharts.chart('chart-agama', pie);

@@ -2,54 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Berita;
+use App\Artikel;
 use App\Desa;
 use App\Gallery;
-use App\PemerintahanDesa;
 use App\Penduduk;
+use App\Perdes;
+use App\Perkades;
+use App\SkKades;
 use App\Surat;
-use App\Video;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $surat = Surat::whereTampilkan(1)->latest()->take(3)->get();
         $desa = Desa::find(1);
-        $berita = Berita::latest()->take(3)->get();
-        $pemerintahan_desa = PemerintahanDesa::latest()->take(3)->get();
+        $artikel = Artikel::latest()->paginate(10);
+        foreach ($artikel as $item) {
+            preg_match_all("/<\s*img[^>]*>/", $item->konten, $img);
+            foreach($img[0] as $image){
+                $item->konten = str_replace($image,'',$item->konten);
+            }
+            preg_match_all("/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/", $item->konten, $konten);
+            $item->konten = '';
+            foreach($konten[1] as $isi) {
+                $item->konten .= $isi . ' ';
+            }
+        }
+
         $gallery = Gallery::where('slider', 1)->latest()->get();
-        $galleries = array();
-        $videos = Video::all();
+        $galleries = Gallery::where('slider', null)->inRandomOrder()->limit(7)->get();
 
-        foreach (Gallery::where('slider', null)->get() as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gallery,
-                'id'        => $value->id,
-                'caption'   => $value->caption,
-                'jenis'     => 1,
-                'created_at'=> strtotime($value->created_at),
-            ];
-            array_push($galleries, $gambar);
+        if ($request->cari) {
+            $artikel = Artikel::where('judul','like',"%{$request->cari}%")
+            ->orWhere('konten','like',"%{$request->cari}%")
+            ->orWhere('menu','like',"%{$request->cari}%")
+            ->orWhere('submenu','like',"%{$request->cari}%")
+            ->orWhere('sub_submenu','like',"%{$request->cari}%")
+            ->orderBy('id','desc')->paginate(10);
         }
 
-        foreach ($videos as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gambar,
-                'id'        => $value->video_id,
-                'caption'   => $value->caption,
-                'jenis'     => 2,
-                'created_at'=> strtotime($value->published_at),
-            ];
-            array_push($galleries, $gambar);
-        }
+        $artikel->appends($request->only('cari'));
 
-        usort($galleries, function($a, $b) {
-            return $a['created_at'] < $b['created_at'];
-        });
-
-        return view('index', compact('surat', 'desa', 'gallery','berita','pemerintahan_desa','galleries'));
+        return view('index', compact('desa', 'gallery','galleries','artikel'));
     }
 
     public function dashboard()
@@ -154,5 +149,28 @@ class HomeController extends Controller
     {
         $desa = Desa::find(1);
         return view('panduan', compact('desa'));
+    }
+
+    public function produk_hukum(Request $request)
+    {
+        if ($request->kategori == 'sk-kades') {
+            $produk_hukum   = SkKades::select('id','judul_dokumen','nomor_keputusan_kades','tanggal_keputusan_kades','uraian_singkat')->where('aktif',1)->paginate(10);
+        } elseif ($request->kategori == 'perdes') {
+            $produk_hukum   = Perdes::select('id','judul_dokumen','nomor_ditetapkan','tanggal_ditetapkan','uraian_singkat')->where('aktif',1)->paginate(10);
+        } elseif ($request->kategori == 'perkades') {
+            $produk_hukum   = Perkades::select('id','judul_dokumen','nomor_keputusan_kades','tanggal_keputusan_kades','uraian_singkat')->where('aktif',1)->paginate(10);
+        } else {
+            return redirect('produk-hukum?kategori=sk-kades');
+        }
+
+        $desa = Desa::find(1);
+
+        return view('produk-hukum.index', compact('produk_hukum','desa'));
+    }
+
+    public function load_gallery()
+    {
+        $galleries = Gallery::where('slider', null)->latest()->paginate(9);
+        return response()->json($galleries);
     }
 }

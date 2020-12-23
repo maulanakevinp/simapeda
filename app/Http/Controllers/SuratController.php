@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CetakSurat;
 use App\Desa;
 use App\IsiSurat;
+use App\PemerintahanDesa;
 use App\Surat;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -19,7 +20,9 @@ class SuratController extends Controller
     public function index()
     {
         $surat = Surat::latest()->get();
-        return view('surat.index', compact('surat'));
+        $desa = Desa::find(1);
+        $pemerintahan_desa = PemerintahanDesa::orderBy('urutan')->get();
+        return view('surat.index', compact('surat','pemerintahan_desa','desa'));
     }
 
     /**
@@ -52,7 +55,10 @@ class SuratController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $this->validationSurat($request);
+        $validator = Validator::make($request->all(), [
+            'nama'      => ['required', 'max:64'],
+            'isian.*'   => ['required']
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -114,7 +120,10 @@ class SuratController extends Controller
      */
     public function update(Request $request, Surat $surat)
     {
-        $validator = $this->validationSurat($request);
+        $validator = Validator::make($request->all(), [
+            'nama'      => ['required', 'max:64'],
+            'isian.*'   => ['required']
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -226,7 +235,6 @@ class SuratController extends Controller
     {
         $dataSurat = [
             'nama'                      => $request->nama,
-            'icon'                      => $request->icon,
             'deskripsi'                 => $request->deskripsi,
             'persyaratan'               => $request->persyaratan,
             'perihal'                   => $request->perihal,
@@ -236,14 +244,5 @@ class SuratController extends Controller
         ];
 
         return $dataSurat;
-    }
-
-    public function validationSurat($request)
-    {
-        return Validator::make($request->all(), [
-            'nama'      => ['required', 'max:64'],
-            'icon'      => ['required', 'max:64'],
-            'isian.*'   => ['required']
-        ]);
     }
 }

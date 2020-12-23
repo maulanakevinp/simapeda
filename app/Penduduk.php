@@ -43,4 +43,59 @@ class Penduduk extends Model
     {
         return $this->belongsTo('App\StatusPerkawinan');
     }
+
+    public function statusRekam()
+    {
+        return $this->belongsTo('App\StatusRekam');
+    }
+
+    public function statusPenduduk()
+    {
+        return $this->belongsTo('App\StatusPenduduk');
+    }
+
+    public function akseptorKb()
+    {
+        return $this->belongsTo('App\AkseptorKb');
+    }
+
+    public function asuransi()
+    {
+        return $this->belongsTo('App\Asuransi');
+    }
+
+    public function jenisCacat()
+    {
+        return $this->belongsTo('App\JenisCacat');
+    }
+
+    public function jenisKelahiran()
+    {
+        return $this->belongsTo('App\JenisKelahiran');
+    }
+
+    public function penolongKelahiran()
+    {
+        return $this->belongsTo('App\PenolongKelahiran');
+    }
+
+    public function sakitMenahun()
+    {
+        return $this->belongsTo('App\SakitMenahun');
+    }
+
+    public function tempatDilahirkan()
+    {
+        return $this->belongsTo('App\TempatDilahirkan');
+    }
+
+    public function pendidikanSedangDitempuh()
+    {
+        return $this->belongsTo('App\Pendidikan','pendidikan_sedang_ditempuh_id');
+    }
+
+    public function input()
+    {
+        return $this->hasMany('App\Input');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Desa;
+use App\Penduduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -57,18 +58,31 @@ class DesaController extends Controller
                 'nama_desa'             => ['required', 'max:64', 'string'],
                 'nama_kecamatan'        => ['required', 'max:64', 'string'],
                 'nama_kabupaten'        => ['required', 'max:64', 'string'],
+                'nama_provinsi'         => ['required', 'max:64', 'string'],
+                'kodepos'               => ['required', 'max:8', 'string'],
                 'alamat'                => ['required', 'string'],
                 'nama_kepala_desa'      => ['required', 'max:64', 'string'],
-                'alamat_kepala_desa'    => ['required', 'string']
+                'alamat_kepala_desa'    => ['required', 'string'],
+                'email'                 => ['nullable', 'max:64', 'string'],
+                'telepon'               => ['nullable', 'max:16', 'string'],
+                'website'               => ['nullable', 'max:32', 'string'],
+                'link_facebook'         => ['nullable', 'url'],
+                'link_instagram'        => ['nullable', 'url'],
+                'link_twitter'          => ['nullable', 'url'],
+                'link_youtube'          => ['nullable', 'url'],
+                'link_maps'             => ['nullable'],
             ]);
 
-            if ($request->nama_desa != $desa->nama_desa  || $request->nama_kecamatan != $desa->nama_kecamatan || $request->nama_kabupaten != $desa->nama_kabupaten || $request->alamat != $desa->alamat || $request->nama_kepala_desa != $desa->nama_kepala_desa || $request->alamat_kepala_desa != $desa->alamat_kepala_desa) {
-                $desa->update($data);
-                return redirect()->back()->with('success','Profil desa berhasil di perbarui');
-            } else {
-                return redirect()->back()->with('error','Tidak ada perubahan yang berhasil disimpan');
-            }
+            $desa->update($data);
+            return redirect()->back()->with('success','Profil desa berhasil di perbarui');
         }
     }
 
+    public function pengaturan_surat(Request $request)
+    {
+        $desa = Desa::find(1);
+        $desa->pemerintahan_desa_id = $request->ditandatangani;
+        $desa->save();
+        return redirect()->back()->with('success','Pengaturan surat berhasil di perbarui');
+    }
 }

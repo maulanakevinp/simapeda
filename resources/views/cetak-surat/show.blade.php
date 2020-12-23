@@ -48,7 +48,7 @@
                     <tbody>
                         <tr>
                             <td>Nomor</td>
-                            <td>: 140 / {!! str_repeat('&nbsp;', 10) !!} / 20.2003 / {{ Terbilang::roman(date('m')) }} / {{ date('Y') }}</td>
+                            <td>: {!! str_repeat('&nbsp;', 10) !!} / {!! str_repeat('&nbsp;', 10) !!} / {!! str_repeat('&nbsp;', 10) !!} / {{ Terbilang::roman(date('m')) }} / {{ date('Y') }}</td>
                         </tr>
                         <tr>
                             <td>Sifat</td>
@@ -72,7 +72,7 @@
         @else
             <div class="text-center mt-5 mb-3">
                 <b style="text-decoration: underline;">{{ Str::upper($surat->nama) }}</b><br>
-                Nomor : 140 / {!! str_repeat('&nbsp;', 10) !!} / 20.2003 / {{ Terbilang::roman(date('m')) }} / {{ date('Y') }}
+                Nomor : {!! str_repeat('&nbsp;', 10) !!} / {!! str_repeat('&nbsp;', 10) !!} / {!! str_repeat('&nbsp;', 10) !!} / {{ Terbilang::roman(date('m')) }} / {{ date('Y') }}
             </div>
         @endif
 
@@ -129,17 +129,17 @@
                         <tr>
                             <td width="160px" valign="top">Nama</td>
                             <td width="10px" valign="top">:</td>
-                            <td class="text-justify" width="10cm" valign="top">{{ $desa->nama_kepala_desa }}</td>
+                            <td class="text-justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}</td>
                         </tr>
                         <tr>
                             <td width="160px" valign="top">Jabatan</td>
                             <td width="10px" valign="top">:</td>
-                            <td class="text-justify" width="10cm" valign="top">Kepala Desa</td>
+                            <td class="text-justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }}</td>
                         </tr>
                         <tr>
                             <td width="160px" valign="top">Alamat</td>
                             <td width="10px" valign="top">:</td>
-                            <td class="text-justify" width="10cm" valign="top">{{ $desa->alamat_kepala_desa }}</td>
+                            <td class="text-justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->alamat : $desa->alamat_kepala_desa }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -192,10 +192,10 @@
             <div style="margin-left: 50%; width: 50%" class="text-center float-right">
                 <p style="margin-bottom: 100px">
                     {{ $desa->nama_desa }}, {{ $tanggal }}  <br>
-                    Kepala Desa {{ $desa->nama_desa }}
+                    {{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }} {{ $desa->nama_desa }}
                 </p>
                 <p style="" class="bold underline">
-                    {{ $desa->nama_kepala_desa }}
+                    {{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}
                 </p>
             </div>
         </div>

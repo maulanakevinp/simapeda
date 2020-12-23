@@ -128,20 +128,16 @@
     <!--   Core   -->
     <script src="{{ asset('/js/plugins/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!--   Optional JS   -->
+    <script src="{{ asset('js/plugins/jquery-sticky/jquery.sticky.js') }}"></script>
 
     <!--   Argon JS   -->
     <script src="{{ asset('/js/argon-dashboard.min.js?v=1.1.2') }}"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
     <script>
         const baseURL = $('meta[name="base-url"]').attr('content');
-        window.TrackJS &&
-            TrackJS.install({
-                token: "ee6fab19c5a04ac1a32a645abde4613a",
-                application: "argon-dashboard-free"
-            });
+        const csrfToken = $('meta[name="csrf-token"]').attr('content');
     </script>
+
+    <!--   Optional JS   -->
     <script src="{{ asset('/js/script.js') }}"></script>
     @stack('scripts')
 </body>

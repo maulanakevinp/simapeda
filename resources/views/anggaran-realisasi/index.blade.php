@@ -2,10 +2,6 @@
 
 @section('title', 'Anggaran Pendapatan Belanja Desa')
 
-@section('styles')
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-@endsection
-
 @section('content-header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
@@ -91,7 +87,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $anggaran_realisasi->links() }}
+        {{ $anggaran_realisasi->links('layouts.components.pagination') }}
     </div>
 </div>
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Desa;
 use App\Gallery;
-use App\Video;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -18,37 +18,7 @@ class GalleryController extends Controller
     public function index()
     {
         $desa = Desa::find(1);
-        $gallery = Gallery::where('slider', null)->get();
-        $videos = Video::all();
-        $galleries = array();
-
-        foreach ($gallery as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gallery,
-                'id'        => $value->id,
-                'caption'   => $value->caption,
-                'jenis'     => 1,
-                'created_at'=> strtotime($value->created_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        foreach ($videos as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gambar,
-                'id'        => $value->video_id,
-                'caption'   => $value->caption,
-                'jenis'     => 2,
-                'created_at'=> strtotime($value->published_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        usort($galleries, function($a, $b) {
-            return $a['created_at'] < $b['created_at'];
-        });
-
-        return view('gallery.index', compact('galleries','desa'));
+        return view('gallery.index', compact('desa'));
     }
 
     /**
@@ -59,37 +29,7 @@ class GalleryController extends Controller
     public function gallery()
     {
         $desa = Desa::find(1);
-        $gallery = Gallery::where('slider', null)->get();
-        $videos = Video::all();
-        $galleries = array();
-
-        foreach ($gallery as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gallery,
-                'id'        => $value->id,
-                'caption'   => $value->caption,
-                'jenis'     => 1,
-                'created_at'=> strtotime($value->created_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        foreach ($videos as $key => $value) {
-            $gambar = [
-                'gambar'    => $value->gambar,
-                'id'        => $value->video_id,
-                'caption'   => $value->caption,
-                'jenis'     => 2,
-                'created_at'=> strtotime($value->published_at),
-            ];
-            array_push($galleries, $gambar);
-        }
-
-        usort($galleries, function($a, $b) {
-            return $a['created_at'] < $b['created_at'];
-        });
-
-        return view('gallery.gallery', compact('galleries','desa'));
+        return view('gallery.gallery', compact('desa'));
     }
 
     /**
@@ -101,16 +41,6 @@ class GalleryController extends Controller
     {
         $gallery = Gallery::where('slider', 1)->latest()->get();
         return view('gallery.slider', compact('gallery'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('gallery.create');
     }
 
     /**
@@ -136,6 +66,67 @@ class GalleryController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $data = $request->validate([
+            'channel_id'    => ['nullable', 'string' ,'max:64'],
+        ]);
+
+        $desa = Desa::find(1);
+        $desa->update($data);
+        $api_key = config('api.key');
+
+        if ($api_key != "KOSONG") {
+            Gallery::where('video_id','!=',null)->delete();
+            $apiUrl = "https://www.googleapis.com/youtube/v3/search?";
+            $part = "part=snippet";
+            $channelId = "&channelId=$desa->channel_id";
+            $key = "&key=$api_key";
+            $maxResults = "&maxResults=50";
+            $nextPageToken = "&pageToken=";
+            $reload = true;
+            $message = null;
+
+            do {
+                $youtube = Http::get("{$apiUrl}{$part}{$channelId}{$key}{$maxResults}{$nextPageToken}");
+                $youtubeList = $youtube->json();
+                if (array_key_exists('items',$youtubeList)) {
+                    if (array_key_exists('nextPageToken',$youtubeList)) {
+                        $nextPageToken = "&pageToken={$youtubeList['nextPageToken']}";
+                    } else {
+                        $reload = false;
+                    }
+
+                    foreach ($youtubeList['items'] as $key => $value) {
+                        if (array_key_exists('videoId',$value['id'])) {
+                            Gallery::create([
+                                'gallery'       => $value['snippet']['thumbnails']['high']['url'],
+                                'video_id'      => $value['id']['videoId'],
+                                'caption'       => $value['snippet']['title'],
+                                'created_at'    => date('Y-m-d H:i:s',strtotime($value['snippet']['publishedAt'])),
+                                'updated_at'    => date('Y-m-d H:i:s',strtotime($value['snippet']['publishedAt'])),
+                            ]);
+                        }
+                    }
+                } else {
+                    $reload = false;
+                    $message = $youtubeList['error']['message'];
+                }
+            } while ($reload);
+
+            if ($message) return back()->with('success', $message);
+            return back()->with('success', 'Video berhasil diperbarui');
+        } else {
+            return back()->with('error', 'Harap memasukkan API KEY pada .env');
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Gallery  $gallery
@@ -146,5 +137,24 @@ class GalleryController extends Controller
         File::delete(storage_path('app/'.$gallery->gallery));
         $gallery->delete();
         return back()->with('success', 'Gambar berhasil dihapus');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function destroys(Request $request)
+    {
+        foreach ($request->id as $id) {
+            $image = Gallery::findOrFail($id);
+            File::delete(storage_path('app/'.$image->image));
+            $image->delete();
+        }
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

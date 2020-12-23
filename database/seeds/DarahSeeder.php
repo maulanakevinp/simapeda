@@ -2,6 +2,7 @@
 
 use App\Darah;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DarahSeeder extends Seeder
 {
@@ -12,6 +13,8 @@ class DarahSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Darah::truncate();
         Darah::create(['golongan' => 'A']);
         Darah::create(['golongan' => 'A+']);
         Darah::create(['golongan' => 'A-']);
@@ -24,5 +27,6 @@ class DarahSeeder extends Seeder
         Darah::create(['golongan' => 'AB']);
         Darah::create(['golongan' => 'AB+']);
         Darah::create(['golongan' => 'AB-']);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

@@ -16,7 +16,7 @@
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-lg-between text-center text-lg-left">
                             <div class="mb-3">
                                 <h2 class="mb-0">{{ $surat->nama }}</h2>
-                                <p class="mb-0 text-sm">Kelola {{ $surat->nama }} {{ config('app.name') }}</p>
+                                <p class="mb-0 text-sm">Kelola {{ $surat->nama }}</p>
                             </div>
                             <div class="mb-3">
                                 <a href="{{ route('surat.index') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
@@ -37,7 +37,20 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input class="form-control" placeholder="Cari ...." type="text" name="cari" value="{{ request('cari') }}">
+            <input class="form-control" placeholder="Cari ...." type="search" name="cari" value="{{ request('cari') }}">
+        </div>
+    </div>
+</form>
+@endsection
+
+@section('form-search-mobile')
+<form class="mt-4 mb-3 d-md-none" action="{{ URL::current() }}" method="GET">
+    <div class="input-group input-group-rounded input-group-merge">
+        <input type="search" name="cari" class="form-control form-control-rounded form-control-prepended" placeholder="cari" aria-label="cari" value="{{ request('cari') }}">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span class="fa fa-search"></span>
+            </div>
         </div>
     </div>
 </form>
@@ -128,7 +141,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $cetakSurat->links() }}
+        {{ $cetakSurat->links('layouts.components.pagination') }}
     </div>
 </div>
 

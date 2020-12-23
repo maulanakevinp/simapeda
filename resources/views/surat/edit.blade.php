@@ -4,12 +4,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<style>
-    .ikon {
-        font-family: fontAwesome;
-    }
-</style>
 @endsection
 
 @section('content-header')
@@ -22,7 +16,7 @@
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
                                 <h2 class="mb-0">Edit Surat</h2>
-                                <p class="mb-0 text-sm">Kelola Surat {{ config('app.name') }}</p>
+                                <p class="mb-0 text-sm">Kelola Surat</p>
                             </div>
                             <div class="mb-3">
                                 <a href="{{ route('surat.index') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
@@ -52,23 +46,13 @@
                     <input type="hidden" name="tampilkan[]" value="0">
                     <h6 class="heading-small text-muted">Detail Surat</h6>
                     <div class="pl-lg-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label">Nama Surat</label>
-                                    <input class="form-control form-control-alternative" name="nama" value="{{ $surat->nama }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label">Icon</label>
-                                    @include('layouts.components.icon')
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Nama Surat</label>
+                            <input class="form-control form-control-alternative" name="nama" placeholder="Masukkan Nama Surat" value="{{ $surat->nama }}">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Deskripsi</label>
-                            <textarea class="form-control form-control-alternative" name="deskripsi">{{ $surat->deskripsi }}</textarea>
+                            <textarea class="form-control form-control-alternative" name="deskripsi" placeholder="Masukkan Deskripsi">{{ $surat->deskripsi }}</textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Persyaratan</label>

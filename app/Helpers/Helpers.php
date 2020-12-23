@@ -24,5 +24,24 @@ if (! function_exists('tgl')) {
 
         return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
-
+}
+if (! function_exists('bulan')) {
+    function bulan($bulan)
+    {
+        $data = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        return $data[$bulan];
+    }
 }

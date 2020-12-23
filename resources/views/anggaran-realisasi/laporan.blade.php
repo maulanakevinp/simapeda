@@ -3,7 +3,6 @@
 @section('title', 'Anggaran Pendapatan Belanja Desa')
 
 @section('styles')
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 <style>
     .table th, .table td {
         padding: 5px;
@@ -64,7 +63,7 @@
                 </ul>
             </div>
             <form id="form-tahun" action="{{ URL::current()}}" method="GET">
-                <input type="hidden" name="jenis" value="{{ request('jenis') ? request('jenis') : "pendapatan"}}">
+                <input type="hidden" name="jenis" value="{{ request('jenis') ? request('jenis') : "laporan"}}">
                 Tahun: <input type="number" name="tahun" id="tahun" class="form-control-sm" value="{{ request('tahun') ? request('tahun') : date('Y') }}" style="width: 80px">
                 <img id="loading-tahun" src="{{ asset(Storage::url('loading.gif')) }}" alt="Loading" height="20px" style="display: none">
             </form>

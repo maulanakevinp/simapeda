@@ -2001,7 +2001,6 @@ pre code {
   padding: 0.625rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: #8898aa;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #cad1d7;
@@ -2022,7 +2021,6 @@ pre code {
 }
 
 .form-control:focus {
-  color: #8898aa;
   background-color: #fff;
   border-color: rgba(50, 151, 211, 0.25);
   outline: 0;
@@ -2097,7 +2095,6 @@ select.form-control:focus::-ms-value {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-radius: 0.25rem;
 }
 
 .form-control-lg {
@@ -16897,6 +16894,8 @@ textarea[resize="horizontal"] {
 
 .navbar-vertical .navbar-nav .nav-link.active {
   position: relative;
+  background: #f6f9fc;
+  font-weight: 600;
 }
 
 .navbar-vertical .navbar-nav .nav-link.active:before {
