@@ -51,7 +51,7 @@ $(document).ready(function (){
                     text: null
                 },
                 min: 0,
-                max: 4,
+                max: 10,
                 scrollbar: {
                     enabled: true
                 },

@@ -44,9 +44,17 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapAnalisisRoutes();
+        $this->mapAnggaranRealisasiRoutes();
+        $this->mapArtikelRoutes();
+        $this->mapGalleryRoutes();
+        $this->mapInventarisRoutes();
+        $this->mapPemerintahanDesaRoutes();
+        $this->mapPendudukRoutes();
+        $this->mapProdukHukumRoutes();
+        $this->mapSuratRoutes();
 
-        //
+        $this->mapWebRoutes();
     }
 
     /**
@@ -76,5 +84,68 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapAnalisisRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/analisis.php'));
+    }
+
+    protected function mapAnggaranRealisasiRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/anggaran-realisasi.php'));
+    }
+
+    protected function mapArtikelRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/artikel.php'));
+    }
+
+    protected function mapGalleryRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/gallery.php'));
+    }
+
+    protected function mapInventarisRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/inventaris.php'));
+    }
+
+    protected function mapPemerintahanDesaRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/pemerintahan-desa.php'));
+    }
+
+    protected function mapPendudukRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/penduduk.php'));
+    }
+
+    protected function mapProdukHukumRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/produk-hukum.php'));
+    }
+
+    protected function mapSuratRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/surat.php'));
     }
 }
