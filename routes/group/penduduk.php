@@ -19,6 +19,7 @@ Route::get('/statistik-penduduk/show', 'GrafikController@show')->name('statistik
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 
+    Route::get('/akseptor-kb/{sex}', 'PendudukController@akseptor_kb')->name('penduduk.akseptor-kb');
     Route::get('/tambah-penduduk', 'PendudukController@create')->name('penduduk.create');
     Route::get('/penduduk/{nik}', 'PendudukController@show')->name('penduduk.show');
     Route::get('/detail-penduduk/{penduduk}', 'PendudukController@detail')->name('penduduk.detail');
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/calon-pemilih', 'PendudukController@calonPemilih')->name('penduduk.calon_pemilih');
     Route::get('/cetak-calon-pemilih', 'PendudukController@printCalonPemilih')->name('penduduk.print_calon_pemilih');
     Route::post('/import-penduduk', 'PendudukController@import')->name('penduduk.import');
+    Route::post('/import-penduduk-opensid', 'PendudukController@import_opensid')->name('penduduk.import-opensid');
     Route::delete('/hapus-penduduk', 'PendudukController@destroys')->name('penduduk.destroys');
     Route::resource('penduduk', 'PendudukController')->except('create','show');
 

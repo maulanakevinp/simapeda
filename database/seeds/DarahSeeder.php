@@ -27,6 +27,7 @@ class DarahSeeder extends Seeder
         Darah::create(['golongan' => 'AB']);
         Darah::create(['golongan' => 'AB+']);
         Darah::create(['golongan' => 'AB-']);
+        Darah::create(['golongan' => 'Tidak Tahu']);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

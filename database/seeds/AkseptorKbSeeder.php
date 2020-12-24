@@ -15,17 +15,14 @@ class AkseptorKbSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         AkseptorKb::truncate();
-        AkseptorKb::create(['nama' => 'KB Alamiah/Kalender']);
-        AkseptorKb::create(['nama' => 'Pil']);
-        AkseptorKb::create(['nama' => 'Susuk KB (Implant)']);
-        AkseptorKb::create(['nama' => 'Tubektomi']);
-        AkseptorKb::create(['nama' => 'Kondom']);
-        AkseptorKb::create(['nama' => 'Spiral']);
-        AkseptorKb::create(['nama' => 'Tidak Menggunakan kontrasepsi']);
-        AkseptorKb::create(['nama' => 'Vasektomi']);
-        AkseptorKb::create(['nama' => 'Obat Tradisional']);
-        AkseptorKb::create(['nama' => 'Suntik']);
-        AkseptorKb::create(['nama' => 'Lainnya']);
+        AkseptorKb::create(['nama' => 'Pil', 'sex' => 2]);
+        AkseptorKb::create(['nama' => 'IUD', 'sex' => 2]);
+        AkseptorKb::create(['nama' => 'Suntik', 'sex' => 2]);
+        AkseptorKb::create(['nama' => 'Kondom', 'sex' => 1]);
+        AkseptorKb::create(['nama' => 'Susuk KB', 'sex' => 2]);
+        AkseptorKb::create(['nama' => 'Sterilisasi Wanita', 'sex' => 2]);
+        AkseptorKb::create(['nama' => 'Sterilisasi Pria', 'sex' => 1]);
+        AkseptorKb::create(['id' => 99,'nama' => 'Lainnya', 'sex' => 3]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

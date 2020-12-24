@@ -23,8 +23,6 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a id="btn-import" href="#import" data-toggle="tooltip" class="mb-1 btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
-                                <a href="{{ route('pemerintahan-desa.export') }}" data-toggle="tooltip" class="mb-1 btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
                                 <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
@@ -227,30 +225,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="import" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-import">Import .xlsx</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form action="{{ route("pemerintahan-desa.import") }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input accept=".xlsx" type="file" name="xlsx" class="form-control" placeholder="Masukkan File Excel">
-                    <div class="mt-5 d-flex justify-content-between">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="print" tabindex="-1" role="dialog" aria-labelledby="print" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -303,11 +277,6 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#btn-import').click(function (e) {
-            e.preventDefault();
-            $("#import").modal('show');
-        });
-
         $(".atas").click(function () {
             $('input[name="urutan"]').val('atas');
             $('input[name="id"]').val($(this).data('id'));

@@ -23,8 +23,6 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="mb-1 btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a id="btn-import" href="#import" data-toggle="tooltip" class="mb-1 btn btn-info" title="Import"><i class="fas fa-file-import"></i></a>
-                                <a href="{{ route('penduduk.export') }}" data-toggle="tooltip" class="mb-1 btn btn-primary" title="Export"><i class="fas fa-file-export"></i></a>
                                 <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="mb-1 btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
@@ -243,40 +241,11 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="import" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-import">Import .xlsx</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form action="{{ route("penduduk.import") }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input accept=".xlsx" type="file" name="xlsx" class="form-control" placeholder="Masukkan File Excel">
-                    <div class="mt-5 d-flex justify-content-between">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#btn-import').click(function (e) {
-            e.preventDefault();
-            $("#import").modal('show');
-        });
-
         $(document).on('click', '#delete', function(){
             let id = [];
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {

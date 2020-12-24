@@ -128,8 +128,7 @@
     <div class="card-body">
         <div class="text-center mb-3">
             <form action="{{ URL::current() }}" method="GET">
-                Tanggal : <input class="form-control-sm" type="date" name="tanggal" value="{{ date('Y-m-d',strtotime(request('tanggal'))) }}">
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
+                Tanggal : <input class="form-control-sm" type="date" name="tanggal" id="tanggal" value="{{ date('Y-m-d',strtotime(request('tanggal'))) }}">
             </form>
         </div>
         <div class="table-responsive">
@@ -176,3 +175,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $("#tanggal").change(function () {
+            $(this).parent().submit();
+        });
+    });
+</script>
+@endpush

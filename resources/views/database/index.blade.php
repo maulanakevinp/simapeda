@@ -9,16 +9,8 @@
             <div class="col">
                 <div class="card shadow h-100">
                     <div class="card-header border-0">
-                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
-                            <div class="mb-3">
-                                <h2 class="mb-0">Database</h2>
-                                <p class="mb-0 text-sm">Kelola Database</p>
-                            </div>
-                            <div class="mb-3">
-                                <a href="{{ route("folder.backup") }}" class="btn btn-primary" title="download folder backup (zip)"><i class="fas fa-download"></i> Backup Folder</a>
-                                <a href="{{ route("database.backup") }}" class="btn btn-success" title="download file backup (sql)"><i class="fas fa-download"></i> Backup Database</a>
-                            </div>
-                        </div>
+                        <h2 class="mb-0">Database</h2>
+                        <p class="mb-0 text-sm">Kelola Database</p>
                     </div>
                 </div>
             </div>
@@ -32,36 +24,108 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <div class="card bg-secondary shadow h-100">
+            <div class="card-header font-weight-bold">
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                    <span class="mb-1">DATABASE</span>
+                    <a href="{{ route("database.backup") }}" class="btn btn-success btn-sm" title="download file backup (sql)"><i class="fas fa-download"></i> Backup Database</a>
+                </div>
+            </div>
             <div class="card-body">
-                <form autocomplete="off" action="{{ route('folder.restore') }}" method="post" enctype="multipart/form-data">
+                <form autocomplete="off" action="{{ route('database.restore') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group row">
-                        <label class="form-control-label col-form-label col-md-3" for="zip">Folder Backup (zip)</label>
-                        <div class="col-md-9">
-                            <input type="file" accept=".zip" class="form-control @error('zip') is-invalid @enderror" name="zip" placeholder="Masukkan File zip ...">
-                            @error('zip')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                        </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="sql">File (sql)</label>
+                        <input type="file" accept=".sql" class="form-control @error('sql') is-invalid @enderror" name="sql" placeholder="Masukkan File sql ...">
+                        @error('sql')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
-                    <p class="text-sm mb-3 text-danger">*Pastikan file yang dimasukkan adalah hasil backupan dari backup folder</p>
-                    <button type="submit" class="btn btn-primary btn-block" id="simpan">Restore Folder Backup</button>
+                    <p class="text-sm mb-3 text-danger">*Pastikan file yang dimasukkan adalah hasil backupan dari backup database</p>
+                    <button type="submit" class="btn btn-primary btn-block" id="simpan"><i class="fas fa-sync"></i> Restore Database</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="col-md-6 mb-3">
         <div class="card bg-secondary shadow h-100">
+            <div class="card-header font-weight-bold">
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                    <span class="mb-1">FOLDER</span>
+                    <a href="{{ route("folder.backup") }}" class="btn btn-success btn-sm" title="download folder backup (zip)"><i class="fas fa-download"></i> Backup Folder</a>
+                </div>
+            </div>
             <div class="card-body">
-                <form autocomplete="off" action="{{ route('database.restore') }}" method="post" enctype="multipart/form-data">
+                <form autocomplete="off" action="{{ route('folder.restore') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group row">
-                        <label class="form-control-label col-form-label col-md-3" for="sql">File (sql)</label>
-                        <div class="col-md-9">
-                            <input type="file" accept=".sql" class="form-control @error('sql') is-invalid @enderror" name="sql" placeholder="Masukkan File sql ...">
-                            @error('sql')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                        </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="zip">Folder Backup (zip)</label>
+                        <input type="file" accept=".zip" class="form-control @error('zip') is-invalid @enderror" name="zip" placeholder="Masukkan File zip ...">
+                        @error('zip')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
-                    <p class="text-sm mb-3 text-danger">*Pastikan file yang dimasukkan adalah hasil backupan dari backup database</p>
-                    <button type="submit" class="btn btn-success btn-block" id="simpan">Restore Database</button>
+                    <p class="text-sm mb-3 text-danger">*Pastikan file yang dimasukkan adalah hasil backupan dari backup folder</p>
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                        <button type="submit" class="btn btn-primary btn-block" id="simpan"><i class="fas fa-sync"></i> Restore Folder Backup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card bg-secondary shadow h-100">
+            <div class="card-header font-weight-bold">
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                    <span class="mb-1">DATA PENDUDUK</span>
+                    <a href="{{ route('penduduk.export') }}" class="btn btn-success btn-sm"><i class="fas fa-file-export"></i> Export Excel</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <form autocomplete="off" action="{{ route('penduduk.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_excel_penduduk">File (xlsx) <span class="text-sm text-danger font-weight-light"> *Pastikan file yang dimasukkan adalah hasil export excel data penduduk</span></label>
+                        <div class="input-group mb-3">
+                            <input accept=".xlsx" type="file" name="file_excel_penduduk" class="form-control @error('file_excel_penduduk') is-invalid @enderror" placeholder="Masukkan File Excel">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="simpan"><i class="fas fa-file-import"></i> Import</button>
+                            </div>
+                        </div>
+                        @error('file_excel_penduduk')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                </form>
+                <form autocomplete="off" action="{{ route('penduduk.import-opensid') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_excel_penduduk_opensid">File (xlsx) <span class="text-sm text-danger font-weight-light"> *Pastikan file yang dimasukkan adalah hasil export excel data penduduk dari aplikasi <b class="font-weight-bold">OpenSID</b></span></label>
+                        <div class="input-group mb-3">
+                            <input accept=".xlsx" type="file" name="file_excel_penduduk_opensid" class="form-control @error('file_excel_penduduk_opensid') is-invalid @enderror" placeholder="Masukkan File Excel">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="simpan"><i class="fas fa-file-import"></i> Import</button>
+                            </div>
+                        </div>
+                        @error('file_excel_penduduk_opensid')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card bg-secondary shadow h-100">
+            <div class="card-header font-weight-bold">
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                    <span class="mb-1">DATA PEMERINTAHAN DESA</span>
+                    <a href="{{ route('pemerintahan-desa.export') }}" class="btn btn-success btn-sm"><i class="fas fa-file-export"></i> Export Excel</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <form autocomplete="off" action="{{ route('pemerintahan-desa.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_excel_pemerintahan_desa">File (xlsx)</label>
+                        <input type="file" accept=".xlsx" class="form-control @error('file_excel_pemerintahan_desa') is-invalid @enderror" name="file_excel_pemerintahan_desa" placeholder="Masukkan File xlsx ...">
+                        @error('file_excel_pemerintahan_desa')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <p class="text-sm mb-3 text-danger">*Pastikan file yang dimasukkan adalah hasil dari export excel data pemerintahan desa</p>
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
+                        <button type="submit" class="btn btn-primary btn-block" id="simpan"><i class="fas fa-file-import"></i> Import</button>
+                    </div>
                 </form>
             </div>
         </div>

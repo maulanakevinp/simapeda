@@ -406,7 +406,7 @@
                                 </select>
                                 @error('sakit_menahun_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-lg-4 col-md-6">
                                 <label class="form-control-label" for="akseptor_kb_id">Akseptor KB</label>
                                 <select class="form-control @error('akseptor_kb_id') is-invalid @enderror" name="akseptor_kb_id" id="akseptor_kb_id">
                                     <option selected value="">Pilih Akseptor KB</option>
@@ -416,7 +416,16 @@
                                 </select>
                                 @error('akseptor_kb_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-lg-4 col-md-6" id="status-kehamilan" style="display: none">
+                                <label class="form-control-label" for="status_kehamilan">Status Kehamilan</label>
+                                <select class="form-control @error('status_kehamilan') is-invalid @enderror" name="status_kehamilan" id="status_kehamilan">
+                                    <option selected value="">Pilih Status Kehamilan</option>
+                                    <option value="0" {{ old('status_kehamilan') == 0 ? 'selected="true"' : ''  }}>Tidak Hamil</option>
+                                    <option value="1" {{ old('status_kehamilan') == 1 ? 'selected="true"' : ''  }}>Hamil</option>
+                                </select>
+                                @error('status_kehamilan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6">
                                 <label class="form-control-label" for="asuransi_id">Asuransi</label>
                                 <select class="form-control @error('asuransi_id') is-invalid @enderror" name="asuransi_id" id="asuransi_id">
                                     <option selected value="">Pilih Asuransi</option>
@@ -443,6 +452,11 @@
         $('#pekerjaan_id').select2({
             placeholder: "Pilih Pekerjaan",
             allowClear: true
+        });
+
+        jenis_kelamin();
+        $("#jenis_kelamin").change(function () {
+            jenis_kelamin();
         });
 
         if ($("#dusun").val() != "") {
@@ -487,5 +501,27 @@
             perkawinan();
         });
     });
+
+    function jenis_kelamin() {
+        if ($("#jenis_kelamin").val() == 1) {
+            $('#status-kehamilan').hide();
+            option(1)
+        } else if ($("#jenis_kelamin").val() == 2) {
+            $('#status-kehamilan').show();
+            option(2);
+        }
+    }
+
+    function option (value) {
+        $("#akseptor_kb_id").html(`<option selected value="">Loading ...</option>`);
+        $.get(baseURL + "/akseptor-kb/" + value, function (response) {
+            let option = `<option value="">Pilih Akseptor KB</option>`;
+            $.each(response, function (key, item){
+                option += `<option value="${item.id}" ${"{{ old('akseptor_kb_id', $penduduk->akseptor_kb_id) }}" == item.id ? 'selected' : ''}>${item.nama}</option>`;
+            });
+            option += `<option value="99">Lainnya</option>`;
+            $("#akseptor_kb_id").html(option);
+        });
+    }
 </script>
 @endpush

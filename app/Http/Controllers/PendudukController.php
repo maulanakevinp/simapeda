@@ -11,6 +11,7 @@ use App\Dusun;
 use App\Exports\PendudukExport;
 use App\Http\Requests\PendudukRequest;
 use App\Imports\PendudukImport;
+use App\Imports\PendudukOpenSIDImport;
 use App\JenisCacat;
 use App\JenisKelahiran;
 use App\Pekerjaan;
@@ -97,7 +98,12 @@ class PendudukController extends Controller
      */
     public function create()
     {
-        return view('penduduk.create', [
+        return view('penduduk.create', $this->parsing());
+    }
+
+    private function parsing($penduduk = [])
+    {
+        return [
             'agama'                         => Agama::all(),
             'darah'                         => Darah::all(),
             'dusun'                         => Dusun::all(),
@@ -115,7 +121,8 @@ class PendudukController extends Controller
             'status_penduduk'               => StatusPenduduk::all(),
             'status_rekam'                  => StatusRekam::all(),
             'tempat_dilahirkan'             => TempatDilahirkan::all(),
-        ]);
+            'penduduk'                      => $penduduk,
+        ];
     }
 
     /**
@@ -174,26 +181,7 @@ class PendudukController extends Controller
      */
     public function edit(Penduduk $penduduk)
     {
-        return view('penduduk.edit', [
-            'agama'                         => Agama::all(),
-            'darah'                         => Darah::all(),
-            'dusun'                         => Dusun::all(),
-            'pekerjaan'                     => Pekerjaan::all(),
-            'pendidikan'                    => Pendidikan::all(),
-            'pendidikan'                    => Pendidikan::all(),
-            'status_hubungan_dalam_keluarga'=> StatusHubunganDalamKeluarga::all(),
-            'status_perkawinan'             => StatusPerkawinan::all(),
-            'akseptor_kb'                   => AkseptorKb::all(),
-            'asuransi'                      => Asuransi::all(),
-            'jenis_cacat'                   => JenisCacat::all(),
-            'jenis_kelahiran'               => JenisKelahiran::all(),
-            'penolong_kelahiran'            => PenolongKelahiran::all(),
-            'sakit_menahun'                 => SakitMenahun::all(),
-            'status_penduduk'               => StatusPenduduk::all(),
-            'status_rekam'                  => StatusRekam::all(),
-            'tempat_dilahirkan'             => TempatDilahirkan::all(),
-            'penduduk'                      => $penduduk,
-        ]);
+        return view('penduduk.edit', $this->parsing($penduduk));
     }
 
     /**
@@ -255,13 +243,21 @@ class PendudukController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'xlsx' => ['required','file','max:2048']
-        ],[
-            'xlsx.required' => 'File wajib diisi'
+            'file_excel_penduduk' => ['required','file','max:2048']
         ]);
 
-        Excel::import(new PendudukImport, $request->file('xlsx'));
-        return back();
+        Excel::import(new PendudukImport, $request->file('file_excel_penduduk'));
+        return back()->with('success', 'Data penduduk berhasil diimport');
+    }
+
+    public function import_opensid(Request $request)
+    {
+        $request->validate([
+            'file_excel_penduduk_opensid' => ['required','file','max:2048']
+        ]);
+
+        Excel::import(new PendudukOpenSIDImport, $request->file('file_excel_penduduk_opensid'));
+        return back()->with('success', 'Data penduduk dari OPENSID berhasil diimport');
     }
 
     public function printAll()
@@ -428,5 +424,11 @@ class PendudukController extends Controller
             $data['updated_at'],
         );
         return response()->json($data);
+    }
+
+    public function akseptor_kb($sex)
+    {
+        $akseptor_kb = AkseptorKb::where('sex', $sex)->get();
+        return response()->json($akseptor_kb->toArray());
     }
 }

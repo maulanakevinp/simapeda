@@ -236,13 +236,11 @@ class PemerintahanDesaController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'xlsx' => ['required','file','max:2048']
-        ],[
-            'xlsx.required' => 'File wajib diisi'
+            'file_excel_pemerintahan_desa' => ['required','file','max:2048']
         ]);
 
-        Excel::import(new PemerintahanDesaImport, $request->file('xlsx'));
-        return back();
+        Excel::import(new PemerintahanDesaImport, $request->file('file_excel_pemerintahan_desa'));
+        return back()->with('success', 'Data pemerintahan desa berhasil diimport');;
     }
 
 }

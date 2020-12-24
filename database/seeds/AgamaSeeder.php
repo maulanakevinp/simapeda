@@ -21,8 +21,8 @@ class AgamaSeeder extends Seeder
         Agama::create(['nama' => 'Hindu']);
         Agama::create(['nama' => 'Budha']);
         Agama::create(['nama' => 'Khonghucu']);
-        Agama::create(['nama' => 'Kepercayaan Kepada Tuhan YME']);
         Agama::create(['nama' => 'Lainnya']);
+        Agama::create(['nama' => 'Kepercayaan Kepada Tuhan YME']);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
