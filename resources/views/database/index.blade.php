@@ -90,6 +90,19 @@
                         @error('file_excel_penduduk')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                 </form>
+                <form autocomplete="off" action="{{ route('penduduk.import-prodeskel') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_excel_penduduk_prodeskel">File (xlsx) <span class="text-sm text-danger font-weight-light"> *Pastikan file yang dimasukkan adalah hasil export excel data penduduk dari aplikasi <b class="font-weight-bold">prodeskel</b></span></label>
+                        <div class="input-group mb-3">
+                            <input accept=".xlsx" type="file" name="file_excel_penduduk_prodeskel" class="form-control @error('file_excel_penduduk_prodeskel') is-invalid @enderror" placeholder="Masukkan File Excel">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="simpan"><i class="fas fa-file-import"></i> Import</button>
+                            </div>
+                        </div>
+                        @error('file_excel_penduduk_prodeskel')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                </form>
                 <form autocomplete="off" action="{{ route('penduduk.import-opensid') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">

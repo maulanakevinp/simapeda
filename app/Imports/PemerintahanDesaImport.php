@@ -16,6 +16,32 @@ class PemerintahanDesaImport implements ToCollection
     */
     public function collection(Collection $collection)
     {
+        $heading = [
+            'NO',
+            'NAMA',
+            'NIK',
+            'NIP',
+            'NIPD',
+            'TEMPAT LAHIR',
+            'TANGGAL LAHIR',
+            'JENIS KELAMIN',
+            'AGAMA',
+            'PENDIDIKAN TERAKHIR',
+            'STATUS PEGAWAI DESA',
+            'NOMOR KEPUTUSAN PENGANGKATAN',
+            'TANGGAL KEPUTUSAN PENGANGKATAN',
+            'NOMOR KEPUTUSAN PEMBERHENTIAN',
+            'TANGGAL KEPUTUSAN PEMBERHENTIAN',
+            'PANGKAT / GOLONGAN',
+            'JABATAN',
+            'MASA JABATAN',
+            'ALAMAT',
+        ];
+
+        if ($heading != $collection[0]->toArray()) {
+            return back()->with('error', 'Data tidak sesuai');
+        }
+
         unset($collection[0]);
         set_time_limit(0);
 
@@ -108,5 +134,7 @@ class PemerintahanDesaImport implements ToCollection
                 PemerintahanDesa::create($data);
             }
         }
+
+        return back()->with('success', 'Data penduduk berhasil diimport');
     }
 }

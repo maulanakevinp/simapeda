@@ -240,7 +240,7 @@ class PemerintahanDesaController extends Controller
         ]);
 
         Excel::import(new PemerintahanDesaImport, $request->file('file_excel_pemerintahan_desa'));
-        return back()->with('success', 'Data pemerintahan desa berhasil diimport');;
+        return back();
     }
 
 }

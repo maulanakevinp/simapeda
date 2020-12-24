@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/cetak-calon-pemilih', 'PendudukController@printCalonPemilih')->name('penduduk.print_calon_pemilih');
     Route::post('/import-penduduk', 'PendudukController@import')->name('penduduk.import');
     Route::post('/import-penduduk-opensid', 'PendudukController@import_opensid')->name('penduduk.import-opensid');
+    Route::post('/import-penduduk-prodeskel', 'PendudukController@import_prodeskel')->name('penduduk.import-prodeskel');
     Route::delete('/hapus-penduduk', 'PendudukController@destroys')->name('penduduk.destroys');
     Route::resource('penduduk', 'PendudukController')->except('create','show');
 

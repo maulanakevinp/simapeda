@@ -12,6 +12,7 @@ use App\Exports\PendudukExport;
 use App\Http\Requests\PendudukRequest;
 use App\Imports\PendudukImport;
 use App\Imports\PendudukOpenSIDImport;
+use App\Imports\PendudukProdeskelImport;
 use App\JenisCacat;
 use App\JenisKelahiran;
 use App\Pekerjaan;
@@ -247,7 +248,17 @@ class PendudukController extends Controller
         ]);
 
         Excel::import(new PendudukImport, $request->file('file_excel_penduduk'));
-        return back()->with('success', 'Data penduduk berhasil diimport');
+        return back();
+    }
+
+    public function import_prodeskel(Request $request)
+    {
+        $request->validate([
+            'file_excel_penduduk_prodeskel' => ['required','file','max:2048']
+        ]);
+
+        Excel::import(new PendudukProdeskelImport, $request->file('file_excel_penduduk_prodeskel'));
+        return back();
     }
 
     public function import_opensid(Request $request)
