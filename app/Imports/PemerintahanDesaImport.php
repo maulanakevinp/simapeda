@@ -135,6 +135,6 @@ class PemerintahanDesaImport implements ToCollection
             }
         }
 
-        return back()->with('success', 'Data penduduk berhasil diimport');
+        return back()->with('success', 'Data pemerintahan desa berhasil diimport');
     }
 }
