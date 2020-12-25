@@ -25,7 +25,7 @@
                                 <p class="mb-0 text-sm">Kelola Pemerintahan Desa</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route("pemerintahan-desa.index") }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ request('atasan') ? route("pemerintahan-desa.show", request('atasan')) : route("pemerintahan-desa.index") }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>
@@ -66,12 +66,17 @@
                                     </select>
                                     @error('penduduk_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-2 col-md-6">
+                                    <label class="form-control-label" for="urutan">Urutan</label>
+                                    <input type="number" onkeypress="return hanyaAngka(event)" class="form-control @error('urutan') is-invalid @enderror" name="urutan" id="urutan" placeholder="Masukkan Urutan ..." value="{{ old('urutan', request('atasan') ? (App\PemerintahanDesa::where('atasan',request('atasan'))->select('urutan')->orderBy('urutan','desc')->first() ? App\PemerintahanDesa::where('atasan',request('atasan'))->select('urutan')->orderBy('urutan','desc')->first()->urutan + 1 : 1) : (App\PemerintahanDesa::select('urutan')->orderBy('urutan','desc')->first() ? App\PemerintahanDesa::select('urutan')->orderBy('urutan','desc')->first()->urutan + 1 : 1)) }}">
+                                    @error('urutan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-lg-5 col-md-6">
                                     <label class="form-control-label" for="nik">NIK</label>
                                     <input type="text" onkeypress="return hanyaAngka(event)" class="form-control @error('nik') is-invalid @enderror" name="nik" id="nik" placeholder="Masukkan NIK ..." value="{{ old('nik') }}">
                                     @error('nik')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-5 col-md-12">
                                     <label class="form-control-label" for="nama">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" placeholder="Masukkan Nama ..." value="{{ old('nama') }}">
                                     @error('nama')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -138,17 +143,27 @@
                             </select>
                             @error('agama_id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group col-lg-4 col-md-6">
+                        <div class="form-group col-md-6">
                             <label class="form-control-label" for="pangkat_atau_golongan">Pangkat/Golongan</label>
                             <input type="text" class="form-control @error('pangkat_atau_golongan') is-invalid @enderror" name="pangkat_atau_golongan" id="pangkat_atau_golongan" placeholder="Masukkan Pangkat/Golongan ..." value="{{ old('pangkat_atau_golongan') }}">
                             @error('pangkat_atau_golongan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group col-lg-4 col-md-6">
+                        <div class="form-group col-md-6">
                             <label class="form-control-label" for="jabatan">Jabatan</label>
                             <input type="text" class="form-control @error('jabatan') is-invalid @enderror" name="jabatan" id="jabatan" placeholder="Masukkan Jabatan ..." value="{{ old('jabatan') }}">
                             @error('jabatan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group col-lg-4 col-md-6">
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="atasan">Atasan</label>
+                            <select class="form-control @error('atasan') is-invalid @enderror" name="atasan" id="atasan">
+                                <option selected value="">Pilih Atasan</option>
+                                @foreach (App\PemerintahanDesa::where('atasan',null)->orderBy('urutan')->get() as $item)
+                                    <option value="{{ $item->id }}" {{ old('atasan', request('atasan')) == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} - {{ $item->jabatan }}</option>
+                                @endforeach
+                            </select>
+                            @error('atasan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="form-group col-md-6">
                             <label class="form-control-label" for="masa_jabatan">Masa Jabatan</label>
                             <input type="text" class="form-control @error('masa_jabatan') is-invalid @enderror" name="masa_jabatan" id="masa_jabatan" placeholder="Ex: 6 Tahun Periode Pertama (2019-2025)" value="{{ old('masa_jabatan') }}">
                             @error('masa_jabatan')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror

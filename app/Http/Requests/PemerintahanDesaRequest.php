@@ -41,9 +41,11 @@ class PemerintahanDesaRequest extends FormRequest
             'nomor_sk_pemberhentian'    => ['nullable','string','32'],
             'tanggal_sk_pemberhentian'  => ['nullable','date'],
             'pangkat_atau_golongan'     => ['nullable','string','max:64'],
-            'jabatan'                   => ['required','string','max:32'],
+            'jabatan'                   => ['required','string','max:128'],
+            'atasan'                    => ['nullable','numeric'],
             'masa_jabatan'              => ['nullable','string','max:64'],
             'alamat'                    => ['nullable'],
+            'urutan'                    => ['required'],
         ];
 
         if ($this->dusun) {

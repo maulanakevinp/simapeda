@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pemerintahan Desa')
+@section('title', 'Staff Pemerintahan Desa')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,15 +15,16 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Pemerintahan Desa</h2>
-                                <p class="mb-0 text-sm">Kelola Pemerintahan Desa</p>
+                                <h2 class="mb-0">Staff Pemerintahan Desa</h2>
+                                <p class="mb-0 text-sm">{{ $pemerintahan_desa->jabatan }}</p>
                             </div>
                             <div class="mb-3">
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('pemerintahan-desa.create') }}?atasan={{ $pemerintahan_desa->id }}" data-toggle="tooltip" class="btn btn-primary" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('pemerintahan-desa.index') }}" data-toggle="tooltip" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i></a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Aparat Desa</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('atasan', $pemerintahan_desa->id)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -56,7 +57,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Laki-laki</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('jenis_kelamin',1)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('atasan', $pemerintahan_desa->id)->where('jenis_kelamin',1)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -74,7 +75,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Jumlah Perempuan</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('jenis_kelamin',2)->count() }}</span>
+                                <span class="h2 font-weight-bold mb-0">{{ App\PemerintahanDesa::where('atasan', $pemerintahan_desa->id)->where('jenis_kelamin',2)->count() }}</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-pink text-white rounded-circle shadow">
@@ -146,7 +147,7 @@
                     <th class="text-center">Masa Jabatan</th>
                 </thead>
                 <tbody>
-                    @forelse ($pemerintahan_desa as $key => $item)
+                    @forelse ($pemerintahan_desa->staff as $key => $item)
                         <tr>
                             <td style="vertical-align: middle">
                                 <input type="checkbox" class="pemerintah-desa-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
@@ -156,13 +157,10 @@
                                 @if ($key != 0)
                                     <button data-id="{{ $item->id }}" title="Pindah Ke Atas" data-toggle="tooltip" class="btn btn-sm btn-success atas"><i class="fas fa-arrow-up"></i></button>
                                 @endif
-                                @if ($key+1 != count($pemerintahan_desa))
+                                @if ($key+1 != count($pemerintahan_desa->staff))
                                     <button data-id="{{ $item->id }}" title="Pindah Ke Bawah" data-toggle="tooltip" class="btn btn-sm btn-success bawah"><i class="fas fa-arrow-down"></i></button>
                                 @endif
-                                <a href="{{ route('pemerintahan-desa.edit', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                @if (count($item->staff) > 0)
-                                    <a href="{{ route('pemerintahan-desa.show', $item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Staff"><i class="fas fa-list"></i></a>
-                                @endif
+                                <a href="{{ route('pemerintahan-desa.edit', $item) }}?atasan={{ $pemerintahan_desa->id }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("pemerintahan-desa.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
@@ -196,7 +194,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $pemerintahan_desa->links('layouts.components.pagination') }}
     </div>
 </div>
 
@@ -239,13 +236,13 @@
             </div>
 
             <div class="modal-body pt-0">
-                <form class="d-inline" action="{{ route("pemerintahan-desa.print_all") }}" method="POST" >
+                <form class="d-inline" action="{{ route("pemerintahan-desa.print", $pemerintahan_desa) }}" method="POST" >
                     @csrf
                     <div class="form-group">
                         <label class="form-control-label" for="ditandatangani">Laporan Ditandatangani</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
                         <select required class="form-control @error('ditandatangani') is-invalid @enderror" name="ditandatangani" id="ditandatangani">
                             <option selected value="">Pilih Aparat Pemerintahan Desa</option>
-                            @foreach ($pemerintahan_desa as $item)
+                            @foreach (App\PemerintahanDesa::where('atasan',null)->get() as $item)
                                 <option value="{{ $item->id }}" {{ old('ditandatangani') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
                             @endforeach
                         </select>
@@ -255,7 +252,7 @@
                         <label class="form-control-label" for="diketahui">Laporan Diketahui</label> <img style="display: none" id="loading" height="20px" src="{{ asset('storage/loading.gif') }}" alt="Loading">
                         <select required class="form-control @error('diketahui') is-invalid @enderror" name="diketahui" id="diketahui">
                             <option selected value="">Pilih Aparat Pemerintahan Desa</option>
-                            @foreach ($pemerintahan_desa as $item)
+                            @foreach (App\PemerintahanDesa::where('atasan',null)->get() as $item)
                                 <option value="{{ $item->id }}" {{ old('diketahui') == $item->id ? 'selected="true"' : ''  }}>{{ $item->nama }} ({{ $item->jabatan }})</option>
                             @endforeach
                         </select>

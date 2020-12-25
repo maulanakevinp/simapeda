@@ -18,4 +18,9 @@ class PemerintahanDesa extends Model
     {
         return $this->belongsTo('App\Pendidikan');
     }
+
+    public function staff()
+    {
+        return $this->hasMany('App\PemerintahanDesa', 'atasan');
+    }
 }
