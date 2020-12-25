@@ -116,6 +116,12 @@
                     <span class="nav-link-inner--text">Calon Pemilih</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if (Request::segment(1) == 'bantuan' || Request::segment(1) == 'bantuan-penduduk') active @endif" href="{{ route('bantuan.index') }}">
+                    <i class="fas fa-heart text-danger"></i>
+                    <span class="nav-link-inner--text">Bantuan</span>
+                </a>
+            </li>
         </ul>
         <hr class="my-3">
         <h6 class="navbar-heading text-muted">Sekretariat</h6>
