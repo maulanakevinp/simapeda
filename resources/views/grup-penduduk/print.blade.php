@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
-    <title>Daftar Peserta Program Bantuan Pemerintahan Desa {{ $desa->nama }}</title>
+    <title>Daftar Peserta Grup Pemerintahan Desa {{ $desa->nama }}</title>
     <link rel="stylesheet" href="{{asset('js/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="icon" href="{{ url(Storage::url($desa->logo)) }}" type="image/png">
     <style type="text/css" media="print">
@@ -43,63 +43,51 @@
     </div>
     <hr style="border-top: 5px double #000000; margin-top: 5px">
     <div class="text-center mb-3">
-        <h5 class="font-weight-bold text-uppercase">Daftar Peserta Program {{ $bantuan->nama_program }}</h5>
+        <h5 class="font-weight-bold text-uppercase">Daftar Peserta Grup {{ $grup->nama }}</h5>
     </div>
     <table style="padding: 0px; font-size: 0.7rem">
         <tr>
-            <td width="100px">Nama Program</td>
+            <td width="100px">Nama Grup</td>
             <td width="1px">:</td>
-            <td>{{ $bantuan->nama_program }}</td>
+            <td>{{ $grup->nama }}</td>
         </tr>
         <tr>
             <td width="100px">Sasaran Peserta</td>
             <td width="1px">:</td>
-            <td>{{ $bantuan->sasaran_program == 1 ? 'Penduduk' : 'Keluarga' }}</td>
-        </tr>
-        <tr>
-            <td width="100px">Masa Berlaku</td>
-            <td width="1px">:</td>
-            <td>{{ tgl($bantuan->tanggal_mulai) }} - {{ tgl($bantuan->tanggal_berakhir) }}</td>
+            <td>{{ $grup->sasaran == 1 ? 'Penduduk' : 'Keluarga' }}</td>
         </tr>
         <tr>
             <td style="vertical-align: top" width="100px">Keterangan</td>
             <td style="vertical-align: top" width="1px">:</td>
-            <td style="vertical-align: top">{{ $bantuan->keterangan }}</td>
+            <td style="vertical-align: top">{{ $grup->keterangan }}</td>
         </tr>
     </table>
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
-                <th rowspan="2" style="vertical-align: middle" class="text-center">No</th>
-                <th rowspan="2" style="vertical-align: middle" class="text-center">NIK</th>
-                <th rowspan="2" style="vertical-align: middle" class="text-center">No. KK</th>
-                <th rowspan="2" style="vertical-align: middle" class="text-center">Nama Penduduk</th>
-                <th colspan="7" class="text-center">Identitas Di Kartu Peserta</th>
-            </tr>
-            <tr>
-                <th class="text-center">No. Kartu Peserta</th>
+                <th class="text-center">No</th>
                 <th class="text-center">NIK</th>
-                <th class="text-center">Nama</th>
+                <th class="text-center">No. KK</th>
+                <th class="text-center">Nama Penduduk</th>
                 <th class="text-center">Tempat Lahir</th>
                 <th class="text-center">Tanggal Lahir</th>
                 <th class="text-center">Jenis Kelamin</th>
                 <th class="text-center">Alamat</th>
+                <th class="text-center">Keterangan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($bantuan->bantuan_penduduk as $item)
+            @foreach ($grup->grup_penduduk as $item)
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
-                    <td>{{ $item->penduduk->nik }}</td>
-                    <td>{{ $item->penduduk->kk }}</td>
-                    <td>{{ $item->penduduk->nama }}</td>
-                    <td>{{ $item->nomor_kartu_peserta }}</td>
-                    <td>{{ $item->nik }}</td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->tempat_lahir }}</td>
-                    <td>{{ tgl($item->tanggal_lahir) }}</td>
-                    <td>{{ $item->penduduk->jenis_kelamin == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
-                    <td>{{ $item->alamat }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->nik }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->kk }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->nama }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->tempat_lahir }}</td>
+                    <td style="vertical-align: middle">{{ tgl($item->penduduk->tanggal_lahir) }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->jenis_kelamin == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
+                    <td style="vertical-align: middle">{{ $item->penduduk->alamat_sekarang ? $item->penduduk->alamat_sekarang : $item->penduduk->alamat_sebelumnya }}</td>
+                    <td style="vertical-align: middle">{{ $item->keterangan }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -79,13 +79,13 @@
                             <td>
                                 <a href="{{ route('bantuan-penduduk.index', $item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Rincian"><i class="fas fa-list"></i></a>
                                 <a href="{{ route('bantuan.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("bantuan.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_program }}" data-action="{{ route("bantuan.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama_program }}</td>
                             <td style="vertical-align: middle">{{ $item->asal_dana }}</td>
-                            <td style="vertical-align: middle">{{ '' }}</td>
+                            <td style="vertical-align: middle">{{ count($item->bantuan_penduduk) }}</td>
                             <td style="vertical-align: middle">{{ tgl($item->tanggal_mulai) }} - {{ tgl($item->tanggal_berakhir) }}</td>
-                            <td style="vertical-align: middle">{{ $item->sasaran_program }}</td>
+                            <td style="vertical-align: middle">{{ $item->sasaran_program == 1 ? 'Penduduk' : 'Keluarga'  }}</td>
                             <td style="vertical-align: middle">{{ $item->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
                         </tr>
                     @empty
@@ -116,7 +116,7 @@
                 <div class="py-3 text-center">
                     <i class="ni ni-bell-55 ni-3x"></i>
                     <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus surat masuk akan menghapus semua data yang dimilikinya</p>
+                    <p>Menghapus bantuan akan menghapus semua data yang dimilikinya</p>
                     <p><strong id="nama-hapus"></strong></p>
                 </div>
 

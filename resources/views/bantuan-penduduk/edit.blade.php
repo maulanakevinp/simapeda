@@ -43,7 +43,7 @@
                 <div class="col-md-9">
                     <select class="form-control @error('penduduk_id') is-invalid @enderror" name="penduduk_id" id="penduduk_id" id="penduduk_id">
                         <option value="">Pilih Sasaran Program</option>
-                        @foreach (App\Penduduk::all() as $item)
+                        @foreach ($bantuan->sasaran_program == 1 ? App\Penduduk::all() : App\Penduduk::whereHas('statusHubunganDalamKeluarga', function ($status) {$status->where('nama','Kepala Keluarga');})->get() as $item)
                             <option value="{{ $item->id }}" {{ old('penduduk_id', $bantuan_penduduk->penduduk_id) == $item->id ? 'selected' : '' }}>{{ $item->nik }} - {{ $item->nama }}</option>
                         @endforeach
                     </select>

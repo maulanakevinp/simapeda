@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Program Bantuan ' . $bantuan->nama_program)
+@section('title', 'Grup')
 
 @section('styles')
 <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -15,13 +15,11 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Program Bantuan {{ $bantuan->nama_program }}</h2>
-                                <p class="mb-0 text-sm">Kelola Bantuan</p>
+                                <h2 class="mb-0">Grup</h2>
+                                <p class="mb-0 text-sm">Kelola Grup</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('bantuan-penduduk.print', $bantuan) }}" class="btn btn-secondary" title="Print" data-toggle="tooltip"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('bantuan-penduduk.create', $bantuan) }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
-                                <a href="{{ route('bantuan.index') }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i></a>
+                                <a href="{{ route('grup.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -60,48 +58,31 @@
 
 @section('content')
 @include('layouts.components.alert')
-@include('bantuan-penduduk.detail')
 <div class="card shadow">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
-                    <tr>
-                        <th rowspan="2" style="vertical-align: middle" class="text-center">No</th>
-                        <th rowspan="2" style="vertical-align: middle" class="text-center">Opsi</th>
-                        <th rowspan="2" style="vertical-align: middle" class="text-center">NIK</th>
-                        <th rowspan="2" style="vertical-align: middle" class="text-center">No. KK</th>
-                        <th rowspan="2" style="vertical-align: middle" class="text-center">Nama Penduduk</th>
-                        <th colspan="7" class="text-center">Identitas Di Kartu Peserta</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">No. Kartu Peserta</th>
-                        <th class="text-center">NIK</th>
-                        <th class="text-center">Nama</th>
-                        <th class="text-center">Tempat Lahir</th>
-                        <th class="text-center">Tanggal Lahir</th>
-                        <th class="text-center">Jenis Kelamin</th>
-                        <th class="text-center">Alamat</th>
-                    </tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Opsi</th>
+                    <th class="text-center">Nama Grup</th>
+                    <th class="text-center">Jumlah Peserta</th>
+                    <th class="text-center">Sasaran</th>
+                    <th class="text-center">Keterangan</th>
                 </thead>
                 <tbody>
-                    @forelse ($bantuan_penduduk as $item)
+                    @forelse ($grup as $item)
                         <tr>
-                            <td style="vertical-align: middle" class="text-center">{{ ($bantuan_penduduk->currentpage()-1) * $bantuan_penduduk->perpage() + $loop->index + 1 }}</td>
+                            <td style="vertical-align: middle" class="text-center">{{ ($grup->currentpage()-1) * $grup->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('bantuan-penduduk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("bantuan-penduduk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('grup-penduduk.index', $item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Rincian"><i class="fas fa-list"></i></a>
+                                <a href="{{ route('grup.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("grup.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td style="vertical-align: middle">{{ $item->penduduk->nik }}</td>
-                            <td style="vertical-align: middle">{{ $item->penduduk->kk }}</td>
-                            <td style="vertical-align: middle">{{ $item->penduduk->nama }}</td>
-                            <td style="vertical-align: middle">{{ $item->nomor_kartu_peserta }}</td>
-                            <td style="vertical-align: middle">{{ $item->nik }}</td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
-                            <td style="vertical-align: middle">{{ $item->tempat_lahir }}</td>
-                            <td style="vertical-align: middle">{{ tgl($item->tanggal_lahir) }}</td>
-                            <td style="vertical-align: middle">{{ $item->penduduk->jenis_kelamin == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
-                            <td style="vertical-align: middle">{{ $item->alamat }}</td>
+                            <td style="vertical-align: middle">{{ count($item->grup_penduduk) }}</td>
+                            <td style="vertical-align: middle">{{ $item->sasaran == 1 ? 'Penduduk' : 'Keluarga' }}</td>
+                            <td style="vertical-align: middle">{{ $item->keterangan }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -110,7 +91,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $bantuan_penduduk->links('layouts.components.pagination') }}
+            {{ $grup->links('layouts.components.pagination') }}
         </div>
     </div>
 </div>
@@ -120,7 +101,7 @@
         <div class="modal-content bg-gradient-danger">
 
             <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus Bantuan?</h6>
+                <h6 class="modal-title" id="modal-title-delete">Hapus Grup?</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -131,7 +112,7 @@
                 <div class="py-3 text-center">
                     <i class="ni ni-bell-55 ni-3x"></i>
                     <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus peserta akan menghapus semua data yang dimilikinya</p>
+                    <p>Menghapus grup akan menghapus semua data yang dimilikinya</p>
                     <p><strong id="nama-hapus"></strong></p>
                 </div>
 
