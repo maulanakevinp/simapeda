@@ -1,3 +1,20 @@
+@if (App\Gallery::where('slider', 1)->count() > 0)
+    <div class="card shadow mb-3">
+        <div class="card-header bg-dark text-white">
+            <b>Informasi</b>
+        </div>
+        <div class="card-body">
+            <div id="owl-one" class="owl-carousel owl-theme" style="z-index: 0">
+                @foreach(App\Gallery::where('slider', 1)->latest()->get() as $key => $item)
+                    <a class="text-center" href="{{ asset(Storage::url($item->gallery)) }}" data-caption="{{ $item->caption }}" data-fancybox>
+                        <img class="mw-100" style="height: 300px; object-fit: cover;" src="{{ asset(Storage::url($item->gallery)) }}" alt="{{ $item->caption }}">
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
 <div class="card shadow mb-3">
     <div class="card-header bg-dark text-white">
         <b><a href="{{ route('layanan-surat') }}" class="text-white">Layanan Surat</a></b>

@@ -18,10 +18,10 @@ class ArtikelController extends Controller
      */
     public function index(Request $request)
     {
-        $artikel = Artikel::orderBy('id','desc')->paginate(12);
+        $artikel = Artikel::select('id','gambar','judul','dilihat','slide','created_at')->orderBy('id','desc')->paginate(12);
 
         if ($request->cari) {
-            $artikel = Artikel::where('judul','like',"%{$request->cari}%")
+            $artikel = Artikel::select('id','gambar','judul','dilihat','slide','created_at')->where('judul','like',"%{$request->cari}%")
             ->orWhere('konten','like',"%{$request->cari}%")
             ->orWhere('menu','like',"%{$request->cari}%")
             ->orWhere('submenu','like',"%{$request->cari}%")
@@ -235,5 +235,18 @@ class ArtikelController extends Controller
         $artikel->delete();
 
         return back()->with('success','Artikel berhasil dihapus');
+    }
+
+    public function slide(Artikel $artikel)
+    {
+        if($artikel->slide == 0) {
+            $artikel->slide = 1;
+            $artikel->save();
+            return back()->with('success','Artikel berhasil dimasukkan ke dalam slide');
+        } else {
+            $artikel->slide = 0;
+            $artikel->save();
+            return back()->with('success','Artikel berhasil dikeluarkan dari slide');
+        }
     }
 }

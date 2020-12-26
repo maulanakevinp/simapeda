@@ -20,7 +20,7 @@
         <div class="col-md-8 mb-3">
             <div class="card shadow mb-3">
                 <div class="card-header bg-dark">
-                    <h1 class="h4 mb-0 font-weight-bolder text-white">{{ $artikel->judul }}</h1>
+                    <h1 class="h5 mb-0 font-weight-bolder text-white">{{ $artikel->judul }}</h1>
                 </div>
                 <div class="card-body">
                     <div class="mb-3 d-flex justify-content-between text-muted" style="font-size: 0.8rem">
@@ -62,13 +62,13 @@
                         </a>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 border border-left-0 text-center">
+                        <div class="col-6 border border-left-0 text-center">
                             @if ($before)
                                 <span style="font-size: 0.7rem"><i class="fas fa-arrow-left"></i> Postingan Sebelumnya</span><br>
                                 <a href="{{ url('') }}{{ $before->menu ? '/' . Str::slug($before->menu) : '' }}{{ $before->submenu ? '/' . Str::slug($before->submenu) : '' }}{{ $before->sub_submenu ? '/' . Str::slug($before->sub_submenu) : '' }}{{ '/' . $before->id . '/' . Str::slug($before->judul) }}" class="h5 font-weight-bolder">{{ $before->judul }}</a>
                             @endif
                         </div>
-                        <div class="col-md-6 border border-right-0 text-center">
+                        <div class="col-6 border border-right-0 text-center">
                             @if ($next)
                                 <span style="font-size: 0.7rem">Postingan Berikutnya <i class="fas fa-arrow-right"></i></span><br>
                                 <a href="{{ url('') }}{{ $next->menu ? '/' . Str::slug($next->menu) : '' }}{{ $next->submenu ? '/' . Str::slug($next->submenu) : '' }}{{ $next->sub_submenu ? '/' . Str::slug($next->sub_submenu) : '' }}{{ '/' . $next->id . '/' . Str::slug($next->judul) }}" class="h5 font-weight-bolder">{{ $next->judul }}</a>
@@ -115,6 +115,29 @@
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $('#owl-one').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed:900,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                400: {
+                    items: 1
+                },
+                650: {
+                    items: 1
+                },
+                660: {
+                    items: 1
+                }
+            }
+        });
+
         $('#owl-two').owlCarousel({
             loop: true,
             autoplay: true,

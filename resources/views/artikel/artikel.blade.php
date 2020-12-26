@@ -83,6 +83,29 @@
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $('#owl-one').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed:900,
+            dots:false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                400: {
+                    items: 1
+                },
+                650: {
+                    items: 1
+                },
+                660: {
+                    items: 1
+                }
+            }
+        });
+
         $('#owl-two').owlCarousel({
             loop: true,
             autoplay: true,

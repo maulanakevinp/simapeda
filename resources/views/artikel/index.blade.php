@@ -80,8 +80,14 @@
                         </div>
                     </a>
                     <div class="mt-3">
-                        <a href="{{ route('artikel.edit', $item) }}" class="btn btn-sm btn-success" title="Edit"><i class="fas fa-edit"></i> Edit</a>
-                        <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul }}" data-action="{{ route('artikel.destroy',$item) }}" data-toggle="modal" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i> Hapus</a>
+                        @if ($item->slide == 1)
+                            <a href="#slide" class="btn btn-sm btn-info slide" data-toggle="tooltip" title="Keluarkan Dari Slide"><i class="fas fa-pause"></i></a>
+                        @else
+                            <a href="#slide" class="btn btn-sm btn-info slide" data-toggle="tooltip" title="Masukkan Ke Dalam Slide"><i class="fas fa-play"></i></a>
+                        @endif
+                        <a href="{{ route('artikel.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul }}" data-action="{{ route('artikel.destroy',$item) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
+                        <form action="{{ route('artikel.slide', $item) }}" method="post">@csrf</form>
                     </div>
                 </div>
             </div>
@@ -133,3 +139,18 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $(".hapus-data").click(function (){
+            $("#modal-hapus").show();
+        });
+
+        $(".slide").click(function (event) {
+            event.preventDefault();
+            $(this).siblings('form').submit();
+        });
+    });
+</script>
+@endpush

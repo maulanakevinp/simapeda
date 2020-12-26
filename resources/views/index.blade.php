@@ -7,23 +7,10 @@
 <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <style>
     .animate-up:hover {
         top: -5px;
-    }
-
-    @media(max-width:400px){
-        .slider{
-            height: 250px;
-            object-fit: cover;
-        }
-    }
-
-    @media(min-width:400px){
-        .slider{
-            height: 500px;
-            object-fit: cover;
-        }
     }
 
     iframe {
@@ -34,15 +21,27 @@
 @endsection
 
 @section('content')
-<div id="owl-one" class="owl-carousel owl-theme" style="z-index: 0">
-    @foreach($gallery as $key => $item)
-        <div class="text-center">
-            <a class="text-center" href="{{ asset(Storage::url($item->gallery)) }}" data-caption="{{ $item->caption }}" data-fancybox>
-                <img class="slider" src="{{ asset(Storage::url($item->gallery)) }}" alt="Slide Show {{ $key }}">
+<div id="slider" class="carousel slide mb-3" data-ride="carousel">
+    <div class="carousel-inner">
+        @foreach($slide as $key => $item)
+            <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}" class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                <div class="wraper"></div>
+                <img src="{{ asset(Storage::url($item->gambar)) }}" class="slider" alt="{{ $item->caption }}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4 class="font-weight-bold title-article block-with-text">{{ $item->judul }}</h4>
+                    <div class="description-article block-with-text" style="font-size: 0.8rem">{!! $item->konten !!}</div>
+                </div>
             </a>
-            <p style="position: relative; bottom:80px">{{ $item->caption }}</p>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
+    <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
 
 <div class="container">
@@ -156,6 +155,11 @@
 <script src="{{ asset('js/apbdes.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $('#slider').carousel({
+            interval: 3000,
+            touch: true,
+        });
+
         $('#owl-one').owlCarousel({
             loop: true,
             autoplay: true,
@@ -167,14 +171,18 @@
                 0: {
                     items: 1
                 },
-                600: {
+                400: {
                     items: 1
                 },
-                1000: {
+                650: {
+                    items: 1
+                },
+                660: {
                     items: 1
                 }
             }
         });
+
         $('#owl-two').owlCarousel({
             loop: true,
             autoplay: true,

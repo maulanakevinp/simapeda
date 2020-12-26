@@ -783,3 +783,54 @@
 .show>.btn-twitter.dropdown-toggle:focus {
     box-shadow: none, 0 0 0 0 rgba(29, 161, 242, 0.5);
 }
+
+
+.wraper {
+    background-color: black;
+    opacity:0.6;
+    width:70%;
+    height:450px;
+    position: absolute;
+    left:15%;
+    top:0;
+    z-index: 10;
+}
+
+.slider{
+    height: 400px;
+    object-fit: cover;
+    width: 70%;
+    position: relative;
+    left: 15%;
+}
+
+@media(max-width:700px){
+    .slider {
+        height: 250px;
+    }
+    .wraper {
+        height: 250px;
+    }
+}
+
+.carousel-control-next:focus, .carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    opacity: 0.9;
+    /* background-color: black; */
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.carousel-item {
+    background-color: black;
+    transition: 0.7s;
+}
+
+.carousel-item:hover {
+    opacity: 0.9;
+}

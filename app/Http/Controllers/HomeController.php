@@ -30,7 +30,23 @@ class HomeController extends Controller
             }
         }
 
-        $gallery = Gallery::where('slider', 1)->latest()->get();
+        $slide = Artikel::where('slide', 1)->latest()->get();
+        foreach ($slide as $item) {
+            preg_match_all("/<\s*img[^>]*>/", $item->konten, $img);
+            foreach($img[0] as $image){
+                $item->konten = str_replace($image,'',$item->konten);
+            }
+            preg_match_all("/<\s*a[^>]*>(.*?)<\s*\/\s*a\s*>/", $item->konten, $a);
+            foreach($a[0] as $tag_a){
+                $item->konten = str_replace($tag_a,'',$item->konten);
+            }
+            preg_match_all("/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/", $item->konten, $konten);
+            $item->konten = '';
+            foreach($konten[1] as $isi) {
+                $item->konten .= $isi . ' ';
+            }
+        }
+
         $galleries = Gallery::where('slider', null)->inRandomOrder()->limit(7)->get();
 
         if ($request->cari) {
@@ -44,7 +60,7 @@ class HomeController extends Controller
 
         $artikel->appends($request->only('cari'));
 
-        return view('index', compact('desa', 'gallery','galleries','artikel'));
+        return view('index', compact('desa', 'slide','galleries','artikel'));
     }
 
     public function dashboard()
