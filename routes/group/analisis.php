@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
     Route::prefix('analisis/{analisis}')->group(function () {
         Route::get('/input/{periode}', 'InputController@index')->name('input.index');
@@ -30,12 +30,15 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::resource('periode', 'PeriodeController');
     });
 
-    Route::get('/indikator/{indikator}/chart', 'IndikatorController@chart')->name('indikator.chart');
-    Route::delete('/hapus-kategori', 'KategoriController@destroys')->name('kategori.destroys');
-    Route::delete('/hapus-indikator', 'IndikatorController@destroys')->name('indikator.destroys');
-    Route::delete('/hapus-klasifikasi', 'KlasifikasiController@destroys')->name('klasifikasi.destroys');
-    Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
-    Route::delete('/hapus-analisis', 'AnalisisController@destroys')->name('analisis.destroys');
+    Route::prefix('analisis')->group(function () {
+        Route::get('/indikator/{indikator}/chart', 'IndikatorController@chart')->name('indikator.chart');
+        Route::delete('/hapus-kategori', 'KategoriController@destroys')->name('kategori.destroys');
+        Route::delete('/hapus-indikator', 'IndikatorController@destroys')->name('indikator.destroys');
+        Route::delete('/hapus-klasifikasi', 'KlasifikasiController@destroys')->name('klasifikasi.destroys');
+        Route::delete('/hapus-periode', 'PeriodeController@destroys')->name('periode.destroys');
+        Route::delete('/hapus-analisis', 'AnalisisController@destroys')->name('analisis.destroys');
+    });
+
     Route::resource('analisis', 'AnalisisController');
 
 });

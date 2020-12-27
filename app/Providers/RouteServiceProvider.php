@@ -48,9 +48,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAnggaranRealisasiRoutes();
         $this->mapArtikelRoutes();
         $this->mapBantuanRoutes();
+        $this->mapDatabaseRoutes();
         $this->mapGalleryRoutes();
         $this->mapGrupRoutes();
         $this->mapInventarisRoutes();
+        $this->mapPeranRoutes();
         $this->mapPemerintahanDesaRoutes();
         $this->mapPendudukRoutes();
         $this->mapProdukHukumRoutes();
@@ -163,5 +165,19 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/group/grup.php'));
+    }
+
+    protected function mapDatabaseRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/database.php'));
+    }
+
+    protected function mapPeranRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/group/peran.php'));
     }
 }

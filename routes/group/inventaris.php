@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
     Route::prefix('inventaris')->group(function () {
+        Route::get('/', function () {return redirect()->route('tanah.index');});
+
         Route::get('laporan', 'InventarisLaporanController@index')->name("laporan.index");
         Route::post('laporan/print', 'InventarisLaporanController@print')->name("laporan.print");
+
         Route::prefix('tanah')->group(function () {
             Route::get('mutasi', 'InventarisTanahController@mutasi')->name("tanah.mutasi");
             Route::get('mutasi/{tanah}/edit', 'InventarisTanahController@mutasi_edit')->name("tanah.mutasi.edit");
@@ -58,17 +61,14 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         });
         Route::resource('asset', 'InventarisAssetController');
 
-        Route::prefix('kontruksi')->group(function () {
-            Route::post('print', 'InventarisKontruksiController@print')->name("kontruksi.print");
-        });
+        Route::post('/kontruksi/print', 'InventarisKontruksiController@print')->name("kontruksi.print");
         Route::resource('kontruksi', 'InventarisKontruksiController');
+
+        Route::delete('/hapus-tanah', 'InventarisTanahController@destroys')->name('tanah.destroys');
+        Route::delete('/hapus-peralatan', 'InventarisPeralatanController@destroys')->name('peralatan.destroys');
+        Route::delete('/hapus-gedung', 'InventarisGedungController@destroys')->name('gedung.destroys');
+        Route::delete('/hapus-jalan', 'InventarisJalanController@destroys')->name('jalan.destroys');
+        Route::delete('/hapus-asset', 'InventarisAssetController@destroys')->name('asset.destroys');
+        Route::delete('/hapus-kontruksi', 'InventarisKontruksiController@destroys')->name('kontruksi.destroys');
     });
-
-    Route::delete('/hapus-tanah', 'InventarisTanahController@destroys')->name('tanah.destroys');
-    Route::delete('/hapus-peralatan', 'InventarisPeralatanController@destroys')->name('peralatan.destroys');
-    Route::delete('/hapus-gedung', 'InventarisGedungController@destroys')->name('gedung.destroys');
-    Route::delete('/hapus-jalan', 'InventarisJalanController@destroys')->name('jalan.destroys');
-    Route::delete('/hapus-asset', 'InventarisAssetController@destroys')->name('asset.destroys');
-    Route::delete('/hapus-kontruksi', 'InventarisKontruksiController@destroys')->name('kontruksi.destroys');
-
 });

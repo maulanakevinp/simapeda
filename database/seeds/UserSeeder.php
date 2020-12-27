@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email'             => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password'          => bcrypt('asdqwe123'),
+            'peran_id'          => 1,
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
-    Route::get('/bantuan-penduduk/cari-penduduk/{penduduk}', 'BantuanPendudukController@cari_penduduk')->name('bantuan-penduduk.cari-penduduk');
-    Route::get('/bantuan-penduduk/print/{bantuan}', 'BantuanPendudukController@print')->name('bantuan-penduduk.print');
-    Route::get('/bantuan-penduduk/{bantuan}', 'BantuanPendudukController@index')->name('bantuan-penduduk.index');
-    Route::get('/bantuan-penduduk/create/{bantuan}', 'BantuanPendudukController@create')->name('bantuan-penduduk.create');
-    Route::get('/bantuan-penduduk/{bantuan_penduduk}/edit', 'BantuanPendudukController@edit')->name('bantuan-penduduk.edit');
-    Route::post('/bantuan-penduduk', 'BantuanPendudukController@store')->name('bantuan-penduduk.store');
-    Route::patch('/bantuan-penduduk/{bantuan_penduduk}', 'BantuanPendudukController@update')->name('bantuan-penduduk.update');
-    Route::delete('/bantuan-penduduk/{bantuan_penduduk}', 'BantuanPendudukController@destroy')->name('bantuan-penduduk.destroy');
+    Route::prefix('bantuan')->group(function () {
+        Route::get('/penduduk/cari-penduduk/{penduduk}', 'BantuanPendudukController@cari_penduduk')->name('bantuan-penduduk.cari-penduduk');
+        Route::get('/penduduk/print/{bantuan}', 'BantuanPendudukController@print')->name('bantuan-penduduk.print');
+        Route::get('/penduduk/{bantuan}', 'BantuanPendudukController@index')->name('bantuan-penduduk.index');
+        Route::get('/penduduk/create/{bantuan}', 'BantuanPendudukController@create')->name('bantuan-penduduk.create');
+        Route::get('/penduduk/{bantuan_penduduk}/edit', 'BantuanPendudukController@edit')->name('bantuan-penduduk.edit');
+        Route::post('/penduduk', 'BantuanPendudukController@store')->name('bantuan-penduduk.store');
+        Route::patch('/penduduk/{bantuan_penduduk}', 'BantuanPendudukController@update')->name('bantuan-penduduk.update');
+        Route::delete('/penduduk/{bantuan_penduduk}', 'BantuanPendudukController@destroy')->name('bantuan-penduduk.destroy');
+    });
     Route::resource('bantuan', 'BantuanController');
 
 });

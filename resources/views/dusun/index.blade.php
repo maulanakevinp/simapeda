@@ -61,7 +61,7 @@
 <div class="card shadow">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-sm table-stripped table-bordered">
+            <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
                     <th class="text-center" width="20px">#</th>
                     <th class="text-center" width="100px">Opsi</th>

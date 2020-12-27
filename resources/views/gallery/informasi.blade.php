@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Slider')
+@section('title', 'Informasi')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -22,8 +22,8 @@
                     <div class="card-header border-0">
                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between text-center text-md-left">
                             <div class="mb-3">
-                                <h2 class="mb-0">Slider</h2>
-                                <p class="mb-0 text-sm">Kelola Slider</p>
+                                <h2 class="mb-0">Informasi</h2>
+                                <p class="mb-0 text-sm">Kelola Informasi</p>
                             </div>
                             <div class="mb-3">
                                 <a href="#tambah-gambar" data-toggle="modal" class="btn btn-primary"><i class="fas fa-image mr-2"></i> Tambah Gambar</a>

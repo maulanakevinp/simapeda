@@ -305,7 +305,7 @@
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('pemerintah-desa.destroys') }}",
+                        url     : "{{ route('pemerintahan-desa.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",

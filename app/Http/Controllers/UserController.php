@@ -11,6 +11,111 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $user = User::latest()->paginate(10);
+
+        if ($request->cari) {
+            $user = User::where('nama','like',"%$request->cari%")->latest()->paginate(10);
+        }
+
+        $user->appends($request->all());
+        return view('user.index', compact('user'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('user.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'peran_id'      => ['required','numeric'],
+            'nama'          => ['required','string','max:64'],
+            'email'         => ['required','string','max:64','unique:users,email'],
+            'foto_profil'   => ['nullable','image','max:2048'],
+        ]);
+
+        if ($request->foto_profil) {
+            $data['foto_profil'] = $request->foto_profil->store('public/user');
+        }
+
+        $data['password']   = bcrypt('password');
+
+        User::create($data);
+        return redirect()->route('user.index')->with('success','User berhasil ditambahkan');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        return view('user.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'peran_id'      => ['required','numeric'],
+            'nama'          => ['required','string','max:64'],
+            'email'         => ['required','string','max:64','unique:users,email,'.$user->id],
+            'foto_profil'   => ['nullable','image','max:2048'],
+        ]);
+
+        if ($request->foto_profil) {
+            if ($user->foto_profil != 'noavatar.png') {
+                unlink(storage_path('app/' . $user->foto_profil));
+            }
+            $data['foto_profil'] = $request->foto_profil->store('public/user');
+        }
+
+        $user->update($data);
+        return redirect()->back()->with('success','User berhasil diperbarui');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        if ($user->foto_profil != 'noavatar.png') {
+            unlink(storage_path('app/' . $user->foto_profil));
+        }
+        $user->delete();
+        return redirect()->route('user.index')->with('success','User berhasil dihapus');
+    }
+
     public function profil()
     {
         return view('user.profil');

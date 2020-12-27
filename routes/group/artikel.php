@@ -13,15 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
-    Route::get('/kelola-artikel', 'ArtikelController@index')->name('artikel.index');
-    Route::get('/tambah-artikel', 'ArtikelController@create')->name('artikel.create');
-    Route::get('/edit-artikel/{artikel}', 'ArtikelController@edit')->name('artikel.edit');
-    Route::post('/artikel/{artikel}/slide', 'ArtikelController@slide')->name('artikel.slide');
-    Route::post('/artikel-gallery','ArtikelGalleryController@store')->name('artikel-gallery.store');
-    Route::patch('/artikel-gallery/{artikel_gallery}','ArtikelGalleryController@update')->name('artikel-gallery.update');
-    Route::delete('/artikel-gallery/{artikel_gallery}','ArtikelGalleryController@destroy')->name('artikel-gallery.destroy');
-    Route::resource('/artikel', 'ArtikelController')->except('create','show','index','edit');
+    Route::prefix('artikel')->group(function () {
+        Route::post('/{artikel}/slide', 'ArtikelController@slide')->name('artikel.slide');
+        Route::post('/gallery','ArtikelGalleryController@store')->name('artikel-gallery.store');
+        Route::patch('/gallery/{artikel_gallery}','ArtikelGalleryController@update')->name('artikel-gallery.update');
+        Route::delete('/gallery/{artikel_gallery}','ArtikelGalleryController@destroy')->name('artikel-gallery.destroy');
+    });
+    Route::resource('/artikel', 'ArtikelController')->except('show');
 
 });

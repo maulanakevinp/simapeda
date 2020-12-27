@@ -37,10 +37,10 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexSlider()
+    public function informasi()
     {
         $gallery = Gallery::where('slider', 1)->latest()->get();
-        return view('gallery.slider', compact('gallery'));
+        return view('gallery.informasi', compact('gallery'));
     }
 
     /**

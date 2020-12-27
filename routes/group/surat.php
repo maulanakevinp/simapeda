@@ -17,24 +17,29 @@ Route::get('/layanan-surat', 'SuratController@layanan_surat')->name('layanan-sur
 Route::get('/buat-surat/{id}/{slug}', 'CetakSuratController@create')->name('buat-surat');
 Route::post('/cetak-surat/{id}/{slug}', 'CetakSuratController@store')->name('cetak-surat.store');
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
-    Route::get('/surat-harian', 'HomeController@suratHarian')->name('surat-harian');
-    Route::get('/surat-bulanan', 'HomeController@suratBulanan')->name('surat-bulanan');
-    Route::get('/surat-tahunan', 'HomeController@suratTahunan')->name('surat-tahunan');
-    Route::get('/chart-surat/{id}', 'SuratController@chartSurat')->name('chart-surat');
-    Route::get('/tambah-surat', 'SuratController@create')->name('surat.create');
-    Route::post('/surat/pengaturan', 'DesaController@pengaturan_surat')->name('surat.pengaturan');
-    Route::resource('/cetakSurat', 'CetakSuratController')->except('create','store','index');
-    Route::resource('/surat', 'SuratController')->except('create');
-    Route::resource('/isiSurat', 'IsiSuratController')->except('index', 'create', 'edit', 'show');
+    Route::prefix('surat')->group(function () {
+        Route::get('/harian', 'HomeController@suratHarian')->name('surat-harian');
+        Route::get('/bulanan', 'HomeController@suratBulanan')->name('surat-bulanan');
+        Route::get('/tahunan', 'HomeController@suratTahunan')->name('surat-tahunan');
+        Route::get('/chart/{id}', 'SuratController@chartSurat')->name('chart-surat');
+        Route::post('/pengaturan', 'DesaController@pengaturan_surat')->name('surat.pengaturan');
+        Route::resource('cetakSurat', 'CetakSuratController')->except('create','store','index');
+        Route::resource('isiSurat', 'IsiSuratController')->except('index', 'create', 'edit', 'show');
+    });
+    Route::resource('surat', 'SuratController');
 
-    Route::post('/surat-masuk/print', 'SuratMasukController@print')->name('surat-masuk.print');
-    Route::delete('/hapus-surat-masuk', 'SuratMasukController@destroys')->name('surat-masuk.destroys');
+    Route::prefix('surat-masuk')->group(function () {
+        Route::post('/print', 'SuratMasukController@print')->name('surat-masuk.print');
+        Route::delete('/hapus', 'SuratMasukController@destroys')->name('surat-masuk.destroys');
+    });
     Route::resource('surat-masuk', 'SuratMasukController');
 
-    Route::post('/surat-keluar/print', 'SuratKeluarController@print')->name('surat-keluar.print');
-    Route::delete('/hapus-surat-keluar', 'SuratKeluarController@destroys')->name('surat-keluar.destroys');
+    Route::prefix('surat-keluar')->group(function () {
+        Route::post('/print', 'SuratKeluarController@print')->name('surat-keluar.print');
+        Route::delete('/hapus', 'SuratKeluarController@destroys')->name('surat-keluar.destroys');
+    });
     Route::resource('surat-keluar', 'SuratKeluarController');
 
 });

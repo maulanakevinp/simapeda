@@ -36,7 +36,7 @@
 <div class="card bg-secondary shadow h-100">
     <div class="card-body">
         <form autocomplete="off" action="{{ route('bantuan-penduduk.update', $bantuan_penduduk) }}" method="post" enctype="multipart/form-data">
-            @csrf
+            @csrf @method('patch')
             <input type="hidden" name="bantuan_id" value="{{ $bantuan->id }}">
             <div class="form-group row">
                 <label class="form-control-label col-md-3" for="penduduk_id">Cari NIK / Nama Penduduk</label>
@@ -186,7 +186,7 @@
     });
 
     function cari(){
-        $.get(baseURL + '/bantuan-penduduk/cari-penduduk/' + $("#penduduk_id").val(), function (response) {
+        $.get(baseURL + '/bantuan/penduduk/cari-penduduk/' + $("#penduduk_id").val(), function (response) {
             $.each(response, function(i,e){
                 $(`td[id*='${i}']`).html(e);
                 $(`input[id*='${i}']`).val(e);

@@ -98,11 +98,11 @@
 <script>
     $(document).ready(function () {
         if ($("#jenis_anggaran") != "") {
-            $.getJSON(baseURL + "/detail-jenis-anggaran/" + $("#jenis_anggaran").val(), function (response) {
+            $.getJSON(baseURL + "/anggaran-realisasi/detail-jenis-anggaran/" + $("#jenis_anggaran").val(), function (response) {
                 $("#detail_jenis_anggaran_id").html(`<option value="" selected disabled>Pilih Detail Jenis Anggaran</option>`);
                 $.each(response, function(key, item) {
                     if (!item.nama) {
-                        $.getJSON(baseURL + "/kelompok-jenis-anggaran/" + item.kelompok_jenis_anggaran_id, res => {
+                        $.getJSON(baseURL + "/anggaran-realisasi/kelompok-jenis-anggaran/" + item.kelompok_jenis_anggaran_id, res => {
                             $("#detail_jenis_anggaran_id").append(`<option value="${item.id}">${res.nama}</option>`);
                         });
                     } else {
@@ -122,11 +122,11 @@
 
         $('#jenis_anggaran').change(function () {
             $("#detail_jenis_anggaran_id").html(`<option value="" selected disabled>Loading ...</option>`);
-            $.getJSON(baseURL + "/detail-jenis-anggaran/" + $(this).val(), function (response) {
+            $.getJSON(baseURL + "/anggaran-realisasi/detail-jenis-anggaran/" + $(this).val(), function (response) {
                 $("#detail_jenis_anggaran_id").html(`<option value="" selected disabled>Pilih Detail Jenis Anggaran</option>`);
                 $.each(response, function(key, item) {
                     if (!item.nama) {
-                        $.getJSON(baseURL + "/kelompok-jenis-anggaran/" + item.kelompok_jenis_anggaran_id, res => {
+                        $.getJSON(baseURL + "/anggaran-realisasi/kelompok-jenis-anggaran/" + item.kelompok_jenis_anggaran_id, res => {
                             $("#detail_jenis_anggaran_id").append(`<option value="${item.id}">${res.nama}</option>`);
                         });
                     } else {

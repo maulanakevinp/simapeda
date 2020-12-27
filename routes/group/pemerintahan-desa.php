@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
-    Route::get('/export-pemerintahan-desa', 'PemerintahanDesaController@export')->name('pemerintahan-desa.export');
-    Route::post('/urutan-pemerintahan-desa', 'PemerintahanDesaController@urutan')->name('pemerintahan-desa.urutan');
-    Route::post('/cetak-pemerintahan-desa', 'PemerintahanDesaController@printAll')->name('pemerintahan-desa.print_all');
-    Route::post('/cetak-staff-pemerintahan-desa/{pemerintahan_desa}', 'PemerintahanDesaController@print')->name('pemerintahan-desa.print');
-    Route::post('/import-pemerintahan-desa', 'PemerintahanDesaController@import')->name('pemerintahan-desa.import');
-    Route::delete('/hapus-pemerintah-desa', 'PemerintahanDesaController@destroys')->name('pemerintah-desa.destroys');
+    Route::prefix('pemerintahan-desa')->group(function () {
+        Route::post('/urutan', 'PemerintahanDesaController@urutan')->name('pemerintahan-desa.urutan');
+        Route::post('/cetak', 'PemerintahanDesaController@printAll')->name('pemerintahan-desa.print_all');
+        Route::post('/cetak-staff/{pemerintahan_desa}', 'PemerintahanDesaController@print')->name('pemerintahan-desa.print');
+        Route::delete('/hapus', 'PemerintahanDesaController@destroys')->name('pemerintahan-desa.destroys');
+    });
     Route::resource('pemerintahan-desa', 'PemerintahanDesaController');
 
 });

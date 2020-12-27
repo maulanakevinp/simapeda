@@ -98,4 +98,9 @@ class Penduduk extends Model
     {
         return $this->hasMany('App\Input');
     }
+
+    public function bantuan_penduduk()
+    {
+        return $this->hasMany('App\BantuanPenduduk','penduduk_id');
+    }
 }

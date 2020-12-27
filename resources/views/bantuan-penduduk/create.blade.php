@@ -186,7 +186,7 @@
     });
 
     function cari(){
-        $.get(baseURL + '/bantuan-penduduk/cari-penduduk/' + $("#penduduk_id").val(), function (response) {
+        $.get(baseURL + '/bantuan/penduduk/cari-penduduk/' + $("#penduduk_id").val(), function (response) {
             $.each(response, function(i,e){
                 $(`td[id*='${i}']`).html(e);
                 $(`input[id*='${i}']`).val(e);

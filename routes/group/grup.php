@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
-    Route::get('/grup-penduduk/cari-penduduk/{penduduk}', 'GrupPendudukController@cari_penduduk')->name('grup-penduduk.cari-penduduk');
-    Route::get('/grup-penduduk/print/{grup}', 'GrupPendudukController@print')->name('grup-penduduk.print');
-    Route::get('/grup-penduduk/{grup}', 'GrupPendudukController@index')->name('grup-penduduk.index');
-    Route::get('/grup-penduduk/create/{grup}', 'GrupPendudukController@create')->name('grup-penduduk.create');
-    Route::get('/grup-penduduk/{grup_penduduk}/edit', 'GrupPendudukController@edit')->name('grup-penduduk.edit');
-    Route::post('/grup-penduduk', 'GrupPendudukController@store')->name('grup-penduduk.store');
-    Route::patch('/grup-penduduk/{grup_penduduk}', 'GrupPendudukController@update')->name('grup-penduduk.update');
-    Route::delete('/grup-penduduk/{grup_penduduk}', 'GrupPendudukController@destroy')->name('grup-penduduk.destroy');
+    Route::prefix('grup')->group(function () {
+        Route::get('/penduduk/cari-penduduk/{penduduk}', 'GrupPendudukController@cari_penduduk')->name('grup-penduduk.cari-penduduk');
+        Route::get('/penduduk/print/{grup}', 'GrupPendudukController@print')->name('grup-penduduk.print');
+        Route::get('/penduduk/{grup}', 'GrupPendudukController@index')->name('grup-penduduk.index');
+        Route::get('/penduduk/create/{grup}', 'GrupPendudukController@create')->name('grup-penduduk.create');
+        Route::get('/penduduk/{grup_penduduk}/edit', 'GrupPendudukController@edit')->name('grup-penduduk.edit');
+        Route::post('/penduduk', 'GrupPendudukController@store')->name('grup-penduduk.store');
+        Route::patch('/penduduk/{grup_penduduk}', 'GrupPendudukController@update')->name('grup-penduduk.update');
+        Route::delete('/penduduk/{grup_penduduk}', 'GrupPendudukController@destroy')->name('grup-penduduk.destroy');
+    });
     Route::resource('grup', 'GrupController');
 
 });

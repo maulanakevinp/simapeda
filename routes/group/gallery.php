@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/gallery', 'GalleryController@gallery')->name('gallery');
 Route::get('/load-gallery', 'HomeController@load_gallery')->name('load-gallery');
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
     Route::get('/kelola-gallery', 'GalleryController@index')->name('gallery.index');
-    Route::post('/gallery', 'GalleryController@store')->name('gallery.store');
-    Route::patch('/gallery', 'GalleryController@update')->name('gallery.update');
-    Route::delete('/gallery/destroys', 'GalleryController@destroys')->name('gallery.destroys');
-    Route::delete('/gallery/{gallery}', 'GalleryController@destroy')->name('gallery.destroy');
+    Route::post('/kelola-gallery', 'GalleryController@store')->name('gallery.store');
+    Route::patch('/kelola-gallery', 'GalleryController@update')->name('gallery.update');
+    Route::delete('/kelola-gallery/destroys', 'GalleryController@destroys')->name('gallery.destroys');
+    Route::delete('/kelola-gallery/{gallery}', 'GalleryController@destroy')->name('gallery.destroy');
 
 });

@@ -122,10 +122,9 @@ class BantuanPendudukController extends Controller
 
     public function cari_penduduk(Penduduk $penduduk)
     {
-        $bantuan = [];
-
-        foreach ($penduduk->bantuan as $item) {
-            $bantuan[] = $item->nama_program;
+        $bantuan = null;
+        foreach ($penduduk->bantuan_penduduk as $item) {
+            $bantuan .= '<button type="button" class="btn btn-sm">'.$item->bantuan->nama_program."</button>";
         }
 
         return response()->json([

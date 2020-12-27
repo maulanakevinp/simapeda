@@ -73,8 +73,23 @@
                 </a>
             </li>
         </ul>
-        <hr class="my-3">
-        <h6 class="navbar-heading text-muted">Profil Desa</h6>
+        @foreach (App\PeranMenu::where('peran_id', auth()->user()->peran_id)->get() as $peran_menu)
+            <hr class="my-3">
+            <h6 class="navbar-heading text-muted">{{ $peran_menu->menu->nama }}</h6>
+            @if (count($peran_menu->peran_menu_submenu) > 0)
+                <ul class="navbar-nav">
+                    @foreach ($peran_menu->peran_menu_submenu as $item)
+                        <li class="nav-item">
+                            <a class="nav-link @if (Request::segment(1) == $item->submenu->url) active @endif" href="{{ url($item->submenu->url) }}">
+                                <i class="{{ $item->submenu->icon }}" style="color: {{ $item->submenu->warna }}"></i>
+                                <span class="nav-link-inner--text">{{ $item->submenu->nama }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        @endforeach
+        {{-- <h6 class="navbar-heading text-muted">Profil Desa</h6>
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'identitas-desa') active @endif" href="{{ route('identitas-desa') }}">
@@ -168,7 +183,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'surat' || Request::segment(1) == 'tambah-surat') active @endif" href="{{ route('surat.index') }}">
-                    <i class="ni ni-single-copy-04 text-primary"></i>
+                    <i class="fas fa-file-alt text-primary"></i>
                     <span class="nav-link-inner--text">Kelola Surat</span>
                 </a>
             </li>
@@ -180,7 +195,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link @if (Request::segment(1) == 'analisis' || Request::segment(1) == 'tambah-analisis') active @endif" href="{{ route('analisis.index') }}">
-                    <i class="ni ni-single-copy-04 text-info"></i>
+                    <i class="fas fa-file-alt text-info"></i>
                     <span class="nav-link-inner--text">Kelola Analisis</span>
                 </a>
             </li>
@@ -191,9 +206,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if (Request::segment(1) == 'slider') active @endif" href="{{ route('slider.index') }}">
+                <a class="nav-link @if (Request::segment(1) == 'informasi') active @endif" href="{{ route('informasi.index') }}">
                     <i class="fas fa-images text-purple"></i>
-                    <span class="nav-link-inner--text">Kelola Slider</span>
+                    <span class="nav-link-inner--text">Kelola Informasi</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -202,6 +217,6 @@
                     <span class="nav-link-inner--text">Kelola Database</span>
                 </a>
             </li>
-        </ul>
+        </ul> --}}
     </div>
 </div>
