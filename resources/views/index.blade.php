@@ -21,28 +21,30 @@
 @endsection
 
 @section('content')
-<div id="slider" class="carousel slide mb-3" data-ride="carousel">
-    <div class="carousel-inner">
-        @foreach($slide as $key => $item)
-            <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}" class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                <div class="wraper"></div>
-                <img src="{{ asset(Storage::url($item->gambar)) }}" class="slider" alt="{{ $item->caption }}">
-                <div class="carousel-caption d-none d-md-block">
-                    <h4 class="font-weight-bold title-article block-with-text">{{ $item->judul }}</h4>
-                    <div class="description-article block-with-text" style="font-size: 0.8rem">{!! $item->konten !!}</div>
-                </div>
-            </a>
-        @endforeach
+@if ($slide)
+    <div id="slider" class="carousel slide mb-3" data-ride="carousel">
+        <div class="carousel-inner">
+            @foreach($slide as $key => $item)
+                <a href="{{ url('') }}{{ $item->menu ? '/' . Str::slug($item->menu) : '' }}{{ $item->submenu ? '/' . Str::slug($item->submenu) : '' }}{{ $item->sub_submenu ? '/' . Str::slug($item->sub_submenu) : '' }}{{ '/' . $item->id . '/' . Str::slug($item->judul) }}" class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <div class="wraper"></div>
+                    <img src="{{ asset(Storage::url($item->gambar)) }}" class="slider" alt="{{ $item->caption }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h4 class="font-weight-bold title-article block-with-text">{{ $item->judul }}</h4>
+                        <div class="description-article block-with-text" style="font-size: 0.8rem">{!! $item->konten !!}</div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-    <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+@endif
 
 <div class="container">
     <div class="row">
