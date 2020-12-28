@@ -176,7 +176,7 @@ class HomeController extends Controller
         } elseif ($request->kategori == 'perkades') {
             $produk_hukum   = Perkades::select('id','judul_dokumen','nomor_keputusan_kades','tanggal_keputusan_kades','uraian_singkat')->where('aktif',1)->paginate(10);
         } else {
-            return redirect('produk-hukum?kategori=sk-kades');
+            return redirect('produk/hukum?kategori=sk-kades');
         }
 
         $desa = Desa::find(1);

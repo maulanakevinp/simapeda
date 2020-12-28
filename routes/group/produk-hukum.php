@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/produk_hukum', 'HomeController@produk_hukum')->name('produk-hukum');
+Route::get('/produk/hukum', 'HomeController@produk_hukum')->name('produk-hukum');
 
 Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
