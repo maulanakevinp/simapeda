@@ -15,18 +15,20 @@
     </div>
 @endif
 
-<div class="card shadow mb-3">
-    <div class="card-header bg-dark text-white">
-        <b><a href="{{ route('layanan-surat') }}" class="text-white">Layanan Surat</a></b>
-    </div>
-    <div class="card-body overflow-auto" style="height: 500px">
-        <div class="list-group">
-            @foreach (App\Surat::select('id','nama')->whereTampilkan(1)->latest()->get() as $item)
-                <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}" class="list-group-item list-group-item-action" style="font-size: 0.8rem">{{ $item->nama }}</a>
-            @endforeach
+@if (App\Surat::select('id','nama')->whereTampilkan(1)->count() > 0)
+    <div class="card shadow mb-3">
+        <div class="card-header bg-dark text-white">
+            <b><a href="{{ route('layanan-surat') }}" class="text-white">Layanan Surat</a></b>
+        </div>
+        <div class="card-body overflow-auto" style="height: 500px">
+            <div class="list-group">
+                @foreach (App\Surat::select('id','nama')->whereTampilkan(1)->latest()->get() as $item)
+                    <a href="{{ route('buat-surat', ['id' => $item->id,'slug' => Str::slug($item->nama)]) }}" class="list-group-item list-group-item-action" style="font-size: 0.8rem">{{ $item->nama }}</a>
+                @endforeach
+            </div>
         </div>
     </div>
-</div>
+@endif
 @if (App\PemerintahanDesa::count() > 0)
     <div class="card shadow mb-3">
         <div class="card-header bg-dark text-white">

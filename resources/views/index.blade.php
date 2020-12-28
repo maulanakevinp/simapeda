@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-@if ($slide)
+@if (count($slide) > 0)
     <div id="slider" class="carousel slide mb-3" data-ride="carousel">
         <div class="carousel-inner">
             @foreach($slide as $key => $item)
