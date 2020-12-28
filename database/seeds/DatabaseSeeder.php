@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(DatabaseMenuSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(DesaSeeder::class);
         $this->call(AgamaSeeder::class);
@@ -34,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TempatDilahirkanSeeder::class);
         $this->call(KodeSuratSeeder::class);
         $this->call(BarangSeeder::class);
+
     }
 }
