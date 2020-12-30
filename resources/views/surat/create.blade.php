@@ -4,6 +4,7 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
+<link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
 @endsection
 
 @section('content-header')
@@ -39,32 +40,76 @@
                 <h3 class="mb-0">Tambah Surat</h3>
             </div>
             <div class="card-body">
-                <form autocomplete="off" action="{{ route("surat.store") }}" method="post" data-redirect="{{ route('surat.index') }}">
+                <form autocomplete="off" action="{{ route("surat.store") }}" method="post">
                     @csrf
-                    <input type="hidden" class="form-control form-control-alternative" name="isian[]" value="isian">
-                    <input type="hidden" id="urutan" value="1">
-                    <input type="hidden" name="jenis_isi[]" value="0">
-                    <input type="hidden" name="tampilkan[]" value="0">
                     <h6 class="heading-small text-muted">Detail Surat</h6>
                     <div class="pl-lg-4">
                         <div class="form-group">
+                            <label class="form-control-label">Kode Surat</label>
+                            <select name="kode_surat" id="kode_surat" class="form-control">
+                                <option value="">Pilih Kode Surat</option>
+                                @foreach (App\KodeSurat::all() as $key => $item)
+                                    <option value="{{ $item->kode }}">{{ $item->kode }} - {{ $item->nama }} {{ $item->uraian != '-' ? '- '. $item->uraian : ''}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label class="form-control-label">Nama Surat</label>
-                            <input class="form-control form-control-alternative" name="nama" placeholder="Masukkan Nama Surat">
+                            <input class="form-control" name="nama" placeholder="Masukkan Nama Surat">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Deskripsi</label>
-                            <textarea class="form-control form-control-alternative" name="deskripsi" placeholder="Masukkan Deskripsi"></textarea>
+                            <textarea class="form-control" name="deskripsi" placeholder="Masukkan Deskripsi"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Persyaratan</label>
-                            <textarea class="form-control form-control-alternative" name="persyaratan" placeholder="Masukkan persyaratan untuk membuat surat yang ditujukan untuk warga"></textarea>
+                            <textarea class="form-control" name="persyaratan" placeholder="Masukkan persyaratan untuk membuat surat yang ditujukan untuk warga"></textarea>
                         </div>
                     </div>
                     <h6 class="heading-small text-muted mt-4">Isian</h6>
-                    <div class="pl-lg-4" id="isian"></div>
+                    <div class="pl-lg-4" id="isian">
+                        <div class="card shadow mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="isi[]" placeholder="Paragraf ..."></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="isian[]" class="form-control" style="display: none;">
+                                                <option value="">Pilih Isian</option>
+                                                @foreach ($isian as $key => $item)
+                                                    <option value="{{ $item }}">{{ str_replace('_',' ',$item) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <select name="jenis_isi[]" class="form-control">
+                                                <option value="1">Paragraf</option>
+                                                <option value="2">Kalimat</option>
+                                                <option value="3">Isian</option>
+                                                <option value="5">Subjudul</option>
+                                            </select>
+                                        </div>
+                                        <div class="text-right mt-3">
+                                            <input type="checkbox" name="tampil[]" value="1" style="transform: scale(1.5); margin-right: 15px" data-toggle="tooltip" title="Centang untuk ditampilkan pada form buat surat">
+                                            <input type="hidden" name="tampilkan[]" value="0">
+                                            <a class="bantuan mb-1 mr-2" href="{{ url('img/bantuan-paragraf.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
+                                            <button class="btn btn-sm btn-success mb-1 atas-isian" data-toggle="tooltip" title="Pindahkan Ke Atas" type="button"><i  class="fas fa-arrow-up"></i></button>
+                                            <button class="btn btn-sm btn-success mb-1 bawah-isian" data-toggle="tooltip" title="Pindahkan Ke Bawah" type="button"><i class="fas fa-arrow-down"></i></button>
+                                            <button class="btn btn-sm btn-primary mb-1 tambah-isian" data-toggle="tooltip" title="Tambah Isian" type="button"><i class="fas fa-plus"></i></button>
+                                            <button class="btn btn-sm btn-danger mb-1 hapus-isian" data-toggle="tooltip" title="Hapus Isian Ini" type="button"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h6 class="heading-small text-muted">Alat</h6>
                     <div class="pl-lg-4">
-                        @include('surat.button-alat')
+                        <a class="btn btn-primary btn-sm"  href="{{ url('img/bantuan-paragraf-kalimat-isian.png') }}" data-fancybox><i class="fas fa-question-circle" data-toggle="tooltip"></i> Bantuan</a>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="tampilkan_surat_ini" name="tampilkan_surat_ini" value="1">
                             <input type="hidden" name="tampilkan_surat" id="tampilkan_surat" value="0">
@@ -99,15 +144,13 @@
 @push('scripts')
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script src="{{ asset('js/surat.js') }}"></script>
+<script src="{{ asset('js/form.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
-    $(document).ready(function(){
-        $(".ikon").val("fa-file-text-o");
-        $("input:checkbox").change(function () {
-            if ($(this).prop('checked') == true) {
-                $(this).next().val('1');
-            } else {
-                $(this).next().val('0');
-            }
+    $(document).ready(function () {
+        $('#kode_surat').select2({
+            placeholder: "Pilih Kode Surat",
+            allowClear: true
         });
     });
 </script>

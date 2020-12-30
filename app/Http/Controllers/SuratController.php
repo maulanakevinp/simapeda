@@ -37,6 +37,11 @@ class SuratController extends Controller
         return view('surat.layanan-surat', compact('surat','desa'));
     }
 
+    private function isian()
+    {
+        return ["nik", "kk", "nomor_urut_dalam_kk", "nama", "ktp_elektronik", "etnis_atau_suku", "jenis_kelamin", "tempat_lahir", "nomor_akta_kelahiran", "tanggal_lahir", "anak_ke", "berat_lahir", "panjang_lahir", "waktu_kelahiran", "status_kehamilan", "nomor_akta_perkawinan", "tanggal_perkawinan", "nomor_akta_perceraian", "tanggal_perceraian", "kewarganegaraan", "nomor_paspor", "nomor_kitas_atau_kitap", "nik_ayah", "nik_ibu", "nama_ayah", "nama_ibu", "nomor_telepon", "alamat_email", "alamat_sebelumnya", "agama", "akseptor_kb", "alamat", "asuransi", "darah", "rt", "rw", "dusun", "jenis_cacat", "jenis_kelahiran", "pekerjaan", "pendidikan", "penolong_kelahiran", "sakit_menahun", "status_hubungan_dalam_keluarga", "status_penduduk", "status_perkawinan", "status_rekam", "tanggal_berakhir_paspor", "tempat,_tanggal_lahir", "tempat_dilahirkan", "umur"];
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,7 +49,8 @@ class SuratController extends Controller
      */
     public function create()
     {
-        return view('surat.create');
+        $isian = $this->isian();
+        return view('surat.create', compact('isian'));
     }
 
     /**
@@ -56,8 +62,11 @@ class SuratController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'      => ['required', 'max:64'],
-            'isian.*'   => ['required']
+            'nama'      => ['required','string','max:64'],
+            'kode_surat'=> ['required','string','max:8'],
+            'isi.*'     => ['required']
+        ],[
+            'isi.*.required' => 'isian wajib diisi'
         ]);
 
         if ($validator->fails()) {
@@ -75,7 +84,8 @@ class SuratController extends Controller
 
         return response()->json([
             'success'   => true,
-            'message'   => 'Surat berhasil ditambahkan'
+            'message'   => 'Surat berhasil ditambahkan',
+            'redirect'  => route('surat.index')
         ]);
     }
 
@@ -108,7 +118,8 @@ class SuratController extends Controller
      */
     public function edit(Surat $surat)
     {
-        return view('surat.edit', compact('surat'));
+        $isian = $this->isian();
+        return view('surat.edit', compact('surat','isian'));
     }
 
     /**
@@ -121,8 +132,11 @@ class SuratController extends Controller
     public function update(Request $request, Surat $surat)
     {
         $validator = Validator::make($request->all(), [
-            'nama'      => ['required', 'max:64'],
-            'isian.*'   => ['required']
+            'nama'      => ['required','string','max:64'],
+            'kode_surat'=> ['required','string','max:8'],
+            'isi.*'     => ['required']
+        ],[
+            'isi.*.required' => 'isian wajib diisi'
         ]);
 
         if ($validator->fails()) {
@@ -221,10 +235,11 @@ class SuratController extends Controller
 
     public function createIsiSurat($request, $surat)
     {
-        for ($i = 1; $i < count($request->isian); $i++) {
+        for ($i = 0; $i < count($request->isian); $i++) {
             IsiSurat::create([
                 'surat_id'  => $surat->id,
-                'isi'       => $request->isian[$i],
+                'isi'       => $request->isi[$i],
+                'isian'     => $request->isian[$i],
                 'jenis_isi' => $request->jenis_isi[$i],
                 'tampilkan' => $request->tampilkan[$i],
             ]);
@@ -234,6 +249,7 @@ class SuratController extends Controller
     public function dataSurat($request)
     {
         $dataSurat = [
+            'kode_surat'                => $request->kode_surat,
             'nama'                      => $request->nama,
             'deskripsi'                 => $request->deskripsi,
             'persyaratan'               => $request->persyaratan,

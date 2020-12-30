@@ -33,7 +33,7 @@
             @csrf @method('patch')
             <div class="form-group mb-3">
                 <label for="nomor" class="form-control-label">Nomor</label>
-                <input id="nomor" class="form-control form-control-alternative" name="nomor" autofocus placeholder="Masukkan Nomor" value="{{ $cetakSurat->nomor }}">
+                <input id="nomor" type="number" class="form-control form-control-alternative" name="nomor" autofocus placeholder="Masukkan Nomor" value="{{ $cetakSurat->nomor }}">
             </div>
             @foreach ($cetakSurat->surat->isiSurat as $key => $isiSurat)
                 @if ($isiSurat->jenis_isi == 3)

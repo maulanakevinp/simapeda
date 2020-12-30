@@ -122,7 +122,7 @@ Identitas Desa
                 <div class="card-body">
                         <div class="form-group">
                             <label class="form-control-label" for="nama_desa">Nama Desa</label>
-                            <input name="nama_desa" type="text" id="nama_desa" class="form-control form-control-alternative @error('nama_desa') is-invalid @enderror" placeholder="Masukkan nama desa" value="{{ old('nama_desa',$desa->nama_desa) }}">
+                            <input name="nama_desa" type="text" id="nama_desa" class="form-control form-control-alternative @error('nama_desa') is-invalid @enderror" placeholder="Masukkan Nama Desa" value="{{ old('nama_desa',$desa->nama_desa) }}">
                             @error('nama_desa')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -131,7 +131,7 @@ Identitas Desa
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="nama_kecamatan">Nama Kecamatan</label>
-                            <input name="nama_kecamatan" type="text" id="nama_kecamatan" class="form-control form-control-alternative @error('nama_kecamatan') is-invalid @enderror" placeholder="Masukkan nama desa" value="{{ old('nama_kecamatan',$desa->nama_kecamatan) }}">
+                            <input name="nama_kecamatan" type="text" id="nama_kecamatan" class="form-control form-control-alternative @error('nama_kecamatan') is-invalid @enderror" placeholder="Masukkan Nama Kecamatan" value="{{ old('nama_kecamatan',$desa->nama_kecamatan) }}">
                             @error('nama_kecamatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -140,7 +140,7 @@ Identitas Desa
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="nama_kabupaten">Nama Kabupaten</label>
-                            <input name="nama_kabupaten" type="text" id="nama_kabupaten" class="form-control form-control-alternative @error('nama_kabupaten') is-invalid @enderror" placeholder="Masukkan nama desa" value="{{ old('nama_kabupaten',$desa->nama_kabupaten) }}">
+                            <input name="nama_kabupaten" type="text" id="nama_kabupaten" class="form-control form-control-alternative @error('nama_kabupaten') is-invalid @enderror" placeholder="Masukkan Nama Kabupaten" value="{{ old('nama_kabupaten',$desa->nama_kabupaten) }}">
                             @error('nama_kabupaten')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -149,12 +149,58 @@ Identitas Desa
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="nama_provinsi">Nama Provinsi</label>
-                            <input name="nama_provinsi" type="text" id="nama_provinsi" class="form-control form-control-alternative @error('nama_provinsi') is-invalid @enderror" placeholder="Masukkan nama provinsi" value="{{ old('nama_provinsi',$desa->nama_provinsi) }}">
+                            <input name="nama_provinsi" type="text" id="nama_provinsi" class="form-control form-control-alternative @error('nama_provinsi') is-invalid @enderror" placeholder="Masukkan Nama Provinsi" value="{{ old('nama_provinsi',$desa->nama_provinsi) }}">
                             @error('nama_provinsi')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="kode_provinsi">Kode Provinsi</label>
+                                    <input name="kode_provinsi" maxlength="2" onkeypress="return hanyaAngka(event);" type="text" id="kode_provinsi" class="form-control form-control-alternative @error('kode_provinsi') is-invalid @enderror" placeholder="Masukkan Kode Provinsi" value="{{ old('kode_provinsi',$desa->kode_provinsi) }}">
+                                    @error('kode_provinsi')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="kode_kabupaten">Kode Kabupaten</label>
+                                    <input name="kode_kabupaten" maxlength="4" onkeypress="return hanyaAngka(event);" type="text" id="kode_kabupaten" class="form-control form-control-alternative @error('kode_kabupaten') is-invalid @enderror" placeholder="Masukkan Kode Kabupaten" value="{{ old('kode_kabupaten',$desa->kode_kabupaten) }}">
+                                    @error('kode_kabupaten')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="kode_kecamatan">Kode Kecamatan</label>
+                                    <input name="kode_kecamatan" maxlength="6" onkeypress="return hanyaAngka(event);" type="text" id="kode_kecamatan" class="form-control form-control-alternative @error('kode_kecamatan') is-invalid @enderror" placeholder="Masukkan Kode Kecamatan" value="{{ old('kode_kecamatan',$desa->kode_kecamatan) }}">
+                                    @error('kode_kecamatan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="kode_desa">Kode Desa</label>
+                                    <input name="kode_desa" maxlength="10" onkeypress="return hanyaAngka(event);" type="text" id="kode_desa" class="form-control form-control-alternative @error('kode_desa') is-invalid @enderror" placeholder="Masukkan Kode Desa" value="{{ old('kode_desa',$desa->kode_desa) }}">
+                                    @error('kode_desa')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="kodepos">Kode Pos</label>

@@ -56,9 +56,13 @@ class DesaController extends Controller
         } else {
             $data = $request->validate([
                 'nama_desa'             => ['required', 'max:64', 'string'],
+                'kode_desa'             => ['required', 'digits:10'],
                 'nama_kecamatan'        => ['required', 'max:64', 'string'],
+                'kode_kecamatan'        => ['required', 'digits:6'],
                 'nama_kabupaten'        => ['required', 'max:64', 'string'],
+                'kode_kabupaten'        => ['required', 'digits:4'],
                 'nama_provinsi'         => ['required', 'max:64', 'string'],
+                'kode_provinsi'         => ['required', 'digits:2'],
                 'kodepos'               => ['required', 'max:8', 'string'],
                 'alamat'                => ['required', 'string'],
                 'nama_kepala_desa'      => ['required', 'max:64', 'string'],

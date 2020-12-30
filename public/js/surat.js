@@ -1,95 +1,4 @@
-$(document).on("click", ".atas", function () {
-    $(this).tooltip('hide');
-    const before = $(this).parent('div').parent('div').parent('div').prev();
-    const current = $(this).parent('div').parent('div').parent('div');
-    const dataBefore = $(before).html();
-    const dataCurrent = $(current).html();
-    $(current).html(dataBefore);
-    $(before).html(dataCurrent);
-});
-
-$(document).on("click", ".bawah", function () {
-    $(this).tooltip('hide');
-    const after = $(this).parent('div').parent('div').parent('div').next();
-    const current = $(this).parent('div').parent('div').parent('div');
-    const dataAfter = $(after).html();
-    const dataCurrent = $(current).html();
-    $(current).html(dataAfter);
-    $(after).html(dataCurrent);
-});
-
-$(document).on("change","input:checkbox", function (event) {
-    if ($(this).prop('checked')){
-        $(this).siblings('input[name="tampilkan[]"]').attr('value','1');
-    } else {
-        $(this).siblings('input[name="tampilkan[]"]').attr('value','0');
-    }
-});
-
-$(document).on("click", ".hapus", function () {
-    $(this).tooltip('dispose');
-    $(this).parent('div').parent('div').parent('div').remove();
-});
-
-document.addEventListener("keyup", function(event) {
-    if (event.ctrlKey && event.altKey && event.which == 80) {
-        $("#paragraf").click();
-    }
-
-    if (event.ctrlKey && event.altKey && event.which == 75) {
-        $("#kalimat").click();
-    }
-
-    if (event.ctrlKey && event.altKey && event.which == 73) {
-        $("#isi").click();
-    }
-
-    if (event.ctrlKey && event.altKey && event.which == 74) {
-        $("#sub-judul").click();
-    }
-});
-
-$('form').on('submit', function(event) {
-    event.preventDefault();
-    const url = $(this).attr('action');
-    const redirect = $(this).data('redirect');
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: new FormData(this),
-        dataType: 'json',
-        contentType: false,
-        cache: false,
-        processData: false,
-        beforeSend: function(data){
-            $("#simpan").attr('disabled','disabled');
-            $("#simpan").html(`<img height="20px" src="${baseURL}/storage/loading.gif" alt=""> Loading ...`);
-        },
-        success: function(result){
-            $("#simpan").html('SIMPAN');
-            $("#simpan").removeAttr('disabled');
-            if (result.success) {
-                alertSuccess(result.message);
-                setTimeout(() => {
-                    $(".notifikasi").html('');
-                }, 3000);
-                if (redirect) {
-                    location.href = redirect;
-                }
-            } else {
-                alertError();
-                $.each(result.message, function (i, e) {
-                    $('#pesanError').append(`<li>`+e+`</li>`);
-                });
-                setTimeout(() => {
-                    $(".notifikasi").html('');
-                }, 10000);
-            }
-        }
-    });
-});
-
-$("#perihal").change(function(){
+$(document).on('change','#tampilkan_perihal',function(){
     if ($(this).prop('checked') == true) {
         $("#isian").prepend(`
             <div id="isian_perihal">
@@ -136,101 +45,89 @@ $("#perihal").change(function(){
     }
 });
 
-$("#paragraf").click(function(){
-    $(this).tooltip('hide');
-    let foc = $("#isian").append(`
-        <div class="form-group">
-            <label class="form-control-label">Paragraf</label> <a href="{{ url('img/bantuan-paragraf.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-            <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan paragraf ini pada form buat surat">
-                        <input type="hidden" name="tampilkan[]" value="0">
-                    </div>
-                </div>
-                <textarea class="form-control" name="isian[]"></textarea>
-                <input type="hidden" name="jenis_isi[]" value="1">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger hapus" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></button>
-                    <button type="button" class="btn btn-outline-success atas" data-toggle="tooltip" title="Pindah Ke Atas"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="btn btn-outline-success bawah" data-toggle="tooltip" title="Pindah Ke Bawah"><i class="fas fa-arrow-down"></i></button>
-                </div>
-            </div>
-        </div>
-    `);
-    $('[data-toggle="tooltip"]').tooltip();
-    $("#isian").find('.form-control').focus();
+$(document).on('change',"input:checkbox",function () {
+    if ($(this).prop('checked') == true) {
+        $(this).next().val('1');
+    } else {
+        $(this).next().val('0');
+    }
 });
 
-$("#kalimat").click(function(){
-    $(this).tooltip('hide');
-    $("#isian").append(`
-        <div class="form-group">
-            <label class="form-control-label">Kalimat</label> <a href="{{ url('img/bantuan-kalimat.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-            <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan kalimat ini pada form buat surat">
-                        <input type="hidden" name="tampilkan[]" value="0">
-                    </div>
-                </div>
-                <input type="text" class="form-control" name="isian[]">
-                <input type="hidden" name="jenis_isi[]" value="2">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger hapus" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></button>
-                    <button type="button" class="btn btn-outline-success atas" data-toggle="tooltip" title="Pindah Ke Atas"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="btn btn-outline-success bawah" data-toggle="tooltip" title="Pindah Ke Bawah"><i class="fas fa-arrow-down"></i></button>
-                </div>
-            </div>
-        </div>
-    `);
+$(document).on('change','[name="jenis_isi[]"]',function () {
+    const card = $(this).parents('.card')[0];
+    const isi = $(card).find('[name="isi[]"]')[0];
+    const isian = $(card).find('[name="isian[]"]')[0];
+    const bantuan = $(card).find('.bantuan')[0];
+    const tampil = $(card).find('[name="tampil[]"]')[0];
+    if ($(this).val() == 1) {
+        $(bantuan).css("display",'');
+        $(bantuan).attr('href',`${baseURL}/img/bantuan-paragraf.png`);
+        $(tampil).css("display",'');
+        $(isi).attr('placeholder', 'Masukkan Paragraf ...');
+        $(isian).css('display','none');
+    } else if ($(this).val() == 2) {
+        $(bantuan).css("display",'');
+        $(bantuan).attr('href',`${baseURL}/img/bantuan-kalimat.png`);
+        $(tampil).css("display",'');
+        $(isi).attr('placeholder', 'Masukkan Kalimat ...');
+        $(isian).css('display','none');
+    } else if ($(this).val() == 3) {
+        $(bantuan).css("display",'none');
+        $(tampil).css("display",'none');
+        $(isi).attr('placeholder', 'Masukkan Isian ...');
+        $(isian).css('display','block');
+    } else {
+        $(bantuan).css("display",'');
+        $(bantuan).attr('href',`${baseURL}/img/bantuan-subjudul.png`);
+        $(tampil).css("display",'');
+        $(isi).attr('placeholder', 'Masukkan Subjudul ...');
+        $(isian).css('display','none');
+    }
     $('[data-toggle="tooltip"]').tooltip();
-    $("#isian").find('.form-control').focus();
+
 });
 
-$("#isi").click(function(){
+$(document).on('click',".tambah-isian",function () {
+    const card = $(this).parents('.card')[0];
     $(this).tooltip('hide');
-    $("#isian").append(`
-        <div class="form-group">
-            <label class="form-control-label">Isian</label>
-            <div class="input-group input-group-alternative mb-3">
-                <input type="text" class="form-control" name="isian[]">
-                <input type="hidden" name="jenis_isi[]" value="3">
-                <input type="hidden" name="tampilkan[]" value="0">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger hapus" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></button>
-                    <button type="button" class="btn btn-outline-success atas" data-toggle="tooltip" title="Pindah Ke Atas"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="btn btn-outline-success bawah" data-toggle="tooltip" title="Pindah Ke Bawah"><i class="fas fa-arrow-down"></i></button>
-                </div>
-            </div>
-        </div>
-    `);
+    $("#isian").append(card.outerHTML);
+
+    const next = card.nextElementSibling;
     $('[data-toggle="tooltip"]').tooltip();
-    $("#isian").find('.form-control').focus();
+    $(next).find('[name="isi[]"]').val('');
+    $(next).find('[name="isian[]"]').val('');
+    $(next).find('[name="tampil[]"]').prop('checked', false);
+    $(next).find('[name="tampilkan[]"]').val(0);
+    $(next).find('[name="isian[]"]').css('display','none');
+    $(next).find('[name="jenis_isi[]"]').val(1);
 });
 
-$("#sub-judul").click(function(){
+$(document).on('click', '.hapus-isian', function () {
     $(this).tooltip('hide');
-    $("#isian").append(`
-        <div class="form-group">
-            <label class="form-control-label">Sub Judul</label> <a href="{{ url('img/bantuan-subjudul.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-            <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan kalimat ini pada form buat surat">
-                        <input type="hidden" name="tampilkan[]" value="0">
-                    </div>
-                </div>
-                <input type="text" class="form-control" name="isian[]">
-                <input type="hidden" name="jenis_isi[]" value="5">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger hapus" data-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></button>
-                    <button type="button" class="btn btn-outline-success atas" data-toggle="tooltip" title="Pindah Ke Atas"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="btn btn-outline-success bawah" data-toggle="tooltip" title="Pindah Ke Bawah"><i class="fas fa-arrow-down"></i></button>
-                </div>
-            </div>
-        </div>
-    `);
-    $('[data-toggle="tooltip"]').tooltip();
-    $("#isian").find('.form-control').focus();
-});
+    if ($(this).parents('#isian').children().length > 1) {
+        $(this).parents('.card')[0].remove();
+    }
+})
+
+$(document).on('click', '.atas-isian', function () {
+    $(this).tooltip('hide');
+    const card = $(this).parents('.card')[0];
+    if (card.previousElementSibling) {
+        changePosition(card.previousElementSibling, card)
+    }
+})
+
+$(document).on('click', '.bawah-isian', function () {
+    $(this).tooltip('hide');
+    const card = $(this).parents('.card')[0];
+    if (card.nextElementSibling) {
+        changePosition(card.nextElementSibling, card)
+    }
+})
+
+function changePosition(change, current) {
+    const dataChange = change.innerHTML;
+    const dataCurrent = current.innerHTML;
+    change.innerHTML = dataCurrent;
+    current.innerHTML = dataChange;
+}

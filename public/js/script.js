@@ -13,7 +13,14 @@ $(document).on("change", "input", function (event) {
 });
 
 $(document).on("change", "select", function (event) {
-    $(this).attr('value', this.value);
+    const select = $(this).attr('value', this.value);
+    $.each(this, function (key, item){
+        if($(item).val() == $(select).attr('value')) {
+            $(this).attr('selected', $(this).prop('selected'));
+        } else {
+            $(this).attr('selected', $(this).prop('selected'));
+        };
+    });
     $(this).removeClass('is-invalid');
     $(this).siblings('.invalid-feedback').remove();
     $('.alert-dismissible').remove();

@@ -25,6 +25,7 @@ use App\StatusPenduduk;
 use App\StatusPerkawinan;
 use App\StatusRekam;
 use App\TempatDilahirkan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
@@ -383,31 +384,34 @@ class PendudukController extends Controller
         }
 
         $data = $penduduk->toArray();
-        $data['agama']                          = $penduduk->agama->nama ?? '';
-        $data['akseptor_kb']                    = $penduduk->akseptorKb->nama ?? '';
+        $data['agama']                          = $penduduk->agama->nama ?? null;
+        $data['akseptor_kb']                    = $penduduk->akseptorKb->nama ?? null;
         $data['alamat']                         = $penduduk->alamat_sekarang;
-        $data['asuransi']                       = $penduduk->asuransi->nama ?? '';
-        $data['darah']                          = $penduduk->darah->nama ?? '';
-        $data['rt']                             = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
+        $data['asuransi']                       = $penduduk->asuransi->nama ?? null;
+        $data['darah']                          = $penduduk->darah->nama ?? null;
+        $data['rt']                             = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rt : '';
         $data['rw']                             = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
-        $data['dusun']                          = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->rw : '';
-        $data['jenis_cacat']                    = $penduduk->jenisCacat->nama ?? '';
-        $data['jenis_kelahiran']                = $penduduk->jenisKelahiran->nama ?? '';
+        $data['dusun']                          = $penduduk->detail_dusun_id ? $penduduk->detailDusun->rt .'/'.$penduduk->detailDusun->dusun : '';
+        $data['jenis_cacat']                    = $penduduk->jenisCacat->nama ?? null;
+        $data['jenis_kelahiran']                = $penduduk->jenisKelahiran->nama ?? null;
         $data['jenis_kelamin']                  = $penduduk->jenis_kelamin == 1 ? "Laki-laki" : "Perempuan";
         $data['kewarganegaraan']                = $penduduk->kewarganegaraan == 1 ? "WNI" : ($penduduk->kewarganegaraan == 2 ? $penduduk->kewarganegaraan = "WNA" : $penduduk->kewarganegaraan = "Dua Kewarganagaraan");
-        $data['pekerjaan']                      = $penduduk->pekerjaan->nama ?? '';
-        $data['pendidikan']                     = $penduduk->pendidikan->nama ?? '';
-        $data['penolong_kelahiran']             = $penduduk->penolongKelahiran->nama ?? '';
-        $data['sakit_menahun']                  = $penduduk->sakitMenahun->nama ?? '';
-        $data['status_hubungan_dalam_keluarga'] = $penduduk->statusHubunganDalamKeluarga->nama ?? '';
-        $data['status_penduduk']                = $penduduk->statusPenduduk->nama ?? '';
-        $data['status_perkawinan']              = $penduduk->statusPerkawinan->nama ?? '';
-        $data['status_rekam']                   = $penduduk->statusRekam->nama ?? '';
+        $data['pekerjaan']                      = $penduduk->pekerjaan->nama ?? null;
+        $data['pendidikan']                     = $penduduk->pendidikan->nama ?? null;
+        $data['penolong_kelahiran']             = $penduduk->penolongKelahiran->nama ?? null;
+        $data['sakit_menahun']                  = $penduduk->sakitMenahun->nama ?? null;
+        $data['status_hubungan_dalam_keluarga'] = $penduduk->statusHubunganDalamKeluarga->nama ?? null;
+        $data['status_penduduk']                = $penduduk->statusPenduduk->nama ?? null;
+        $data['status_perkawinan']              = $penduduk->statusPerkawinan->nama ?? null;
+        $data['status_rekam']                   = $penduduk->statusRekam->nama ?? null;
         $data['tanggal_berakhir_paspor']        = date('d-m-Y', strtotime($penduduk->tgl_berakhir_paspor));
         $data['tanggal_perceraian']             = date('d-m-Y', strtotime($penduduk->tanggal_perceraian));
         $data['tanggal_perkawinan']             = date('d-m-Y', strtotime($penduduk->tanggal_perkawinan));
         $data['tempat,_tanggal_lahir']          = $penduduk->tempat_lahir .', '. date('d-m-Y', strtotime($penduduk->tanggal_lahir));
-        $data['tempat_dilahirkan']              = $penduduk->tempatDilahirkan->nama ?? '';
+        $data['tempat_lahir']                   = $penduduk->tempat_lahir;
+        $data['tanggal_lahir']                  = date('d-m-Y', strtotime($penduduk->tanggal_lahir));
+        $data['tempat_dilahirkan']              = $penduduk->tempatDilahirkan->nama ?? null;
+        $data['umur']                           = Carbon::parse($penduduk->tanggal_lahir)->diff(Carbon::now())->format('%y Tahun');
 
         unset(
             $data['akseptor_kb_id'],
@@ -417,6 +421,7 @@ class PendudukController extends Controller
             $data['created_at'],
             $data['darah_id'],
             $data['detail_dusun_id'],
+            $data['foto'],
             $data['id'],
             $data['jenis_cacat_id'],
             $data['jenis_kelahiran_id'],
@@ -428,12 +433,11 @@ class PendudukController extends Controller
             $data['status_penduduk_id'],
             $data['status_perkawinan_id'],
             $data['status_rekam_id'],
-            $data['tanggal_lahir'],
-            $data['tempat_lahir'],
             $data['tempat_dilahirkan_id'],
             $data['tgl_berakhir_paspor'],
             $data['updated_at'],
         );
+
         return response()->json($data);
     }
 

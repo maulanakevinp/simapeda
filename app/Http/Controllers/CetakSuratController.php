@@ -53,11 +53,12 @@ class CetakSuratController extends Controller
         }
 
         $desa = Desa::find(1);
+        $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
         $surat = Surat::find($id);
         $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
         $logo = (string) Image::make($image)->encode('data-url');
         $tanggal = tgl(date('Y-m-d'));
-        $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal'))->setPaper(array(0,0,609.449,935.433));
+        $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal', 'kode_desa'))->setPaper(array(0,0,609.449,935.433));
         if ($surat->tampilkan == 1) {
             $cetakSurat = CetakSurat::create([
                 'surat_id' => $id
@@ -100,7 +101,8 @@ class CetakSuratController extends Controller
         $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
         $logo = (string) Image::make($image)->encode('data-url');
         $tanggal = tgl(date('Y-m-d', strtotime($cetakSurat->created_at)));
-        $pdf = PDF::loadView('cetak-surat.detail', compact('surat', 'desa', 'cetakSurat', 'logo', 'tanggal'))->setPaper(array(0,0,609.449,935.433));
+        $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
+        $pdf = PDF::loadView('cetak-surat.detail', compact('surat','kode_desa', 'desa', 'cetakSurat', 'logo', 'tanggal'))->setPaper(array(0,0,609.449,935.433));
         return $pdf->stream($surat->nama . '.pdf');
     }
 

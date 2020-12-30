@@ -787,7 +787,7 @@
 
 .wraper {
     background-color: black;
-    opacity:0.6;
+    opacity:0.4;
     width:70%;
     height:450px;
     position: absolute;
@@ -817,7 +817,6 @@
     color: #fff;
     text-decoration: none;
     outline: 0;
-    opacity: 0.9;
     /* background-color: black; */
 }
 

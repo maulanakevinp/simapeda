@@ -29,40 +29,42 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($surat->isiSurat as $key => $isiSurat)
-                    @if ($isiSurat->jenis_isi == 3)
-                        <div class="form-group mb-3">
-                            <label for="{{ strtolower($isiSurat->isi) . ' ' . $key }}" class="form-control-label">{{ $isiSurat->isi }}</label>
-                            <input required id="{{ strtolower($isiSurat->isi) . ' ' . $key }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }}">
-                        </div>
-                    @endif
-                    @if ($isiSurat->tampilkan == 1)
-                        <p class="mt-5 mb-0">{{ $isiSurat->isi }}</p>
-                    @endif
-                    @php
-                        $string = $isiSurat->isi;
-                        preg_match_all("/\{[A-Za-z\s\(\)]+\}/", $string, $matches);
-                    @endphp
-                    @foreach ($matches[0] as $k => $value)
+                <div id="isian" style="display: none">
+                    @foreach ($surat->isiSurat as $key => $isiSurat)
+                        @if ($isiSurat->jenis_isi == 3)
+                            <div class="form-group mb-3">
+                                <label for="{{ $isiSurat->isi . ' ' . $key }}" class="form-control-label">{{ $isiSurat->isi }}</label>
+                                <input required id="{{ $isiSurat->isi . ' ' . $key }}" data-isian="{{ $isiSurat->isian }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }}">
+                            </div>
+                        @endif
+                        @if ($isiSurat->tampilkan == 1)
+                            <p class="mt-5 mb-0">{{ $isiSurat->isi }}</p>
+                        @endif
                         @php
-                            $pertama = substr($value,1);
-                            $hasil = substr($pertama,0,-1);
+                            $string = $isiSurat->isi;
+                            preg_match_all("/\{[A-Za-z\s\(\)]+\}/", $string, $matches);
                         @endphp
-                        <div class="form-group mb-3">
-                            <label for="{{ strtolower($hasil) . ' ' . $k }}" class="form-control-label">{{ $hasil }}</label>
-                            <input required id="{{ strtolower($hasil) . ' ' . $k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }}">
-                        </div>
+                        @foreach ($matches[0] as $k => $value)
+                            @php
+                                $pertama = substr($value,1);
+                                $hasil = substr($pertama,0,-1);
+                            @endphp
+                            <div class="form-group mb-3">
+                                <label for="{{ $hasil . ' ' . $k }}" class="form-control-label">{{ $hasil }}</label>
+                                <input required id="{{ $hasil . ' ' . $k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }}">
+                            </div>
+                        @endforeach
                     @endforeach
-                @endforeach
 
-                @if ($surat->tanda_tangan_bersangkutan == 1)
-                    <div class="form-group mb-3">
-                        <label for="tanda_tangan_bersangkutan" class="form-control-label">Nama yang bersangkutan</label>
-                        <input required id="tanda_tangan_bersangkutan" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan nama yang bersangkutan">
-                    </div>
-                @endif
+                    @if ($surat->tanda_tangan_bersangkutan == 1)
+                        <div class="form-group mb-3">
+                            <label for="tanda_tangan_bersangkutan" class="form-control-label">Nama yang bersangkutan</label>
+                            <input required id="tanda_tangan_bersangkutan" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan nama yang bersangkutan">
+                        </div>
+                    @endif
+                </div>
 
-                <div class="text-center">
+                <div class="text-center" id="submit" style="display: none">
                     <button type="submit" class="btn btn-primary my-4">Cetak</button>
                 </div>
                 <p>{!! nl2br($surat->persyaratan) !!}</p>
@@ -88,10 +90,18 @@
                 data: {
                     nik: $("#nomor_induk_penduduk").val()
                 },
+                before: function () {
+                    $("#cari-nik").html(`<img height="20px" src="${baseURL}/storage/loading.gif" alt="">`);
+                },
                 success: function(response){
-                    $.each(response, function(i,e){
-                        $(`input[id*='${i.replaceAll('_',' ')}']`).val(e);
-                    });
+                    if (response.nik) {
+                        $("#cari-nik").html(`cari`);
+                        $("#isian").css('display','block');
+                        $("#submit").css('display','block');
+                        $.each(response, function(i,e){
+                            $(`input[data-isian="${i}"]`).val(e);
+                        });
+                    }
                 }
             })
         });

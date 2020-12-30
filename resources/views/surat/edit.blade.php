@@ -4,6 +4,7 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
+<link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
 @endsection
 
 @section('content-header')
@@ -41,11 +42,17 @@
             <div class="card-body">
                 <form autocomplete="off" action="{{ route('surat.update', $surat) }}" method="post">
                     @csrf @method('patch')
-                    <input type="hidden" class="form-control form-control-alternative" name="isian[]" value="isian">
-                    <input type="hidden" name="jenis_isi[]" value="2">
-                    <input type="hidden" name="tampilkan[]" value="0">
                     <h6 class="heading-small text-muted">Detail Surat</h6>
                     <div class="pl-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">Kode Surat</label>
+                            <select name="kode_surat" id="kode_surat" class="form-control">
+                                <option value="">Pilih Kode Surat</option>
+                                @foreach (App\KodeSurat::all() as $key => $item)
+                                    <option value="{{ $item->kode }}" {{ $surat->kode_surat == $item->kode ? 'selected' : '' }}>{{ $item->kode }} - {{ $item->nama }} {{ $item->uraian != '-' ? '- '. $item->uraian : ''}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label class="form-control-label">Nama Surat</label>
                             <input class="form-control form-control-alternative" name="nama" placeholder="Masukkan Nama Surat" value="{{ $surat->nama }}">
@@ -108,74 +115,32 @@
                             </div>
                         @endif
                         @foreach ($surat->isiSurat as $key => $isiSurat)
-                            @if ($isiSurat->jenis_isi == 1)
-                                <div class="form-group">
-                                    <label class="form-control-label">Paragraf</label> <a href="{{ url('img/bantuan-paragraf.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-                                    <div class="input-group input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan paragraf ini pada form buat surat" @if($isiSurat->tampilkan == 1) checked @endif>
-                                                <input type="hidden" name="tampilkan[]" value="{{ $isiSurat->tampilkan }}">
+                            <div class="card shadow mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="isi[]" placeholder="{{ $isiSurat->jenis_isi == 1 ? 'Paragraf' : ($isiSurat->jenis_isi == 2 ? 'Kalimat' : ($isiSurat->jenis_isi == 3 ? 'Isian' : 'Subjudul')) }} ...">{{ $isiSurat->isi }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="isian[]" class="form-control" style="{{ $isiSurat->jenis_isi != 3 ? 'display: none;' : '' }}">
+                                                    <option value="">Pilih Isian</option>
+                                                    @foreach ($isian as $key => $item)
+                                                        <option value="{{ $item }}" {{ $isiSurat->isian == $item ? 'selected' : '' }}>{{ str_replace('_',' ',$item) }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                        <textarea class="form-control" name="isian[]">{{ $isiSurat->isi }}</textarea>
-                                        <input type="hidden" name="id" value="{{ $isiSurat->id }}">
-                                        <input type="hidden" name="jenis_isi[]" value="1">
-                                        @include('surat.button-isian')
-                                    </div>
-                                </div>
-                            @endif
-                            @if ($isiSurat->jenis_isi == 2)
-                                <div class="form-group">
-                                    <label class="form-control-label">Kalimat</label> <a href="{{ url('img/bantuan-kalimat.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-                                    <div class="input-group input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan kalimat ini pada form buat surat" @if($isiSurat->tampilkan == 1) checked @endif>
-                                                <input type="hidden" name="tampilkan[]" value="{{ $isiSurat->tampilkan }}">
-                                            </div>
+                                        <div class="col-sm-4">
+                                            @include('surat.side', ['bantuan' => $isiSurat->jenis_isi == 1 ? url('img/bantuan-paragraf.png') : ($isiSurat->jenis_isi == 2 ? url('img/bantuan-kalimat.png') : url('img/bantuan-subjudul.png'))])
                                         </div>
-                                        <input type="text" class="form-control" name="isian[]" value="{{ $isiSurat->isi }}">
-                                        <input type="hidden" name="id" value="{{ $isiSurat->id }}">
-                                        <input type="hidden" name="jenis_isi[]" value="2">
-                                        @include('surat.button-isian')
                                     </div>
                                 </div>
-                            @endif
-                            @if ($isiSurat->jenis_isi == 3)
-                                <div class="form-group">
-                                    <label class="form-control-label">Isian</label>
-                                    <div class="input-group input-group-alternative mb-3">
-                                        <input type="text" class="form-control" name="isian[]" value="{{ $isiSurat->isi }}">
-                                        <input type="hidden" name="id" value="{{ $isiSurat->id }}">
-                                        <input type="hidden" name="jenis_isi[]" value="3">
-                                        <input type="hidden" name="tampilkan[]" value="{{ $isiSurat->tampilkan }}">
-                                        @include('surat.button-isian')
-                                    </div>
-                                </div>
-                            @endif
-                            @if ($isiSurat->jenis_isi == 5)
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Judul</label> <a href="{{ url('img/bantuan-kalimat.png') }}" data-fancybox><i class="fas fa-question-circle text-blue" title="Bantuan" data-toggle="tooltip"></i></a>
-                                    <div class="input-group input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <input type="checkbox" name="tampil[]" value="1" data-toggle="tooltip" title="Centang untuk menampilkan kalimat ini pada form buat surat" @if($isiSurat->tampilkan == 1) checked @endif>
-                                                <input type="hidden" name="tampilkan[]" value="{{ $isiSurat->tampilkan }}">
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control" name="isian[]" value="{{ $isiSurat->isi }}">
-                                        <input type="hidden" name="id" value="{{ $isiSurat->id }}">
-                                        <input type="hidden" name="jenis_isi[]" value="5">
-                                        @include('surat.button-isian')
-                                    </div>
-                                </div>
-                            @endif
+                            </div>
                         @endforeach
                     </div>
                     <h6 class="heading-small text-muted">Alat</h6>
                     <div class="pl-lg-4">
-                        @include('surat.button-alat')
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="tampilkan_surat_ini" name="tampilkan_surat_ini" {{ $surat->tampilkan ? 'checked="true"' : '' }} value="1">
                             <input type="hidden" name="tampilkan_surat" id="tampilkan_surat" value="{{ $surat->tampilkan }}">
@@ -210,15 +175,13 @@
 @push('scripts')
 <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
 <script src="{{ asset('js/surat.js') }}"></script>
+<script src="{{ asset('js/form.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
 <script>
-    $(document).ready(function(){
-        $(".ikon").val("{{ $surat->icon }}");
-        $("input:checkbox").change(function () {
-            if ($(this).prop('checked') == true) {
-                $(this).next().val('1');
-            } else {
-                $(this).next().val('0');
-            }
+    $(document).ready(function () {
+        $('#kode_surat').select2({
+            placeholder: "Pilih Kode Surat",
+            allowClear: true
         });
     });
 </script>
