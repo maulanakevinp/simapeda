@@ -41,7 +41,8 @@ class SuratKeluarController extends Controller
     public function create()
     {
         $kode_surat = KodeSurat::all();
-        return view('surat-keluar.create', compact('kode_surat'));
+        $desa = Desa::find(1);
+        return view('surat-keluar.create', compact('kode_surat','desa'));
     }
 
     /**
@@ -59,7 +60,7 @@ class SuratKeluarController extends Controller
             'tanggal_surat'             => ['required','date'],
             'tujuan'                    => ['required','string','max:128'],
             'isi_singkat_atau_perihal'  => ['required'],
-            'berkas'                    => ['nullable','file','max:2048'],
+            'berkas'                    => ['required','file','max:2048'],
         ],[
             'kode_surat_id.required'    => 'kode surat wajib diisi.'
         ]);
@@ -69,6 +70,10 @@ class SuratKeluarController extends Controller
         }
 
         SuratKeluar::create($data);
+        $desa = Desa::find(1);
+        $desa->penomoran_surat == 1 ? $desa->nomor_surat_keluar += 1 : $desa->nomor_surat += 1;
+        $desa->save();
+
         return redirect()->route('surat-keluar.index')->with('success','Surat keluar berhasil ditambahkan');
     }
 

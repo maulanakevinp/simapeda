@@ -44,7 +44,8 @@ class SuratMasukController extends Controller
     {
         $kode_surat = KodeSurat::all();
         $pemerintahan_desa = PemerintahanDesa::all();
-        return view('surat-masuk.create', compact('kode_surat', 'pemerintahan_desa'));
+        $desa = Desa::find(1);
+        return view('surat-masuk.create', compact('kode_surat', 'pemerintahan_desa', 'desa'));
     }
 
     /**
@@ -64,7 +65,7 @@ class SuratMasukController extends Controller
             'pengirim'                  => ['required','string','max:128'],
             'isi_singkat_atau_perihal'  => ['required'],
             'isi_disposisi'             => ['required'],
-            'berkas'                    => ['nullable','file','max:2048'],
+            'berkas'                    => ['required','file','max:2048'],
         ],[
             'kode_surat_id.required'    => 'kode surat wajib diisi.'
         ]);
@@ -74,6 +75,9 @@ class SuratMasukController extends Controller
         }
 
         $surat_masuk = SuratMasuk::create($data);
+        $desa = Desa::find(1);
+        $desa->penomoran_surat == 1 ? $desa->nomor_surat_masuk += 1 : $desa->nomor_surat += 1;
+        $desa->save();
 
         if ($request->pemerintahan_desa_id) {
             foreach ($request->pemerintahan_desa_id as $item) {

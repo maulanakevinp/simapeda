@@ -127,11 +127,11 @@
                                 <a href="{{ route('cetakSurat.edit',$item->id) }}" class="btn btn-sm btn-primary" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="Detail cetak surat ini" data-action="{{ route('cetakSurat.destroy',$item->id) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ $item->nomor ? $item->nomor : "-" }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor ? $item->nomor : "-" }}</td>
                             @foreach ($item->DetailCetak as $DetailCetak)
-                                <td>{{ $DetailCetak->isian }}</td>
+                                <td style="vertical-align: middle">{{ $DetailCetak->isian }}</td>
                             @endforeach
-                            <td>{{ date('d/m/Y H:i' ,strtotime($item->created_at)) }}</td>
+                            <td style="vertical-align: middle">{{ date('d/m/Y H:i' ,strtotime($item->created_at)) }}</td>
                         </tr>
                     @empty
                         <tr>

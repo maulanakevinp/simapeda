@@ -75,7 +75,7 @@
                                 <a href="{{ route('peran.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("peran.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ $item->nama }}</td>
+                            <td style="vertical-align: middle">{{ $item->nama }}</td>
                         </tr>
                     @empty
                         <tr>

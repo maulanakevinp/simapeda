@@ -36,6 +36,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
         Route::get('/informasi', 'GalleryController@informasi')->name('informasi.index');
 
+        Route::get('/pengaturan-surat', 'PengaturanSuratController@index')->name('pengaturan-surat.index');
+        Route::post('/pengaturan-surat', 'PengaturanSuratController@update')->name('pengaturan-surat.update');
+
         Route::resource('dusun', 'DusunController')->except('show');
         Route::resource('/dusun/detailDusun', 'DetailDusunController')->except('create','edit');
 

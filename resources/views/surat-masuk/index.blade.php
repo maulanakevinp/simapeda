@@ -71,7 +71,9 @@
         <div class="table-responsive">
             <table class="table table-hover table-sm table-striped table-bordered">
                 <thead>
-                    <th class="text-center" width="20px">#</th>
+                    <th class="text-center">
+                        <input type="checkbox" name="check_all" id="check_all">
+                    </th>
                     <th class="text-center">No. Urut</th>
                     <th class="text-center">Opsi</th>
                     <th class="text-center">Tanggal Penerimaan</th>
@@ -86,7 +88,7 @@
                             <td style="vertical-align: middle">
                                 <input type="checkbox" class="surat-masuk-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
-                            <td class="text-center">{{ $item->nomor_urut }}</td>
+                            <td style="vertical-align: middle" class="text-center">{{ $item->nomor_urut }}</td>
                             <td>
                                 <a href="{{ route('surat-masuk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if ($item->berkas)
@@ -94,11 +96,11 @@
                                 @endif
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("surat-masuk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ tgl(date('Y-m-d', strtotime($item->tanggal_penerimaan))) }}</td>
-                            <td>{{ $item->nomor_surat }}</td>
-                            <td>{{ tgl(date('Y-m-d', strtotime($item->tanggal_surat))) }}</td>
-                            <td>{{ $item->pengirim }}</td>
-                            <td>{{ $item->isi_singkat_atau_perihal }}</td>
+                            <td style="vertical-align: middle">{{ tgl(date('Y-m-d', strtotime($item->tanggal_penerimaan))) }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor_surat }}</td>
+                            <td style="vertical-align: middle">{{ tgl(date('Y-m-d', strtotime($item->tanggal_surat))) }}</td>
+                            <td style="vertical-align: middle">{{ $item->pengirim }}</td>
+                            <td style="vertical-align: middle">{{ $item->isi_singkat_atau_perihal }}</td>
                         </tr>
                     @empty
                         <tr>

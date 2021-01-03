@@ -16,6 +16,6 @@ class CetakSurat extends Model
 
     public function detailCetak()
     {
-        return $this->hasMany('App\DetailCetak');
+        return $this->hasMany('App\DetailCetak')->orderBy('urutan');
     }
 }

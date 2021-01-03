@@ -73,10 +73,26 @@ class SubmenuSeeder extends Seeder
 
         Submenu::create([
             'menu_id'   => 2,
+            'nama'      => 'Analisis',
+            'url'       => 'analisis',
+            'icon'      => 'fas fa-file-alt',
+            'warna'     => '#11cdef',
+        ]);
+
+        Submenu::create([
+            'menu_id'   => 2,
             'nama'      => 'Bantuan',
             'url'       => 'bantuan',
             'icon'      => 'fas fa-heart',
             'warna'     => '#f5365c',
+        ]);
+
+        Submenu::create([
+            'menu_id'   => 3,
+            'nama'      => 'Kelola Surat',
+            'url'       => 'surat',
+            'icon'      => 'fas fa-file-alt',
+            'warna'     => '#2bffc6',
         ]);
 
         Submenu::create([
@@ -93,6 +109,14 @@ class SubmenuSeeder extends Seeder
             'url'       => 'surat-keluar',
             'icon'      => 'fas fa-file-export',
             'warna'     => '#2dce89',
+        ]);
+
+        Submenu::create([
+            'menu_id'   => 3,
+            'nama'      => 'Pengaturan Surat',
+            'url'       => 'pengaturan-surat',
+            'icon'      => 'fas fa-cog',
+            'warna'     => '#f5365c',
         ]);
 
         Submenu::create([
@@ -121,26 +145,10 @@ class SubmenuSeeder extends Seeder
 
         Submenu::create([
             'menu_id'   => 4,
-            'nama'      => 'Kelola Surat',
-            'url'       => 'surat',
-            'icon'      => 'fas fa-file-alt',
-            'warna'     => '#5e72e4',
-        ]);
-
-        Submenu::create([
-            'menu_id'   => 4,
             'nama'      => 'Kelola Artikel',
             'url'       => 'artikel',
             'icon'      => 'fas fa-newspaper',
             'warna'     => '#2bffc6',
-        ]);
-
-        Submenu::create([
-            'menu_id'   => 4,
-            'nama'      => 'Kelola Analisis',
-            'url'       => 'analisis',
-            'icon'      => 'fas fa-file-alt',
-            'warna'     => '#11cdef',
         ]);
 
         Submenu::create([

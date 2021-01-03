@@ -237,6 +237,7 @@ class SuratController extends Controller
     {
         for ($i = 0; $i < count($request->isian); $i++) {
             IsiSurat::create([
+                'urutan'    => $i+1,
                 'surat_id'  => $surat->id,
                 'isi'       => $request->isi[$i],
                 'isian'     => $request->isian[$i],

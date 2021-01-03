@@ -11,7 +11,7 @@ class Surat extends Model
 
     public function isiSurat()
     {
-        return $this->hasMany('App\IsiSurat', 'surat_id');
+        return $this->hasMany('App\IsiSurat', 'surat_id')->orderBy('urutan');
     }
 
     public function cetakSurat()

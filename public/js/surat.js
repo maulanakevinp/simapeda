@@ -6,35 +6,40 @@ $(document).on('change','#tampilkan_perihal',function(){
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Sifat</label>
-                            <input class="form-control form-control-alternative" name="isian[]">
+                            <input class="form-control form-control-alternative" name="isi[]">
                             <input type="hidden" name="jenis_isi[]" value="4">
                             <input type="hidden" name="tampilkan[]" value="0">
+                            <input type="hidden" name="isian[]" value="">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Lampiran</label>
-                            <input class="form-control form-control-alternative" name="isian[]">
+                            <input class="form-control form-control-alternative" name="isi[]">
                             <input type="hidden" name="jenis_isi[]" value="4">
                             <input type="hidden" name="tampilkan[]" value="0">
+                            <input type="hidden" name="isian[]" value="">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Perihal</label>
-                            <input class="form-control form-control-alternative" name="isian[]">
+                            <input class="form-control form-control-alternative" name="isi[]">
                             <input type="hidden" name="jenis_isi[]" value="4">
                             <input type="hidden" name="tampilkan[]" value="0">
+                            <input type="hidden" name="isian[]" value="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label">Kepada</label>
-                            <input class="form-control form-control-alternative" name="isian[]">
+                            <input class="form-control form-control-alternative" name="isi[]">
                             <input type="hidden" name="jenis_isi[]" value="4">
                             <input type="hidden" name="tampilkan[]" value="0">
+                            <input type="hidden" name="isian[]" value="">
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Di</label>
-                            <input class="form-control form-control-alternative" name="isian[]">
+                            <input class="form-control form-control-alternative" name="isi[]">
                             <input type="hidden" name="jenis_isi[]" value="4">
                             <input type="hidden" name="tampilkan[]" value="0">
+                            <input type="hidden" name="isian[]" value="">
                         </div>
                     </div>
                 </div>

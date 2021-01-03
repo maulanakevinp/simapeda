@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label class="form-control-label col-form-label col-md-3" for="nomor_urut">Nomor Urut</label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control @error('nomor_urut') is-invalid @enderror" name="nomor_urut" placeholder="Masukkan Nomor Urut ..." value="{{ old('nomor_urut', App\SuratKeluar::latest()->first() ? App\SuratKeluar::latest()->first()->nomor_urut + 1 : '1') }}">
+                    <input type="text" class="form-control @error('nomor_urut') is-invalid @enderror" name="nomor_urut" placeholder="Masukkan Nomor Urut ..." value="{{ old('nomor_urut', $desa->penomoran_surat == 1 ? $desa->nomor_surat_keluar : $desa->nomor_surat) }}">
                     @error('nomor_urut')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                 </div>
             </div>

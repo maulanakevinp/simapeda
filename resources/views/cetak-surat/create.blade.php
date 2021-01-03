@@ -38,7 +38,12 @@
                             </div>
                         @endif
                         @if ($isiSurat->tampilkan == 1)
-                            <p class="mt-5 mb-0">{{ $isiSurat->isi }}</p>
+                            @php
+                                $paragraf1 = str_replace('[nama_desa]', $desa->nama_desa, $isiSurat->isi);
+                                $paragraf2 = str_replace('[nama_kecamatan]', $desa->nama_kecamatan, $paragraf1);
+                                $paragraf = str_replace('[nama_kabupaten]', $desa->nama_kabupaten, $paragraf2);
+                            @endphp
+                            <p class="mt-5 mb-0">{{ $paragraf }}</p>
                         @endif
                         @php
                             $string = $isiSurat->isi;

@@ -17,12 +17,23 @@ $('form').on('submit', function(event) {
         success: function(response){
             $(form).find('button[type="submit"]').html('SIMPAN');
             $(form).find('button[type="submit"]').removeAttr('disabled');
-            alertSuccess(response.message);
-            setTimeout(() => {
-                $(".notifikasi").html('');
-            }, 3000);
-            if (response.redirect) {
-                location.href = response.redirect;
+            if (response.success == false) {
+                alertError();
+                let error = '';
+                $.each(response.message, function (key, item) {
+                    error += '<li>'
+                    error += item;
+                    error += '</li>'
+                });
+                $("#pesanError").html(error);
+            } else {
+                alertSuccess(response.message);
+                setTimeout(() => {
+                    $(".notifikasi").html('');
+                }, 3000);
+                if (response.redirect) {
+                    location.href = response.redirect;
+                }
             }
         },
         error: function (response) {

@@ -60,15 +60,23 @@ class CetakSuratController extends Controller
         $tanggal = tgl(date('Y-m-d'));
         $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal', 'kode_desa'))->setPaper(array(0,0,609.449,935.433));
         if ($surat->tampilkan == 1) {
+
             $cetakSurat = CetakSurat::create([
-                'surat_id' => $id
+                'nomor'     => $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat : $desa->nomor_surat,
+                'surat_id'  => $id
             ]);
 
+            $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat += 1 : $desa->nomor_surat += 1;
+            $desa->save();
+
+            $i = 1;
             foreach ($request->isian as $isian) {
                 DetailCetak::create([
+                    'urutan'            => $i,
                     'cetak_surat_id'    => $cetakSurat->id,
                     'isian'             => $isian
                 ]);
+                $i++;
             }
 
             $surat->save();

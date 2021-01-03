@@ -56,7 +56,7 @@ class PeranMenuSubmenuSeeder extends Seeder
         ]);
 
         PeranMenuSubmenu::create([
-            'peran_menu_id' => 3,
+            'peran_menu_id' => 2,
             'submenu_id'    => 9,
         ]);
 
@@ -76,17 +76,17 @@ class PeranMenuSubmenuSeeder extends Seeder
         ]);
 
         PeranMenuSubmenu::create([
-            'peran_menu_id' => 4,
+            'peran_menu_id' => 3,
             'submenu_id'    => 13,
         ]);
 
         PeranMenuSubmenu::create([
-            'peran_menu_id' => 4,
+            'peran_menu_id' => 3,
             'submenu_id'    => 14,
         ]);
 
         PeranMenuSubmenu::create([
-            'peran_menu_id' => 4,
+            'peran_menu_id' => 3,
             'submenu_id'    => 15,
         ]);
 
@@ -118,6 +118,11 @@ class PeranMenuSubmenuSeeder extends Seeder
         PeranMenuSubmenu::create([
             'peran_menu_id' => 4,
             'submenu_id'    => 21,
+        ]);
+
+        PeranMenuSubmenu::create([
+            'peran_menu_id' => 4,
+            'submenu_id'    => 22,
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
