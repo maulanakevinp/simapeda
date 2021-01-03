@@ -196,14 +196,14 @@
             allowClear: true
         });
 
-            $('#kode_barang').val("{{ $desa->kode_provinsi .'.'. $desa->kode_kabupaten .'.'. $desa->kode_kecamatan .'.'. $desa->kode_desa }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
+            $('#kode_barang').val("{{ substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4) }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
 
         $("#tahun_pengadaan").change(function(){
-            $('#kode_barang').val("{{ $desa->kode_provinsi .'.'. $desa->kode_kabupaten .'.'. $desa->kode_kecamatan .'.'. $desa->kode_desa }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
+            $('#kode_barang').val("{{ substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4) }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
         });
 
         $("#penggunaan_barang").change(function(){
-            $('#kode_barang').val("{{ $desa->kode_provinsi .'.'. $desa->kode_kabupaten .'.'. $desa->kode_kecamatan .'.'. $desa->kode_desa }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
+            $('#kode_barang').val("{{ substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4) }}."+$('#penggunaan_barang').val()+"."+$('#tahun_pengadaan').val());
         });
 
             $('#nomor_register').val($('#barang').val().split("_").pop());
