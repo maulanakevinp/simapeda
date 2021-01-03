@@ -60,7 +60,7 @@ class UserController extends Controller
         $data['password']   = bcrypt('password');
 
         User::create($data);
-        return redirect()->route('user.index')->with('success','User berhasil ditambahkan');
+        return redirect()->route('user.index')->with('success','User berhasil ditambahkan. password login: "password"');
     }
 
     /**
