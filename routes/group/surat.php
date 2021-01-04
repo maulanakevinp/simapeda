@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/layanan-surat', 'SuratController@layanan_surat')->name('layanan-surat');
 Route::get('/buat-surat/{id}/{slug}', 'CetakSuratController@create')->name('buat-surat');
-Route::post('/cetak-surat/{id}/{slug}', 'CetakSuratController@store')->name('cetak-surat.store');
+Route::get('/cetak-surat/{cetakSurat}', 'CetakSuratController@show')->name('cetak-surat.show');
+Route::post('/buat-surat/{id}/{slug}', 'CetakSuratController@store')->name('cetak-surat.store');
 
 Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
 
@@ -25,7 +26,7 @@ Route::group(['middleware' => ['web', 'auth', 'peran']], function () {
         Route::get('/tahunan', 'HomeController@suratTahunan')->name('surat-tahunan');
         Route::get('/chart/{id}', 'SuratController@chartSurat')->name('chart-surat');
         Route::post('/pengaturan', 'DesaController@pengaturan_surat')->name('surat.pengaturan');
-        Route::resource('cetakSurat', 'CetakSuratController')->except('create','store','index');
+        Route::resource('cetakSurat', 'CetakSuratController')->except('create','show','store','index');
         Route::resource('isiSurat', 'IsiSuratController')->except('index', 'create', 'edit', 'show');
     });
     Route::resource('surat', 'SuratController');

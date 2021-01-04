@@ -48,22 +48,19 @@ class CetakSuratController extends Controller
         ]);
 
         $penduduk = Penduduk::where('nik', $request->nomor_induk_penduduk)->first();
+
         if (!$penduduk) {
             return back()->with('error','Mohon maaf anda tidak dapat membuat surat dikarenakan NIK anda tidak terdeteksi sebagai data penduduk. Silahkan ke Kantor Desa untuk konfirmasi');
         }
 
         $desa = Desa::find(1);
-        $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
         $surat = Surat::find($id);
-        $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
-        $logo = (string) Image::make($image)->encode('data-url');
-        $tanggal = tgl(date('Y-m-d'));
-        $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal', 'kode_desa'))->setPaper(array(0,0,609.449,935.433));
-        if ($surat->tampilkan == 1) {
 
+        if ($surat->tampilkan == 1) {
             $cetakSurat = CetakSurat::create([
                 'nomor'     => $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat : $desa->nomor_surat,
-                'surat_id'  => $id
+                'surat_id'  => $id,
+                'nik'       => $penduduk->nik,
             ]);
 
             $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat += 1 : $desa->nomor_surat += 1;
@@ -80,9 +77,15 @@ class CetakSuratController extends Controller
             }
 
             $surat->save();
+            return redirect('cetak-surat/' . $cetakSurat->id .'?q=' . $cetakSurat->nik);
+        } else {
+            $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
+            $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
+            $logo = (string) Image::make($image)->encode('data-url');
+            $tanggal = tgl(date('Y-m-d'));
+            $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal', 'kode_desa'))->setPaper(array(0,0,609.449,935.433));
+            return $pdf->stream($surat->nama . '.pdf');
         }
-
-        return $pdf->stream($surat->nama . '.pdf');
     }
 
     /**
@@ -102,8 +105,11 @@ class CetakSuratController extends Controller
      * @param  \App\CetakSurat  $cetakSurat
      * @return \Illuminate\Http\Response
      */
-    public function show(CetakSurat $cetakSurat)
+    public function show(Request $request, CetakSurat $cetakSurat)
     {
+        if ($request->q != $cetakSurat->nik) {
+            return abort(404);
+        }
         $desa = Desa::find(1);
         $surat = Surat::find($cetakSurat->surat_id);
         $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
