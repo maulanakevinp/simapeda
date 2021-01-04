@@ -101,7 +101,7 @@
                         <tr>
                             <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('input.edit', ['penduduk' => $item, 'analisis' => $analisis, 'periode' => request()->segment(4)]) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Data"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('input.edit', ['penduduk' => $item, 'analisis' => $analisis, 'periode' => request()->segment(4)]) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Data"><i class="fas fa-edit"></i></a>
                             </td>
                             @if ($analisis->subjek == 1)
                                 <td style="vertical-align: middle">{{ $item->nik }}</td>

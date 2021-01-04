@@ -24,7 +24,7 @@
                                 <p class="mb-0 text-sm">Kelola User</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route("user.index") }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route("user.index") }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

@@ -124,7 +124,7 @@
                         <tr>
                             <td>
                                 <a target="_blank" href="{{ route('cetakSurat.show', $item->id) }}" class="btn btn-sm btn-success" title="Detail Cetak" data-toggle="tooltip"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('cetakSurat.edit',$item->id) }}" class="btn btn-sm btn-primary" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('cetakSurat.edit',$item->id) }}?page={{ request('page') }}" class="btn btn-sm btn-primary" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="Detail cetak surat ini" data-action="{{ route('cetakSurat.destroy',$item->id) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nomor ? $item->nomor : "-" }}</td>

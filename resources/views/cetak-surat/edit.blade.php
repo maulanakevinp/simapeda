@@ -14,7 +14,7 @@
                                 <p class="mb-0 text-sm">Kelola Cetak Surat</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route("surat.show",$cetakSurat->surat) }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route("surat.show",$cetakSurat->surat) }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@
                                 <p class="mb-0 text-sm">Kelola Bantuan</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route("bantuan-penduduk.index", $bantuan) }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route("bantuan-penduduk.index", $bantuan) }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

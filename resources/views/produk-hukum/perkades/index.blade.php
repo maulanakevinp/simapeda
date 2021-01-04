@@ -27,7 +27,7 @@
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a href="{{ route('perkades.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('perkades.create') }}?page={{ request('page') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                             </td>
                             <td style="vertical-align: middle" class="text-center">{{ ($perkades->currentpage()-1) * $perkades->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('perkades.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('perkades.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if ($item->aktif == 1)
                                     <a href="{{ route('perkades.nonaktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Non Aktifkan"><i class="fas fa-unlock"></i></a>
                                 @else

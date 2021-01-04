@@ -16,7 +16,7 @@
                             </div>
                             <div class="mb-3">
                                 <a href="{{ route("penduduk.keluarga.print", $penduduk[0]->kk) }}" data-toggle="tooltip" class="btn btn-primary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a href="{{ route("penduduk.keluarga") }}" class="btn btn-success" data-toogle="tooltip" title="Kembali"><i class="fas fa-arrow-left"></i></a>
+                                <a href="{{ route("penduduk.keluarga") }}?page={{ request('page') }}" class="btn btn-success" data-toogle="tooltip" title="Kembali"><i class="fas fa-arrow-left"></i></a>
                             </div>
                         </div>
                     </div>

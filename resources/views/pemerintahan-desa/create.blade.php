@@ -25,7 +25,7 @@
                                 <p class="mb-0 text-sm">Kelola Pemerintahan Desa</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ request('atasan') ? route("pemerintahan-desa.show", request('atasan')) : route("pemerintahan-desa.index") }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ request('atasan') ? route("pemerintahan-desa.show", request('atasan')) : route("pemerintahan-desa.index") }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

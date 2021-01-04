@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         Route::resource('dusun', 'DusunController')->except('show');
         Route::resource('/dusun/detailDusun', 'DetailDusunController')->except('create','edit');
 
+        Route::post('user/reset-password/{user}', 'UserController@reset_password')->name('user.reset-password');
         Route::resource('user', 'UserController')->except('show');
     });
 });

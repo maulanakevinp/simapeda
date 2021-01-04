@@ -23,7 +23,7 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="{{ route('penduduk.print_all') }}" data-toggle="tooltip" class="mb-1 btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('penduduk.create') }}" data-toggle="tooltip" class="mb-1 btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('penduduk.create') }}?page={{ request('page') }}" data-toggle="tooltip" class="mb-1 btn btn-success" title="Tambah Penduduk"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -169,8 +169,8 @@
                             </td>
                             <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('penduduk.show', $item->nik) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('penduduk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('penduduk.show', $item->nik) }}?page={{ request('page') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('penduduk.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("penduduk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle"><a href="{{ route('penduduk.show', $item->nik) }}">{{ $item->nik }}</a></td>

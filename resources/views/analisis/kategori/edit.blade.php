@@ -15,7 +15,7 @@
                                 <p class="mb-0 text-sm">Kelola Analisis - {{ $kategori->analisis->nama }}</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('kategori.index', $kategori->analisis_id) }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route('kategori.index', $kategori->analisis_id) }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

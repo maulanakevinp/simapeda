@@ -27,7 +27,7 @@
                                         <i class="fas fa-print"></i>
                                     </button>
                                 @endif
-                                <a href="{{ route('surat-keluar.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('surat-keluar.create') }}?page={{ request('page') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             </td>
                             <td style="vertical-align: middle" class="text-center">{{ $item->nomor_urut }}</td>
                             <td>
-                                <a href="{{ route('surat-keluar.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('surat-keluar.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if ($item->berkas)
                                     <a target="_blank" href="{{ url(Storage::url($item->berkas)) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 @endif

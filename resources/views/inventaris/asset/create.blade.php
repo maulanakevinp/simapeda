@@ -19,7 +19,7 @@
                                 <p class="mb-0 text-sm">Kelola Inventaris</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route("asset.index") }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route("asset.index") }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

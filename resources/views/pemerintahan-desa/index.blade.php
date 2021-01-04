@@ -23,7 +23,7 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('pemerintahan-desa.create') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('pemerintahan-desa.create') }}?page={{ request('page') }}" data-toggle="tooltip" class="btn btn-success" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                                 @if ($key+1 != count($pemerintahan_desa))
                                     <button data-id="{{ $item->id }}" title="Pindah Ke Bawah" data-toggle="tooltip" class="btn btn-sm btn-success bawah"><i class="fas fa-arrow-down"></i></button>
                                 @endif
-                                <a href="{{ route('pemerintahan-desa.edit', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('pemerintahan-desa.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if (count($item->staff) > 0)
                                     <a href="{{ route('pemerintahan-desa.show', $item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Staff"><i class="fas fa-list"></i></a>
                                 @endif

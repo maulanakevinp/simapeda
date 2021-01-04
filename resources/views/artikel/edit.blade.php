@@ -15,7 +15,7 @@
                                 <p class="mb-0 text-sm">Kelola Artikel</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('artikel.index') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route('artikel.index') }}?page={{ request('page') }}" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

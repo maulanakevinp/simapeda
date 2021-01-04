@@ -23,7 +23,7 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <a target="_blank" href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('pemerintahan-desa.create') }}?atasan={{ $pemerintahan_desa->id }}" data-toggle="tooltip" class="btn btn-primary" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('pemerintahan-desa.create') }}?atasan={{ $pemerintahan_desa->id }}&page={{ request('page') }}" data-toggle="tooltip" class="btn btn-primary" title="Tambah Aparat"><i class="fas fa-plus"></i></a>
                                 <a href="{{ route('pemerintahan-desa.index') }}" data-toggle="tooltip" class="btn btn-success" title="Kembali"><i class="fas fa-arrow-left"></i></a>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                                 @if ($key+1 != count($pemerintahan_desa->staff))
                                     <button data-id="{{ $item->id }}" title="Pindah Ke Bawah" data-toggle="tooltip" class="btn btn-sm btn-success bawah"><i class="fas fa-arrow-down"></i></button>
                                 @endif
-                                <a href="{{ route('pemerintahan-desa.edit', $item) }}?atasan={{ $pemerintahan_desa->id }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('pemerintahan-desa.edit', $item) }}?atasan={{ $pemerintahan_desa->id }}&page={{ request('page') }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("pemerintahan-desa.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama }}</td>
@@ -302,7 +302,7 @@
                 });
                 if (id.length > 0) {
                     $.ajax({
-                        url     : "{{ route('pemerintah-desa.destroys') }}",
+                        url     : "{{ route('pemerintahan-desa.destroys') }}",
                         method  : 'delete',
                         data    : {
                             _token  : "{{ csrf_token() }}",

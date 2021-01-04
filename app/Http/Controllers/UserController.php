@@ -208,4 +208,11 @@ class UserController extends Controller
             return redirect()->back()->with('error','Password yang anda masukkan salah');
         }
     }
+
+    public function reset_password(User $user)
+    {
+        $user->password = bcrypt('password');
+        $user->save();
+        return back()->with('success','Password berhasil direset');
+    }
 }

@@ -78,7 +78,7 @@
                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-sm btn-danger" id="delete" name="delete" >
                     <i class="fas fa-trash"></i>
                 </button>
-                <a href="{{ route('tanah.create') }}" class="btn btn-sm btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('tanah.create') }}?page={{ request('page') }}" class="btn btn-sm btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                 @if (count($tanah) > 0)
                     <a href="#print" id="btn-print" data-toggle="tooltip" class="btn btn-sm btn-secondary" title="Cetak"><i class="fas fa-print"></i></a>
                 @endif
@@ -114,8 +114,8 @@
                             <td style="vertical-align: middle" class="text-center">{{ ($tanah->currentpage()-1) * $tanah->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
                                 <a href="{{ route('tanah.mutasi.edit',$item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Mutasi"><i class="fas fa-external-link-alt"></i></a>
-                                <a href="{{ route('tanah.show',$item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('tanah.edit',$item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('tanah.show',$item) }}?page={{ request('page') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('tanah.edit',$item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_barang }}" data-action="{{ route("tanah.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama_barang }}</td>

@@ -15,7 +15,7 @@
                                 <p class="mb-0 text-sm">Kelola Analisis - {{ $analisis->nama }}</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('klasifikasi.laporan', [$analisis, 'periode' => request()->segment(6) ?? (App\Periode::latest()->first() ?? '0')]) }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i> Kembali</a>
+                                <a href="{{ route('klasifikasi.laporan', [$analisis, 'periode' => request()->segment(6) ?? (App\Periode::latest()->first() ?? '0')]) }}?page={{ request('page') }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </div>

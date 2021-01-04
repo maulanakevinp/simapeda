@@ -24,7 +24,7 @@
                                 <p class="mb-0 text-sm">Kelola Artikel</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('artikel.create') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Artikel</a>
+                                <a href="{{ route('artikel.create') }}?page={{ request('page') }}" class="btn btn-success" title="Tambah"><i class="fas fa-plus"></i> Tambah Artikel</a>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         @else
                             <a href="#slide" class="btn btn-sm btn-info slide" data-toggle="tooltip" title="Masukkan Ke Dalam Slide"><i class="fas fa-play"></i></a>
                         @endif
-                        <a href="{{ route('artikel.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="{{ route('artikel.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                         <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul }}" data-action="{{ route('artikel.destroy',$item) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
                         <form action="{{ route('artikel.slide', $item) }}" method="post">@csrf</form>
                     </div>

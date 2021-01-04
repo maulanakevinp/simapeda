@@ -23,7 +23,7 @@
                                 <button type="button" data-toggle="tooltip" title="Hapus data terpilih" class="btn btn-danger" id="delete" name="delete" >
                                     <i class="fas fa-trash"></i>
                                 </button>
-                                <a href="{{ route('user.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('user.create') }}?page={{ request('page') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,12 @@
                         <tr>
                             <td style="vertical-align: middle" class="text-center">{{ ($user->currentpage()-1) * $user->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('user.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('user.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("user.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('user.reset-password', $item) }}" onclick="event.preventDefault(); event.target.nextElementSibling.submit()" class="btn btn-sm btn-dark reset-password" data-toggle="tooltip" title="Reset Password"><i class="fas fa-lock"></i></a>
+                                <form action="{{ route('user.reset-password', $item) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </td>
                             <td width="20px"><a href="{{ asset(Storage::url($item->foto_profil)) }}" data-fancybox><img class="mw-100 rounded-circle" src="{{ asset(Storage::url($item->foto_profil)) }}" alt="Foto Profil {{ $item->nama }}"></a></td>
                             <td style="vertical-align: middle">{{ $item->email }}</td>

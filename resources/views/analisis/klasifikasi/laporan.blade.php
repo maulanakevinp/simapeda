@@ -70,7 +70,7 @@
                         <tr>
                             <td class="text-center">{{ ($hasil_klasifikasi->currentpage()-1) * $hasil_klasifikasi->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('klasifikasi.detail-laporan', [$analisis, 'penduduk' => $item->penduduk_id, 'periode' => request()->segment(4)]) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('klasifikasi.detail-laporan', [$analisis, 'penduduk' => $item->penduduk_id, 'periode' => request()->segment(4)]) }}?page={{ request('page') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
                             </td>
                             <td><a href="{{ route('penduduk.keluarga.show', $item->penduduk->kk) }}">{{ $item->penduduk->kk }}</a></td>
                             <td><a href="{{ route('penduduk.show', $item->penduduk->nik) }}">{{ $item->penduduk->nik }}</a></td>

@@ -19,7 +19,7 @@
                                 <p class="mb-0 text-sm">Kelola Bantuan</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('bantuan.create') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('bantuan.create') }}?page={{ request('page') }}" class="btn btn-success" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                             <td style="vertical-align: middle" class="text-center">{{ ($bantuan->currentpage()-1) * $bantuan->perpage() + $loop->index + 1 }}</td>
                             <td>
                                 <a href="{{ route('bantuan-penduduk.index', $item) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Rincian"><i class="fas fa-list"></i></a>
-                                <a href="{{ route('bantuan.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('bantuan.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama_program }}" data-action="{{ route("bantuan.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->nama_program }}</td>

@@ -154,7 +154,7 @@
                         <tr>
                             <td style="vertical-align: middle" class="text-center">{{ ($penduduk->currentpage()-1) * $penduduk->perpage() + $loop->index + 1 }}</td>
                             <td style="vertical-align: middle">
-                                <a href="{{ route('penduduk.keluarga.show', $item->kk) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('penduduk.keluarga.show', $item->kk) }}?page={{ request('page') }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
                                 <a target="_parent" href="{{ route('penduduk.keluarga.print', $item->kk) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Cetak KK"><i class="fas fa-print"></i></a>
                             </td>
                             <td style="vertical-align: middle"><a href="{{ route('penduduk.keluarga.show', $item->kk) }}">{{ $item->kk }}</a></td>

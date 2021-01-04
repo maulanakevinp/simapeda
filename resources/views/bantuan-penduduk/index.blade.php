@@ -20,7 +20,7 @@
                             </div>
                             <div class="mb-3">
                                 <a href="{{ route('bantuan-penduduk.print', $bantuan) }}" class="btn btn-secondary" title="Print" data-toggle="tooltip"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('bantuan-penduduk.create', $bantuan) }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
+                                <a href="{{ route('bantuan-penduduk.create', $bantuan) }}?page={{ request('page') }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip"><i class="fas fa-plus"></i></a>
                                 <a href="{{ route('bantuan.index') }}" class="btn btn-success" title="Kembali" data-toggle="tooltip"><i class="fas fa-arrow-left"></i></a>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                         <tr>
                             <td style="vertical-align: middle" class="text-center">{{ ($bantuan_penduduk->currentpage()-1) * $bantuan_penduduk->perpage() + $loop->index + 1 }}</td>
                             <td>
-                                <a href="{{ route('bantuan-penduduk.edit', $item) }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('bantuan-penduduk.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->nama }}" data-action="{{ route("bantuan-penduduk.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
                             <td style="vertical-align: middle">{{ $item->penduduk->nik }}</td>
