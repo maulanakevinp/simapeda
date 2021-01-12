@@ -161,12 +161,6 @@ class HomeController extends Controller
         return response()->json($data);
     }
 
-    public function panduan()
-    {
-        $desa = Desa::find(1);
-        return view('panduan', compact('desa'));
-    }
-
     public function produk_hukum(Request $request)
     {
         if ($request->kategori == 'sk-kades') {

@@ -25,7 +25,6 @@
                             </div>
                             <input class="form-control" placeholder="Cari Surat ...." type="text" name="cari" id="cari" value="{{ request('cari') }}">
                         </div>
-                        <a href="{{ route('panduan') }}" class="btn btn-primary mt-3">Panduan</a>
                     </div>
                 </form>
             </div>

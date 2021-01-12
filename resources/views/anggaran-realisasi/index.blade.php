@@ -73,11 +73,11 @@
                                 <a href="{{ route('anggaran-realisasi.edit', $item) }}?jenis={{ request('jenis') }}&tahun={{ request('tahun') }}&page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->detail_jenis_anggaran->nama ? $item->detail_jenis_anggaran->nama : $item->detail_jenis_anggaran->kelompok_jenis_anggaran->nama }}" data-action="{{ route("anggaran-realisasi.destroy", $item) }}" data-toggle="modal" href="#modal-hapus"><i data-toggle="tooltip" title="Hapus" class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ $item->detail_jenis_anggaran->nama ? $item->detail_jenis_anggaran->nama : $item->detail_jenis_anggaran->kelompok_jenis_anggaran->nama }} {{ $item->keterangan_lainnya ? "(" . $item->keterangan_lainnya . ")" : "" }}</td>
-                            <td>Rp. {{ substr(number_format($item->nilai_anggaran, 2, ',', '.'),0,-3) }}</td>
-                            <td>Rp. {{ substr(number_format($item->nilai_realisasi, 2, ',', '.'),0,-3) }}</td>
-                            <td>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) }}</td>
-                            <td>{{ date('d/m/Y H:i:s', strtotime($item->updated_at)) }}</td>
+                            <td style="vertical-align: middle">{{ $item->detail_jenis_anggaran->nama ? $item->detail_jenis_anggaran->nama : $item->detail_jenis_anggaran->kelompok_jenis_anggaran->nama }} {{ $item->keterangan_lainnya ? "(" . $item->keterangan_lainnya . ")" : "" }}</td>
+                            <td style="vertical-align: middle">Rp. {{ substr(number_format($item->nilai_anggaran, 2, ',', '.'),0,-3) }}</td>
+                            <td style="vertical-align: middle">Rp. {{ substr(number_format($item->nilai_realisasi, 2, ',', '.'),0,-3) }}</td>
+                            <td style="vertical-align: middle">{{ date('d/m/Y H:i:s', strtotime($item->created_at)) }}</td>
+                            <td style="vertical-align: middle">{{ date('d/m/Y H:i:s', strtotime($item->updated_at)) }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -90,40 +90,7 @@
         {{ $anggaran_realisasi->links('layouts.components.pagination') }}
     </div>
 </div>
-
-<div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="modal-hapus" aria-hidden="true">
-    <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
-        <div class="modal-content bg-gradient-danger">
-
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus Anggaran Realisasi?</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <div class="py-3 text-center">
-                    <i class="ni ni-bell-55 ni-3x"></i>
-                    <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus anggaran realisasi akan menghapus semua data yang dimilikinya</p>
-                    <p><strong id="nama-hapus"></strong></p>
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <form id="form-hapus" action="" method="POST" >
-                    @csrf @method('delete')
-                    <button type="submit" class="btn btn-white">Yakin</button>
-                </form>
-                <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Tidak</button>
-            </div>
-
-        </div>
-    </div>
-</div>
+@include('layouts.components.hapus', ['nama_hapus' => 'anggaran realisasi'])
 @endsection
 
 @push('scripts')

@@ -90,7 +90,7 @@
                                 <input type="checkbox" class="perkades-checkbox" id="delete{{ $item->id }}" name="delete[]" value="{{ $item->id }}">
                             </td>
                             <td style="vertical-align: middle" class="text-center">{{ ($perkades->currentpage()-1) * $perkades->perpage() + $loop->index + 1 }}</td>
-                            <td>
+                            <td style="vertical-align: middle">
                                 <a href="{{ route('perkades.edit', $item) }}?page={{ request('page') }}" class="btn btn-sm btn-success" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 @if ($item->aktif == 1)
                                     <a href="{{ route('perkades.nonaktifkan', $item) }}" class="btn btn-sm btn-default" data-toggle="tooltip" title="Non Aktifkan"><i class="fas fa-unlock"></i></a>
@@ -100,11 +100,11 @@
                                 <a target="_blank" href="{{ route('perkades.download', $item) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" title="Download"><i class="fas fa-download"></i></a>
                                 <a class="btn btn-sm btn-danger hapus-data" data-nama="{{ $item->judul_dokumen }}" data-action="{{ route("perkades.destroy", $item) }}" data-toggle="tooltip" title="Hapus" href="#modal-hapus"><i class="fas fa-trash"></i></a>
                             </td>
-                            <td>{{ $item->judul_dokumen }}</td>
-                            <td>{{ $item->nomor_keputusan_kades }} / {{ tgl($item->tanggal_keputusan_kades) }}</td>
-                            <td>{{ $item->uraian_singkat }}</td>
-                            <td>{{ $item->aktif == 1 ? 'Ya' : 'Tidak' }}</td>
-                            <td>{{ tgl(date('Y-m-d', strtotime($item->created_at))) }} {{ date('H:i', strtotime($item->created_at)) }}</td>
+                            <td style="vertical-align: middle">{{ $item->judul_dokumen }}</td>
+                            <td style="vertical-align: middle">{{ $item->nomor_keputusan_kades }} / {{ tgl($item->tanggal_keputusan_kades) }}</td>
+                            <td style="vertical-align: middle">{{ $item->uraian_singkat }}</td>
+                            <td style="vertical-align: middle">{{ $item->aktif == 1 ? 'Ya' : 'Tidak' }}</td>
+                            <td style="vertical-align: middle">{{ tgl(date('Y-m-d', strtotime($item->created_at))) }} {{ date('H:i', strtotime($item->created_at)) }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -118,39 +118,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="modal-hapus" aria-hidden="true">
-    <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
-        <div class="modal-content bg-gradient-danger">
-
-            <div class="modal-header">
-                <h6 class="modal-title" id="modal-title-delete">Hapus Perkades?</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <div class="py-3 text-center">
-                    <i class="ni ni-bell-55 ni-3x"></i>
-                    <h4 class="heading mt-4">Perhatian!!</h4>
-                    <p>Menghapus perkades akan menghapus semua data yang dimilikinya</p>
-                    <p><strong id="nama-hapus"></strong></p>
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <form id="form-hapus" action="" method="POST" >
-                    @csrf @method('delete')
-                    <button type="submit" class="btn btn-white">Yakin</button>
-                </form>
-                <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Tidak</button>
-            </div>
-
-        </div>
-    </div>
-</div>
+@include('layouts.components.hapus', ['nama_hapus' => 'perkades'])
 
 <div class="modal fade" id="print" tabindex="-1" role="dialog" aria-labelledby="print" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

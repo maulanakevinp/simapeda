@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home.index');
-Route::get('/panduan', 'HomeController@panduan')->name('panduan');
 
 Route::group(['middleware' => ['web', 'guest']], function () {
     Route::get('/masuk', 'AuthController@index')->name('masuk');
