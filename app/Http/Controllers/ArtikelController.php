@@ -55,15 +55,15 @@ class ArtikelController extends Controller
             'judul'         => ['required','string','max:191'],
             'konten'        => ['required'],
             'gambar'        => ['nullable','image','max:2048'],
-            'menu'          => ['nullable','string','max:32'],
-            'submenu'       => ['nullable','string','max:32'],
+            'menu'          => ['required_with:submenu','max:32'],
+            'submenu'       => ['required_with:sub_submenu','max:32'],
             'sub_submenu'   => ['nullable','string','max:32'],
             'galleries.*'   => ['required'],
         ],[
             'galleries.*.required' => 'gambar wajib diisi'
         ]);
 
-        $data['menu'] = strtoupper($request->menu);
+        $data['menu'] = $request->menu ? strtoupper($request->menu) : null;
         $data['caption'] = $request->caption_gambar;
 
         if ($request->gambar) {
@@ -201,12 +201,12 @@ class ArtikelController extends Controller
             'judul'         => ['required','string','max:191'],
             'konten'        => ['required'],
             'gambar'        => ['nullable','image','max:2048'],
-            'menu'          => ['nullable','string','max:32'],
-            'submenu'       => ['nullable','string','max:32'],
+            'menu'          => ['required_with:submenu','max:32'],
+            'submenu'       => ['required_with:sub_submenu','max:32'],
             'sub_submenu'   => ['nullable','string','max:32'],
         ]);
 
-        $data['menu'] = strtoupper($request->menu);
+        $data['menu'] = $request->menu ? strtoupper($request->menu) : null;
         if ($request->gambar) {
             if ($artikel->gambar) {
                 File::delete(storage_path('app/' . $artikel->gambar));
