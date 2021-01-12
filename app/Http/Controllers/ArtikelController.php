@@ -63,6 +63,7 @@ class ArtikelController extends Controller
             'galleries.*.required' => 'gambar wajib diisi'
         ]);
 
+        $data['menu'] = strtoupper($request->menu);
         $data['caption'] = $request->caption_gambar;
 
         if ($request->gambar) {
@@ -205,6 +206,7 @@ class ArtikelController extends Controller
             'sub_submenu'   => ['nullable','string','max:32'],
         ]);
 
+        $data['menu'] = strtoupper($request->menu);
         if ($request->gambar) {
             if ($artikel->gambar) {
                 File::delete(storage_path('app/' . $artikel->gambar));
