@@ -181,7 +181,7 @@
         if (id.length > 0) {
             if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
                 $.ajax({
-                    url     : baseURL + "/gallery/destroys",
+                    url     : baseURL + "/kelola-gallery/destroys",
                     method  : "delete",
                     data : {
                         _token  : "{{ csrf_token() }}",
@@ -249,7 +249,7 @@
 
         html +=         `</a>
                         <input type="checkbox" class="gambar-check" name="delete[]" title="centang untuk menghapus beberapa gambar" value="${result.id}" style="transform:scale(1.5);position: absolute; top: 5px; left: 20px;">
-                        <button type="button" data-nama="gallery" data-action="${baseURL}/gallery/${result.id}" title="Hapus" class="btn btn-sm btn-danger hapus-data" style="position: absolute; top: 0; right: 15px;"><i class="fas fa-trash"></i></button>
+                        <button type="button" data-nama="gallery" data-action="${baseURL}/kelola-gallery/${result.id}" title="Hapus" class="btn btn-sm btn-danger hapus-data" style="position: absolute; top: 0; right: 15px;"><i class="fas fa-trash"></i></button>
                     </div>`;
         $("#gallery").append(html);
     }

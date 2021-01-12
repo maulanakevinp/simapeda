@@ -23,12 +23,14 @@ class AddColumnNomorSurat extends Migration
         });
 
         $desa = Desa::find(1);
-        $desa->penomoran_surat = 1;
-        $desa->nomor_surat = 1;
-        $desa->nomor_layanan_surat = 1;
-        $desa->nomor_surat_masuk = 1;
-        $desa->nomor_surat_keluar = 1;
-        $desa->save();
+        if ($desa) {
+            $desa->penomoran_surat = 1;
+            $desa->nomor_surat = 1;
+            $desa->nomor_layanan_surat = 1;
+            $desa->nomor_surat_masuk = 1;
+            $desa->nomor_surat_keluar = 1;
+            $desa->save();
+        }
     }
 
     /**

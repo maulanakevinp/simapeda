@@ -25,7 +25,7 @@ class ArtikelGalleryController extends Controller
         $data['gambar'] = $request->gambar->store('public/artikel');
         ArtikelGallery::create($data);
 
-        return redirect('edit-artikel/'.$request->artikel_id.'#gallery')->with('success', 'Gambar berhasil ditambahkan');
+        return redirect('artikel/'.$request->artikel_id.'/edit#gallery')->with('success', 'Gambar berhasil ditambahkan');
     }
 
     /**
@@ -63,10 +63,12 @@ class ArtikelGalleryController extends Controller
     public function destroy(ArtikelGallery $artikel_gallery)
     {
         File::delete(storage_path('app/' . $artikel_gallery->gambar));
+        $id = $artikel_gallery->artikel_id;
         $artikel_gallery->delete();
 
         return response()->json([
-            'message'   => 'Gambar berhasil dihapus',
+            'message'   => 'Gambar berhasil diperbarui',
+            'redirect'  => url('artikel/'.$id.'/edit#gallery')
         ]);
     }
 }

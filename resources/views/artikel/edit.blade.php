@@ -45,6 +45,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="form-control-label">Caption</label>
+                        <input class="form-control" name="caption" placeholder="Masukkan Caption ..." value="{{ $artikel->caption }}">
+                    </div>
+                    <div class="form-group">
                         <label class="form-control-label">Judul</label>
                         <input class="form-control" name="judul" placeholder="Masukkan Judul ..." value="{{ $artikel->judul }}">
                     </div>
@@ -101,7 +105,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer border-0 d-flex justify-content-between">
-                                        <button type="button" class="btn btn-danger hapus" title="Hapus Gambar"><i class="fas fa-trash"></i></button>
+                                        <button type="button" class="btn btn-danger hapus-data" data-action="{{ route('artikel-gallery.destroy', $item) }}" data-nama="gambar" title="Hapus Gambar"><i class="fas fa-trash"></i></button>
                                         <button type="submit" class="btn btn-primary">SIMPAN</button>
                                     </div>
                                 </div>
@@ -113,11 +117,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-labelledby="modal-hapus" aria-hidden="true">
+    <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+        <div class="modal-content bg-gradient-danger">
+
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-delete">Hapus Gambar?</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="py-3 text-center">
+                    <i class="ni ni-bell-55 ni-3x"></i>
+                    <h4 class="heading mt-4">Perhatian!!</h4>
+                    <p>Menghapus gambar akan menghapus semua data yang dimilikinya</p>
+                    <p><strong id="nama-hapus"></strong></p>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <form id="form-hapus" action="" method="POST" >
+                    @csrf @method('delete')
+                    <button type="submit" class="btn btn-white">Yakin</button>
+                </form>
+                <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Tidak</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @include('artikel.summernote')
 
 @push('scripts')
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script>
     $(document).on('click','.tambah-gambar', function () {
         $("#gallery").append(`
@@ -150,32 +189,15 @@
         `);
     });
 
+    (function($) {
+        if (!$.curCSS) {
+            $.curCSS = $.css;
+        }
+    })(jQuery);
+
     $(document).on("click", ".hapus", function (event){
-        let card = $(this).parent().parent().parent().parent();
-        $.ajax({
-            url : baseURL + '/artikel-gallery/' + $(card).find('[name="id"]').val(),
-            type: "DELETE",
-            data: {
-                _token: csrfToken
-            },
-            beforeSend: function(){
-                $(card).find('.hapus').attr('disabled','disabled');
-                $(card).find('.hapus').html(`<img height="20px" src="${baseURL}/storage/loading.gif" alt="">`);
-            },
-            success: function(response){
-                card[0].remove();
-                alertSuccess(response.message);
-                setTimeout(() => {
-                    $(".notifikasi").html('');
-                }, 3000);
-            },
-            error: function (response) {
-                console.clear();
-                $(card).find('.hapus').html('<i class="fas fa-trash"></i>');
-                $(card).find('.hapus').removeAttr('disabled');
-                alertError();
-            }
-        });
+        let card = $(this).parent().parent().parent();
+        card[0].remove();
     });
 </script>
 @endpush

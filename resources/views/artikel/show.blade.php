@@ -33,11 +33,10 @@
                     </div>
 
                     @if ($artikel->gambar)
-                        <div class="row mb-5">
-                            <div class="col-md text-center">
-                                <img class="mw-100" src="{{ url(Storage::url($artikel->gambar)) }}" alt="Gambar Berita {{ $artikel->judul }}">
-                            </div>
+                        <div class="text-center">
+                            <img class="mw-100" src="{{ url(Storage::url($artikel->gambar)) }}" alt="Gambar Berita {{ $artikel->judul }}">
                         </div>
+                        <p style="font-size: 0.8rem; color: darkgray">{{ $artikel->caption }}</p>
                     @endif
 
                     {!! $artikel->konten !!}

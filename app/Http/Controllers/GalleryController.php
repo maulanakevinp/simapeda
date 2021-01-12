@@ -115,11 +115,19 @@ class GalleryController extends Controller
                     }
                 } else {
                     $reload = false;
-                    $message = $youtubeList['error']['message'];
                 }
+
+                if (array_key_exists('error',$youtubeList)) {
+                    if ($youtubeList['error']['status'] == 'PERMISSION_DENIED') {
+                        $message = null;
+                    } else {
+                        $message = $youtubeList['error']['message'];
+                    }
+                }
+
             } while ($reload);
 
-            if ($message) return back()->with('success', $message);
+            if ($message) return back()->with('api_error', $message);
             return back()->with('success', 'Video berhasil diperbarui');
         } else {
             return back()->with('error', 'Harap memasukkan API KEY pada .env');

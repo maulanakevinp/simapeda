@@ -45,6 +45,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="form-control-label">Caption</label>
+                        <input class="form-control" name="caption_gambar" placeholder="Masukkan Caption ...">
+                    </div>
+                    <div class="form-group">
                         <label class="form-control-label">Judul</label> <span class="text-danger font-weight-bold">*</span>
                         <input class="form-control" name="judul" placeholder="Masukkan Judul ...">
                     </div>
@@ -76,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success gambar mb-3 tambah-gambar">Tambah Lebih Banyak Gambar <i class="fas fa-camera"></i></button>
+                    <button type="button" id="gambar" class="btn btn-success gambar mb-3 tambah-gambar">Tambah Lebih Banyak Gambar <i class="fas fa-camera"></i></button>
                     <div id="gallery" class="row"></div>
                     <button type="submit" class="btn btn-primary btn-block mt-3" id="simpan">SIMPAN</button>
                 </form>
@@ -143,6 +147,14 @@
 
     $(document).on("click", ".hapus", function (event){
         let card = $(this).parent().parent().parent();
+        if (card.length == 1) {
+            console.log(card.length);
+            $('#gambar').removeClass('hapus-semua-gambar');
+            $('#gambar').removeClass('btn-danger');
+            $('#gambar').addClass('btn-success');
+            $('#gambar').addClass('tambah-gambar');
+            $('#gambar').html(`Tambah Lebih Banyak Gambar <i class="fas fa-camera"></i>`);
+        }
         card[0].remove();
     });
 </script>

@@ -63,20 +63,23 @@ class ArtikelController extends Controller
             'galleries.*.required' => 'gambar wajib diisi'
         ]);
 
+        $data['caption'] = $request->caption_gambar;
+
         if ($request->gambar) {
             $data['gambar'] = $request->gambar->store('public/artikel');
         }
 
-        unset($data['galleries']);
-
+        unset($data['galleries'],$data['caption_gambar']);
         $artikel = Artikel::create($data);
 
-        foreach ($request->gallery as $key => $item) {
-            ArtikelGallery::create([
-                'artikel_id'    => $artikel->id,
-                'gambar'        => $request->gallery[$key]->store('public/artikel'),
-                'caption'       => $request->caption[$key]
-            ]);
+        if ($request->gallery) {
+            foreach ($request->gallery as $key => $item) {
+                ArtikelGallery::create([
+                    'artikel_id'    => $artikel->id,
+                    'gambar'        => $request->gallery[$key]->store('public/artikel'),
+                    'caption'       => $request->caption[$key]
+                ]);
+            }
         }
 
         return response()->json([
@@ -193,6 +196,7 @@ class ArtikelController extends Controller
     public function update(Request $request, Artikel $artikel)
     {
         $data = $request->validate([
+            'caption'       => ['nullable','string'],
             'judul'         => ['required','string','max:191'],
             'konten'        => ['required'],
             'gambar'        => ['nullable','image','max:2048'],
