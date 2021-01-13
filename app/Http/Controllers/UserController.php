@@ -18,10 +18,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::latest()->paginate(10);
+        $user = User::where('id', '!=', 1)->latest()->paginate(10);
 
         if ($request->cari) {
-            $user = User::where('nama','like',"%$request->cari%")->latest()->paginate(10);
+            $user = User::where('nama','like',"%$request->cari%")->where('id', '!=', 1)->latest()->paginate(10);
         }
 
         $user->appends($request->all());
@@ -71,6 +71,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if ($user->id == 1) {
+            return back();
+        }
         return view('user.edit', compact('user'));
     }
 
@@ -83,6 +86,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if ($user->id == 1) {
+            return back();
+        }
         $data = $request->validate([
             'peran_id'      => ['required','numeric'],
             'nama'          => ['required','string','max:64'],
@@ -109,6 +115,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->id == 1) {
+            return back();
+        }
         if ($user->foto_profil != 'noavatar.png') {
             unlink(storage_path('app/' . $user->foto_profil));
         }
@@ -211,6 +220,9 @@ class UserController extends Controller
 
     public function reset_password(User $user)
     {
+        if ($user->id == 1) {
+            return back();
+        }
         $user->password = bcrypt('password');
         $user->save();
         return back()->with('success','Password berhasil direset');

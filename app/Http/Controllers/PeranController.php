@@ -14,7 +14,7 @@ class PeranController extends Controller
      */
     public function index()
     {
-        return view('peran.index', ['peran' => Peran::latest()->get()]);
+        return view('peran.index', ['peran' => Peran::where('id', '!=', 1)->latest()->get()]);
     }
 
     /**
@@ -51,6 +51,9 @@ class PeranController extends Controller
      */
     public function show(Peran $peran)
     {
+        if ($peran->id == 1) {
+            return back();
+        }
         return view('peran.show', compact('peran'));
     }
 
@@ -62,6 +65,9 @@ class PeranController extends Controller
      */
     public function edit(Peran $peran)
     {
+        if ($peran->id == 1) {
+            return back();
+        }
         return view('peran.edit', compact('peran'));
     }
 
@@ -74,6 +80,10 @@ class PeranController extends Controller
      */
     public function update(Request $request, Peran $peran)
     {
+        if ($peran->id == 1) {
+            return back();
+        }
+
         $data = $request->validate([
             'nama' => ['required','string','max:16']
         ]);
@@ -90,6 +100,10 @@ class PeranController extends Controller
      */
     public function destroy(Peran $peran)
     {
+        if ($peran->id == 1) {
+            return back();
+        }
+
         $peran->delete();
         return redirect()->route('peran.index')->with('success','Peran berhasil dihapus');
     }
