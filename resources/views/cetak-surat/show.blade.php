@@ -159,7 +159,7 @@
 
             @if ($isiSurat->jenis_isi == 3)
                 @if ($tabel)
-                    <table class="table" style="margin-bottom: 1rem; margin-left: 3rem; border: 1px solid black">
+                    <table class="table" style="margin-bottom: 1rem; margin-left: 3rem">
                         <tbody>
                     @php
                         $tabel = false;
@@ -196,7 +196,7 @@
                     Yang Bersangkutan
                 </p>
                 <p style="" class="bold underline">
-                    {{ $isian[count($isian)-1] }}
+                    {{ $isian[count($isian) - 1] }}
                 </p>
             </div>
         @endif

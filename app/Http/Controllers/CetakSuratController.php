@@ -126,7 +126,7 @@ class CetakSuratController extends Controller
         foreach ($cetakSurat->detailCetak as $item) {
             $isian[] = $item->isian;
         }
-        $pdf = PDF::loadView('cetak-surat.detail', compact('surat', 'kode_desa', 'desa', 'isian', 'logo', 'tanggal', 'nomor'))->setPaper(array(0,0,609.449,935.433));
+        $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'kode_desa', 'desa', 'isian', 'logo', 'tanggal', 'nomor'))->setPaper(array(0,0,609.449,935.433));
         return $pdf->stream($surat->nama . '.pdf');
     }
 
