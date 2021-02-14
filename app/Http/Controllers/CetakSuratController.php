@@ -79,11 +79,16 @@ class CetakSuratController extends Controller
             $surat->save();
             return redirect('cetak-surat/' . $cetakSurat->id .'?q=' . $cetakSurat->nik);
         } else {
-            $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
             $image = (string) Image::make(public_path(Storage::url($desa->logo)))->encode('jpg');
             $logo = (string) Image::make($image)->encode('data-url');
             $tanggal = tgl(date('Y-m-d'));
-            $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'desa', 'request', 'logo', 'tanggal', 'kode_desa'))->setPaper(array(0,0,609.449,935.433));
+            $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
+            $nomor = $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat : $desa->nomor_surat;
+            $isian = [];
+            foreach ($request->isian as $item) {
+                $isian[] = $item;
+            }
+            $pdf = PDF::loadView('cetak-surat.show', compact('surat', 'kode_desa', 'desa', 'isian', 'logo', 'tanggal', 'nomor'))->setPaper(array(0,0,609.449,935.433));
             return $pdf->stream($surat->nama . '.pdf');
         }
     }
@@ -116,7 +121,12 @@ class CetakSuratController extends Controller
         $logo = (string) Image::make($image)->encode('data-url');
         $tanggal = tgl(date('Y-m-d', strtotime($cetakSurat->created_at)));
         $kode_desa = substr($desa->kode_desa,0,2) . '.' . substr($desa->kode_desa,2,2) . '.' . substr($desa->kode_desa,4,2) . '.' . substr($desa->kode_desa,6,4);
-        $pdf = PDF::loadView('cetak-surat.detail', compact('surat','kode_desa', 'desa', 'cetakSurat', 'logo', 'tanggal'))->setPaper(array(0,0,609.449,935.433));
+        $nomor = $cetakSurat->nomor;
+        $isian = [];
+        foreach ($cetakSurat->detailCetak as $item) {
+            $isian[] = $item->isian;
+        }
+        $pdf = PDF::loadView('cetak-surat.detail', compact('surat', 'kode_desa', 'desa', 'isian', 'logo', 'tanggal', 'nomor'))->setPaper(array(0,0,609.449,935.433));
         return $pdf->stream($surat->nama . '.pdf');
     }
 

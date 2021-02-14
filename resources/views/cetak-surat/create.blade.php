@@ -34,7 +34,7 @@
                         @if ($isiSurat->jenis_isi == 3)
                             <div class="form-group mb-3">
                                 <label for="{{ $isiSurat->isi . ' ' . $key }}" class="form-control-label">{{ $isiSurat->isi }}</label>
-                                <input required id="{{ $isiSurat->isi . ' ' . $key }}" data-isian="{{ $isiSurat->isian }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }}">
+                                <input required id="{{ $isiSurat->isi . ' ' . $key }}" data-isian="{{ $isiSurat->isian }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $isiSurat->isi }} ...">
                             </div>
                         @endif
                         @if ($isiSurat->tampilkan == 1)
@@ -56,7 +56,7 @@
                             @endphp
                             <div class="form-group mb-3">
                                 <label for="{{ $hasil . ' ' . $k }}" class="form-control-label">{{ $hasil }}</label>
-                                <input required id="{{ $hasil . ' ' . $k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }}">
+                                <input required id="{{ $hasil . ' ' . $k }}" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan {{ $hasil }} ...">
                             </div>
                         @endforeach
                     @endforeach
@@ -64,7 +64,7 @@
                     @if ($surat->tanda_tangan_bersangkutan == 1)
                         <div class="form-group mb-3">
                             <label for="tanda_tangan_bersangkutan" class="form-control-label">Nama yang bersangkutan</label>
-                            <input required id="tanda_tangan_bersangkutan" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan nama yang bersangkutan">
+                            <input required id="tanda_tangan_bersangkutan" class="form-control form-control-alternative" name="isian[]" autofocus placeholder="Masukkan nama yang bersangkutan ...">
                         </div>
                     @endif
                 </div>
@@ -106,6 +106,7 @@
                         $.each(response, function(i,e){
                             $(`input[data-isian="${i}"]`).val(e);
                         });
+                        $("#tanda_tangan_bersangkutan").val(response.nama);
                     }
                 }
             })

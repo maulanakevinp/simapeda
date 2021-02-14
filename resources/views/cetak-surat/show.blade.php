@@ -12,12 +12,21 @@
         body {
             font-family: 'Times New Roman', Times, serif;
         }
+
+        .table, td, th {
+            border: 1px solid white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 
 <body>
-    <div style="margin:1cm">
-        <div style="height:100px;width:100%; margin-bottom: 2rem">
+    <div style="margin-top: 1cm; margin-bottom:0.5cm; margin-left: 1cm; margin-right: 1cm;">
+        <div style="height:100px;width:100%; margin-bottom: 1rem">
             <div style="height:90px;width:70px;float:left" class="">
                 <img style="width: 100%" src="{{ $logo }}" alt="">
             </div>
@@ -35,41 +44,41 @@
         @if ($surat->perihal == 1)
             @php
                 $perihal = array();
-                foreach (App\IsiSurat::where('surat_id', $surat->id)->where('jenis_isi', 4)->orderBy('urutan')->get() as $isiSurat) {
+                foreach ($surat->isiSurat->where('jenis_isi', 4) as $isiSurat) {
                     array_push($perihal, $isiSurat->isi);
                 }
             @endphp
-            <div style="width: 50%; float: left;">
+            <div style="width: 60%; float: left;">
                 <br>
-                <table>
+                <table class="table">
                     <tbody>
                         <tr>
-                            <td>Nomor</td>
-                            <td>: {{ $surat->kode_surat }} / {{ $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat : $desa->nomor_surat }} / {{ $kode_desa }} / {{ date('Y') }}</td>
+                            <td width="60px">Nomor</td>
+                            <td>: {{ $surat->kode_surat }} / {{ $nomor }} / {{ $kode_desa }} / {{ date('Y') }}</td>
                         </tr>
                         <tr>
-                            <td>Sifat</td>
+                            <td width="60px">Sifat</td>
                             <td>: {{ $perihal[0] }}</td>
                         </tr>
                         <tr>
-                            <td>Lampiran</td>
+                            <td width="60px">Lampiran</td>
                             <td>: {{ $perihal[1] }}</td>
                         </tr>
                         <tr>
-                            <td>Perihal</td>
+                            <td width="60px">Perihal</td>
                             <td>: {{ $perihal[2] }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div style="margin-left: 50%; width: 50%; text-align: center; float: right;">
-                <p style="margin-bottom: 37px">{{ $desa->nama_desa }}, {{ $tanggal }}<br>Kepada {{ $perihal[3] }}</p>
+            <div style="margin-left: 60%; width: 40%; text-align: center; float: right;">
+                <p style="margin-bottom: 34px">{{ $desa->nama_desa }}, {{ $tanggal }}<br>Kepada {{ $perihal[3] }}</p>
                 <p>Di - {{ $perihal[4] }}</p>
             </div>
         @else
             <div style="text-align: center; margin-bottom: 1rem">
                 <b style="text-decoration: underline;">{{ Str::upper($surat->nama) }}</b><br>
-                Nomor : {{ $surat->kode_surat }} / {{ $desa->penomoran_surat == 1 ? $desa->nomor_layanan_surat : $desa->nomor_surat }} / {{ $kode_desa }} / {{ date('Y') }}
+                Nomor : {{ $surat->kode_surat }} / {{ $nomor }} / {{ $kode_desa }} / {{ date('Y') }}
             </div>
         @endif
 
@@ -89,7 +98,7 @@
                 $hasil = $paragraf;
 
                 foreach ($matches[0] as $k => $value) {
-                    $hasil = str_replace($value, $request->isian[$i], $hasil);
+                    $hasil = str_replace($value, $isian[$i], $hasil);
                     $i++;
                 }
 
@@ -123,22 +132,22 @@
             @endphp
 
             @if ($data_kades && $surat->data_kades == 1)
-                <table style="margin-bottom: 1rem; margin-left: 3rem">
+                <table class="table" style="margin-bottom: 1rem; margin-left: 3rem">
                     <tbody>
                         <tr>
                             <td width="160px" valign="top">Nama</td>
                             <td width="10px" valign="top">:</td>
-                            <td style="text-align: justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}</td>
+                            <td style="text-align: justify" valign="top">{{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}</td>
                         </tr>
                         <tr>
                             <td width="160px" valign="top">Jabatan</td>
                             <td width="10px" valign="top">:</td>
-                            <td style="text-align: justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }}</td>
+                            <td style="text-align: justify" valign="top">{{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }}</td>
                         </tr>
                         <tr>
                             <td width="160px" valign="top">Alamat</td>
                             <td width="10px" valign="top">:</td>
-                            <td style="text-align: justify" width="10cm" valign="top">{{ $desa->ttd ? $desa->ttd->alamat : $desa->alamat_kepala_desa }}</td>
+                            <td style="text-align: justify" valign="top">{{ $desa->ttd ? $desa->ttd->alamat : $desa->alamat_kepala_desa }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,7 +159,7 @@
 
             @if ($isiSurat->jenis_isi == 3)
                 @if ($tabel)
-                    <table style="margin-bottom: 1rem; margin-left: 3rem">
+                    <table class="table" style="margin-bottom: 1rem; margin-left: 3rem; border: 1px solid black">
                         <tbody>
                     @php
                         $tabel = false;
@@ -160,7 +169,7 @@
                 <tr>
                     <td width="160px" valign="top">{{ $isiSurat->isi }}</td>
                     <td width="10px" valign="top">:</td>
-                    <td style="text-align: justify" width="10cm" valign="top">{{ $request->isian[$i] }}</td>
+                    <td style="text-align: justify" valign="top">{{ $isian[$i] }}</td>
                 </tr>
 
                 @php
@@ -171,32 +180,34 @@
                             echo "</table>";
                             $tabel = true;
                         }
-                    } catch (\Throwable $th) {}
+                    } catch (\Throwable $th) {
+                        echo "</tbody>";
+                        echo "</table>";
+                        $tabel = true;
+                    }
                 @endphp
             @endif
         @endforeach
 
-        <div style="margin-top: 1rem">
-            @if ($surat->tanda_tangan_bersangkutan == 1)
-                <div style="width: 50%; float: left; text-align: center">
-                    <br>
-                    <p style="margin-bottom: 100px">
-                        Yang Bersangkutan
-                    </p>
-                    <p style="" class="bold underline">
-                        {{ $request->isian[count($request->isian)-1] }}
-                    </p>
-                </div>
-            @endif
-            <div style="margin-left: 50%; width: 50%; float: right; text-align: center">
-                <p style="margin-bottom: 100px">
-                    {{ $desa->nama_desa }}, {{ $tanggal }}  <br>
-                    {{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }} {{ $desa->nama_desa }}
+        @if ($surat->tanda_tangan_bersangkutan == 1)
+            <div style="width: 50%; float: left; text-align: center">
+                <br>
+                <p style="margin-bottom: 100px; margin-top:0px">
+                    Yang Bersangkutan
                 </p>
                 <p style="" class="bold underline">
-                    {{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}
+                    {{ $isian[count($isian)-1] }}
                 </p>
             </div>
+        @endif
+        <div style="margin-left: 50%; width: 50%; float: right; text-align: center">
+            <p style="margin-bottom: 100px; margin-top:0px">
+                {{ $desa->nama_desa }}, {{ $tanggal }}  <br>
+                {{ $desa->ttd ? $desa->ttd->jabatan : "Kepala Desa" }} {{ $desa->nama_desa }}
+            </p>
+            <p style="" class="bold underline">
+                {{ $desa->ttd ? $desa->ttd->nama : $desa->nama_kepala_desa }}
+            </p>
         </div>
     </div>
 </body>
