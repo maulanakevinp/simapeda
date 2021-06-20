@@ -63,7 +63,7 @@
     $(document).ready(function () {
         $("#cari").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("#card .surats").filter(function() {
+            $(".surats").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
