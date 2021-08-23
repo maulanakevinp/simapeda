@@ -210,7 +210,7 @@ class SuratController extends Controller
         ]);
     }
 
-    public function createIsiSurat($request, $surat)
+    private function createIsiSurat($request, $surat)
     {
         for ($i = 1; $i < count($request->isian); $i++) {
             IsiSurat::create([
@@ -222,7 +222,7 @@ class SuratController extends Controller
         }
     }
 
-    public function dataSurat($request)
+    private function dataSurat($request)
     {
         $dataSurat = [
             'nama'                      => $request->nama,
@@ -238,7 +238,7 @@ class SuratController extends Controller
         return $dataSurat;
     }
 
-    public function validationSurat($request)
+    private function validationSurat($request)
     {
         return Validator::make($request->all(), [
             'nama'      => ['required', 'max:64'],

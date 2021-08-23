@@ -111,8 +111,13 @@
                         <tr>
                             <td>
                                 <a target="_blank" href="{{ route('cetakSurat.show', $item->id) }}" class="btn btn-sm btn-success" title="Detail Cetak" data-toggle="tooltip"><i class="fas fa-print"></i></a>
-                                <a href="{{ route('cetakSurat.edit',$item->id) }}" class="btn btn-sm btn-primary" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger hapus-data" data-nama="Detail cetak surat ini" data-action="{{ route('cetakSurat.destroy',$item->id) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
+                                @if ($item->arsip == 1)
+                                    <a class="btn btn-sm btn-dark arsip" data-id="" data-action="{{ route('cetakSurat.arsip',$item->id) }}"  data-toggle="tooltip" href="#arsip" title="Buka Arsip"><i class="fas fa-lock"></i></a>
+                                @else
+                                    <a href="{{ route('cetakSurat.edit',$item->id) }}" class="btn btn-sm btn-primary" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-sm btn-danger hapus-data" data-nama="Detail cetak surat ini" data-action="{{ route('cetakSurat.destroy',$item->id) }}" data-toggle="tooltip" href="#modal-hapus" title="Hapus"><i class="fas fa-trash"></i></a>
+                                    <a class="btn btn-sm btn-dark arsip" data-id="1" data-action="{{ route('cetakSurat.arsip',$item->id) }}"  data-toggle="tooltip" href="#arsip" title="Arsipkan"><i class="fas fa-unlock"></i></a>
+                                @endif
                             </td>
                             <td>{{ $item->nomor ? $item->nomor : "-" }}</td>
                             @foreach ($item->DetailCetak as $DetailCetak)
@@ -165,6 +170,11 @@
         </div>
     </div>
 </div>
+
+<form id="form-arsip" method="POST">
+    @csrf @method('patch')
+    <input type="hidden" name="arsip" id="arsip">
+</form>
 @endsection
 
 @push('scripts')
@@ -189,6 +199,13 @@
                 chart.data = response;
                 chart.update();
             });
+        });
+
+        $(".arsip").click(function (event) {
+            event.preventDefault();
+            $("#arsip").val($(this).data('id'));
+            $("#form-arsip").attr('action',$(this).data('action'));
+            $("#form-arsip").submit();
         });
     });
 </script>

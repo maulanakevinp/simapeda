@@ -132,6 +132,13 @@ class CetakSuratController extends Controller
     public function destroy(CetakSurat $cetakSurat)
     {
         $cetakSurat->delete();
-        return back()->with('success','Detail surat berhasil dihapus');
+        return back()->with('success','Detail cetak surat berhasil dihapus');
+    }
+
+    public function arsip(Request $request, CetakSurat $cetakSurat)
+    {
+        $cetakSurat->arsip = $request->arsip;
+        $cetakSurat->save();
+        return back()->with('success','Detail cetak surat berhasil ' . ($request->arsip == 1 ? 'diarsipkan' : 'dinonarsipkan'));
     }
 }
