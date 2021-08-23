@@ -63,7 +63,7 @@ class AnggaranRealisasiController extends Controller
 
     }
 
-    public function laporan($request)
+    private function laporan($request)
     {
         $data['pendapatan_anggaran'] = 0; $data['pendapatan_realisasi'] = 0; $data['belanja_anggaran'] = 0; $data['belanja_realisasi'] = 0; $data['pembiayaan_anggaran'] = 0; $data['pembiayaan_realisasi'] = 0; $data['rincian'] = null;
         $data['penerimaan_biaya_anggaran'] = 0; $data['penerimaan_biaya_realisasi'] = 0; $data['pengeluaran_biaya_anggaran'] = 0; $data['pengeluaran_biaya_realisasi'] = 0;
@@ -158,7 +158,7 @@ class AnggaranRealisasiController extends Controller
         ]);
     }
 
-    public function cart_rincian($jenis, $realisasi, $anggaran, $rincian)
+    private function cart_rincian($jenis, $realisasi, $anggaran, $rincian)
     {
         try {
             $persen = number_format((float)($realisasi / $anggaran) * 100, 2, '.', '');

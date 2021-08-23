@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Agama;
 use App\Darah;
-use App\DetailDusun;
 use App\Dusun;
 use App\Http\Requests\PendudukRequest;
 use App\Pekerjaan;
@@ -13,7 +12,6 @@ use App\Penduduk;
 use App\StatusHubunganDalamKeluarga;
 use App\StatusPerkawinan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PendudukController extends Controller
 {
