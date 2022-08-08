@@ -46,12 +46,12 @@ class HomeController extends Controller
         }
 
         usort($galleries, function($a, $b) {
-            return $a['created_at'] < $b['created_at'];
+            return strlen($a['created_at']) <=> strlen($b['created_at']);
         });
 
         return view('index', compact('surat', 'desa', 'gallery','berita','pemerintahan_desa','galleries'));
     }
-
+    
     public function dashboard()
     {
         $surat = Surat::all();
